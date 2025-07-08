@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
 
 
     this.authService.signInWithUserAccount(userNameValue, passWordValue).pipe(tap((res: LoginResponse) => {
-      this.updateTokenAndReRoute(res.token, '/expense-list')
+      this.updateTokenAndReRoute(res.token, '/home')
     }), catchError((err: FirebaseError) => {
       // console.error('Đăng nhập thất bại:', err);
       this.errorModalService.openErrorModal(err)
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.signInWithGoogleAccount().pipe(
       tap((res: any) => {
-        this.updateTokenAndReRoute(res.token, '/expense-list')
+        this.updateTokenAndReRoute(res.token, '/home')
         this.loading = false;
       }), catchError((err: FirebaseError) => {
         this.errorModalService.openErrorModal(err)
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.signInWithFacebookAccount().pipe(
       tap((res: any) => {
-        this.updateTokenAndReRoute(res.token, '/expense-list')
+        this.updateTokenAndReRoute(res.token, '/home')
         this.loading = false;
       }), catchError((err: FirebaseError) => {
         this.errorModalService.openErrorModal(err)

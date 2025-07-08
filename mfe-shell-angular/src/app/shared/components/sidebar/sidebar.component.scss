@@ -1,0 +1,28 @@
+.sidenav-container {
+  height: 100vh;
+  position: relative; // ✅ quan trọng để nút position tuyệt đối hoạt động
+}
+
+.app-sidenav {
+  width: 220px;
+  transition: width 0.3s ease;
+}
+
+.collapse-button {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  transition: left 0.3s ease;
+}
+
+// Khi sidebar bị collapse, chỉnh lại vị trí nút
+:host-context(.collapsed) .collapse-btn {
+  left: 64px; // hoặc chiều rộng khi collapse
+}

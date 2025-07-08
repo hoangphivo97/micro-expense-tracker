@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut, FacebookAuthProvider, AuthProvider } from '@angular/fire/auth';
-import { firstValueFrom, from, Observable, switchMap } from 'rxjs';
+import { Auth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut, FacebookAuthProvider, AuthProvider, User, onAuthStateChanged } from '@angular/fire/auth';
+import { BehaviorSubject, firstValueFrom, from, Observable, switchMap } from 'rxjs';
 import { LoginResponse } from '../../interface/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { AuthStore } from './Akita/auth.store';
@@ -16,9 +16,20 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000/auth';
   private apiGoogleUrl = 'http://localhost:3000/auth/google-login';
   private apiFacebookUrl = 'http://localhost:3000/auth/facebook-login'
+  private userSubject = new BehaviorSubject<User | undefined>(undefined);
+  user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient, private authStore: AuthStore, private router: Router) {
-
+    onAuthStateChanged(this.auth, (user: User | null) => {
+      if (user) {
+        this.userSubject.next({
+          displayName: user.displayName,
+          email: user.email
+        } as User);
+      } else {
+        this.userSubject.next(undefined);
+      }
+    });
   }
 
   signInWithUserAccount(username: string, password: string): Observable<LoginResponse> {
