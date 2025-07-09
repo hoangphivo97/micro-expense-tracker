@@ -1,6 +1,6 @@
 <!-- Collapse Button -->
 <button mat-icon-button class="collapse-button" [ngStyle]="{
-          left: collapsed ? '0px' : '205px'
+          left: collapsed ? '0px' : '245px'
         }" (click)="toggleSidebar()">
   <mat-icon>{{ collapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
 </button>
@@ -8,16 +8,20 @@
 <mat-sidenav-container class="sidenav-container">
   <!-- Sidebar -->
   <mat-sidenav #sidenav mode="side" [opened]="!collapsed" class="app-sidenav">
-    <div class="p-4">
-      <h2 *ngIf="!collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
-      <ul>
-        <li><a mat-button routerLink="/dashboard">Dashboard</a></li>
-        <li><a mat-button routerLink="/expenses">Expenses</a></li>
+    <div class="sidebar-section">
+      <div class="account-section">
+        <mat-icon class="icon-size account-icon">account_circle</mat-icon>
+        <h2 *ngIf="!collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
+      </div>
+      <ul class="ls-links">
+        <li> <mat-icon>dashboard</mat-icon><a mat-button routerLink="/dashboard">Dashboard</a></li>
+        <li><mat-icon> local_atm</mat-icon><a mat-button routerLink="/expenses">Expenses</a></li>
+        <li> <mat-icon>accessibility_new</mat-icon><a mat-button routerLink="/expenses">User</a></li>
+        <li>	<mat-icon> insert_chart_outlined</mat-icon><a mat-button routerLink="/expenses">Report</a></li>
+        <li><a mat-button routerLink="/expenses">Messege</a></li>
       </ul>
     </div>
   </mat-sidenav>
-
-
 
   <!-- Content -->
   <mat-sidenav-content>
