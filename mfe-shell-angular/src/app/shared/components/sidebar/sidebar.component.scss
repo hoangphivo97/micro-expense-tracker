@@ -1,51 +1,146 @@
+$icon-color-inactive: #BDC2C5;
+$text-color-inactive: #7D8388;
+$color-active: #7D45FF;
+$color-danger: #dc2626;
+$red-bland-8: rgba(220, 38, 38, 0.08);
+$purple-bland-8: rgba($color-active, 0.08);
+
+
 .sidenav-container {
   height: 100vh;
-  position: relative; // ✅ quan trọng để nút position tuyệt đối hoạt động
+  position: relative;
+  font-size: 1.4rem;
 }
 
 .app-sidenav {
   width: 260px;
   transition: width 0.3s ease;
 
-  .sidebar-section{
+  .sidebar-section {
+    height: 100%;
     padding: 1rem;
-  }
+    display: flex;
+    flex-direction: column;
 
-  .account {
-    &-section {
-      display: flex;
-      gap: 10px;
-      align-items: center;
+    .logout {
+      &-section {
+        margin-top: auto;
+        text-align: left;
+      }
 
-      h2{
-        margin: 0;
+      &-btn {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        padding: 12px 20px;
+        border: none;
+        background: none;
+        color: $text-color-inactive;
+        font-weight: 500;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        width: 100%;
+        transition: color 0.3s ease;
+
+        fa-icon {
+          color: $icon-color-inactive;
+          z-index: 1;
+          transition: color 0.3s ease;
+        }
+
+        &:hover {
+          color: $color-danger;
+          background-color: $red-bland-8;
+
+          fa-icon {
+            color: $color-danger;
+          }
+
+          animation: shake 0.3s ease-in-out;
+        }
       }
     }
 
-    &-icon{
-      font-size: 48px;
-      width: auto;
-      height: auto;
+  }
+
+
+}
+
+.account {
+  &-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    h2 {
+      margin: 0;
     }
   }
 
-  .ls-links{
-    font-size: 1.4rem;
-    margin-top: 50px;
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding: 0;
+  &-icon {
+    font-size: 48px;
+    width: auto;
+    height: auto;
+    color: $color-active;
+  }
+}
 
-    li{
+.ls-links {
+  margin-top: 50px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0;
+
+  li {
+    display: flex;
+    position: relative;
+
+    .ls-nav {
       display: flex;
       align-items: center;
       padding: 10px;
       gap: 25px;
+      cursor: pointer;
+      width: 100%;
+
+      mat-icon {
+        color: $icon-color-inactive;
+      }
+
+      a {
+        color: $text-color-inactive;
+      }
+
+      &:hover {
+        background-color: $purple-bland-8;
+      }
+
+      &.active {
+
+        mat-icon,
+        a {
+          color: $color-active;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          width: 5px;
+          background-color: $color-active;
+          transform: translateX(-1rem);
+        }
+      }
     }
   }
 }
+
 
 .collapse-button {
   position: fixed;
@@ -64,4 +159,26 @@
 // Khi sidebar bị collapse, chỉnh lại vị trí nút
 :host-context(.collapsed) .collapse-btn {
   left: 64px; // hoặc chiều rộng khi collapse
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px);
+  }
+
+  50% {
+    transform: translateX(2px);
+  }
+
+  75% {
+    transform: translateX(-1px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }

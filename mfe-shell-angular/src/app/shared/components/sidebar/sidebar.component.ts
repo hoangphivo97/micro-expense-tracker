@@ -7,11 +7,13 @@ import { MatIcon } from '@angular/material/icon';
 import { DialogActionEnum, DialogData } from '../../../interface/modal.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsModalComponent } from '../../../modal/settings-modal/settings-modal.component';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [MatSidenavModule, ExpenseListComponent, CommonModule, MatIcon],
+  imports: [MatSidenavModule, ExpenseListComponent, CommonModule, MatIcon, FontAwesomeModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -21,9 +23,19 @@ export class SidebarComponent implements OnInit {
   user$ = this.authService.user$;
   collapsed = false;
   dialogActionEnum = DialogActionEnum
+  faArrowRightFromBracket = faArrowRightFromBracket
+  navItems = [
+    { icon: 'dashboard', label: 'Dashboard' },
+    { icon: 'local_atm', label: 'Expenses' },
+    { icon: 'accessibility_new', label: 'User' },
+    { icon: 'insert_chart_outlined', label: 'Report' },
+    { icon: 'message', label: 'Messages' }
+  ];
+
+  activeIndex = 0;
 
   ngOnInit(): void {
-
+    
   }
 
   logout() {
@@ -43,5 +55,9 @@ export class SidebarComponent implements OnInit {
 
   toggleSidebar() {
     this.collapsed = !this.collapsed;
+  }
+
+  setActive(index: number) {
+    this.activeIndex = index;
   }
 }

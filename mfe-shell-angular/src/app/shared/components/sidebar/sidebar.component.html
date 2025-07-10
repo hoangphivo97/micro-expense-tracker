@@ -14,13 +14,46 @@
         <h2 *ngIf="!collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
       </div>
       <ul class="ls-links">
-        <li> <mat-icon>dashboard</mat-icon><a mat-button routerLink="/dashboard">Dashboard</a></li>
-        <li><mat-icon> local_atm</mat-icon><a mat-button routerLink="/expenses">Expenses</a></li>
-        <li> <mat-icon>accessibility_new</mat-icon><a mat-button routerLink="/expenses">User</a></li>
-        <li>	<mat-icon> insert_chart_outlined</mat-icon><a mat-button routerLink="/expenses">Report</a></li>
-        <li><a mat-button routerLink="/expenses">Messege</a></li>
+        <li *ngFor="let item of navItems; let i = index"
+          (click)="setActive(i)">
+          <div class="ls-nav" [class.active]="i === activeIndex">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <a>{{ item.label }}</a>
+          </div>
+        </li>
+        <!-- <li>
+          <div class="ls-nav">
+            <mat-icon>dashboard</mat-icon><a mat-button routerLink="/home">Dashboard</a>
+          </div>
+        </li>
+        <li>
+          <div class="ls-nav">
+            <mat-icon> local_atm</mat-icon><a mat-button routerLink="/">Expenses</a>
+          </div>
+        </li>
+        <li>
+          <div class="ls-nav">
+            <mat-icon>accessibility_new</mat-icon><a mat-button routerLink="/">User</a>
+          </div>
+        </li>
+        <li>
+          <div class="ls-nav">
+            <mat-icon> insert_chart_outlined</mat-icon><a mat-button routerLink="/">Report</a>
+          </div>
+        </li>
+        <li>
+          <div class="ls-nav">
+            <mat-icon> message</mat-icon><a mat-button routerLink="/">Messege</a>
+          </div>
+        </li> -->
       </ul>
+      <div class="logout-section">
+        <button (click)="logout()" class="logout-btn"><fa-icon class="fa-solid icon-style" [icon]="faArrowRightFromBracket">
+        </fa-icon>
+        Log Out</button>
+      </div>
     </div>
+
   </mat-sidenav>
 
   <!-- Content -->
