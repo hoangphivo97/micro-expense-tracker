@@ -1,24 +1,22 @@
 <!-- Collapse Button -->
-<button mat-icon-button class="collapse-button" [ngStyle]="{
-          left: collapsed ? '0px' : '245px'
-        }" (click)="toggleSidebar()">
-  <mat-icon>{{ collapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+<button mat-icon-button class="collapse-button" [class.collapsed]="collapsed" (click)="toggleSidebar()">
+  <mat-icon>{{toggleIcon}}</mat-icon>
 </button>
 <!-- Sidebar Container -->
 <mat-sidenav-container class="sidenav-container">
   <!-- Sidebar -->
-  <mat-sidenav #sidenav mode="side" [opened]="!collapsed" class="app-sidenav">
+  <mat-sidenav #sidenav mode="side" [opened]="true" [fixedInViewport]="true" [class.collapsed]="collapsed"
+    class="app-sidenav"> <!-- [opened]="!collapsed" -->
     <div class="sidebar-section">
       <div class="account-section">
         <mat-icon class="icon-size account-icon">account_circle</mat-icon>
-        <h2 *ngIf="!collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
+        <h2 class="label" [class.hide]="collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
       </div>
       <ul class="ls-links">
-        <li *ngFor="let item of navItems; let i = index"
-          (click)="setActive(i)">
+        <li *ngFor="let item of navItems; let i = index" (click)="setActive(i)">
           <div class="ls-nav" [class.active]="i === activeIndex">
             <mat-icon>{{ item.icon }}</mat-icon>
-            <a>{{ item.label }}</a>
+            <a class="label" [class.hide]="collapsed">{{ item.label }}</a>
           </div>
         </li>
         <!-- <li>
@@ -48,9 +46,10 @@
         </li> -->
       </ul>
       <div class="logout-section">
-        <button (click)="logout()" class="logout-btn"><fa-icon class="fa-solid icon-style" [icon]="faArrowRightFromBracket">
-        </fa-icon>
-        Log Out</button>
+        <button (click)="logout()" class="logout-btn"><fa-icon class="fa-solid icon-style"
+            [icon]="faArrowRightFromBracket">
+          </fa-icon>
+          <label class="label" [class.hide]="collapsed">Log Out</label></button>
       </div>
     </div>
 

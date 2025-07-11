@@ -14,13 +14,32 @@ $purple-bland-8: rgba($color-active, 0.08);
 
 .app-sidenav {
   width: 260px;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease-in-out;
+
+  ::ng-deep .mat-icon {
+    overflow: visible !important;
+  }
 
   .sidebar-section {
     height: 100%;
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    overflow: clip;
+
+    .label {
+      display: inline-block;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 1;
+      transform: translateX(0);
+      white-space: nowrap;
+
+      &.hide {
+        opacity: 0;
+        transform: translateX(-10px);
+        pointer-events: none;
+      }
+    }
 
     .logout {
       &-section {
@@ -32,7 +51,7 @@ $purple-bland-8: rgba($color-active, 0.08);
         display: flex;
         align-items: center;
         gap: 30px;
-        padding: 12px 20px;
+        padding: 10px;
         border: none;
         background: none;
         color: $text-color-inactive;
@@ -66,6 +85,11 @@ $purple-bland-8: rgba($color-active, 0.08);
   }
 
 
+  &.collapsed {
+    width: 80px;
+
+    // transform: translateX(80px);
+  }
 }
 
 .account {
@@ -112,6 +136,7 @@ $purple-bland-8: rgba($color-active, 0.08);
       }
 
       a {
+        text-decoration: none;
         color: $text-color-inactive;
       }
 
@@ -154,11 +179,11 @@ $purple-bland-8: rgba($color-active, 0.08);
   height: 26px;
   padding: 0;
   transition: left 0.3s ease;
-}
+  left: 245px;
 
-// Khi sidebar bị collapse, chỉnh lại vị trí nút
-:host-context(.collapsed) .collapse-btn {
-  left: 64px; // hoặc chiều rộng khi collapse
+  &.collapsed {
+    left: 65px;
+  }
 }
 
 @keyframes shake {

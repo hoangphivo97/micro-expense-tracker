@@ -60,4 +60,8 @@ export class SidebarComponent implements OnInit {
   setActive(index: number) {
     this.activeIndex = index;
   }
+
+  get toggleIcon(){
+    return this.collapsed ? "chevron_right" : "chevron_left"
+  }
 }
