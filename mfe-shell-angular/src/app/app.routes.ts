@@ -9,7 +9,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     {
-        path: 'expense-list', loadComponent: () => import("./features/expenses/expense-list/expense-list.component").then(m => m.ExpenseListComponent),
+        path: 'home', loadComponent: () => import("./shared/components/sidebar/sidebar.component").then(m => m.SidebarComponent),
         canActivate: [authGuard]
     },
 ];
