@@ -1,19 +1,19 @@
-import { Component, inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { FooterComponent } from "../../../shared/components/footer/footer.component";
-import { createExpense, editExpense, ExpenseList, PaidMethodEnum } from '../../../interface/expense.interface';
+import { editExpense, ExpenseList, FilterParams, PaidMethodEnum } from '../../../interface/expense.interface';
 import { ExpenseService } from '../../../services/ExpenseService/expense.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DateFormatValue, ExpenseListFieldName, LocalStorageKey, ModalMessage } from '../../../strings/login.strings';
+import { DateFormatValue, LocalStorageKey, ModalMessage } from '../../../strings/login.strings';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { CreateExpenseModalComponent } from '../../../modal/create-expense-modal/create-expense-modal.component';
 import { DialogActionEnum, DialogData } from '../../../interface/modal.interface';
-import { debounceTime, distinctUntilChanged, Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { BaseModalComponent } from '../../../modal/base-modal/base-modal.component';
 import { UserServiceService } from '../../../services/UserService/user-service.service';
 import { CurrencyEnum } from '../../../interface/settings.interface';
@@ -22,11 +22,13 @@ import { LocalStorageService } from '../../../services/LocalStorage/local-storag
 import { MatInputModule } from '@angular/material/input';
 import { EnumToStringPipe } from '../../../shared/EnumToStringPipe/enum-to-string.pipe';
 import { AuthStore } from '../../../services/RouteGuard/Akita/auth.store';
+import { months } from '../../../strings/object';
+import { FilterComponent } from "../../../shared/components/filter/filter.component";
 
 @Component({
   selector: 'app-expense-list',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, NgbPaginationModule, FormsModule, DecimalPipe, CommonModule, MatButtonModule, MatTableModule, MatIconModule, MatInputModule, EnumToStringPipe],
+  imports: [HeaderComponent, FooterComponent, NgbPaginationModule, FormsModule, DecimalPipe, CommonModule, MatButtonModule, MatTableModule, MatIconModule, MatInputModule, EnumToStringPipe, FilterComponent],
   templateUrl: './expense-list.component.html',
   styleUrl: './expense-list.component.scss',
 })
@@ -124,10 +126,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSearch(event: Event) {
-    const value: string = (event.target as HTMLInputElement).value
-    const filterdValue: string = value.trim() && value.toLowerCase()
-    this.dataSource.filter = filterdValue
+  onFitlerChanged(params: FilterParams){
+    console.log(params)
   }
 
   ngOnDestroy(): void {

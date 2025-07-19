@@ -1,5 +1,6 @@
-:host {
+$color-active: #7D45FF;
 
+:host {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -14,25 +15,12 @@
         cursor: pointer;
     }
 
-    .expense-list{
+    .expense-list {
         width: 60%;
     }
 
-    .filter{
-        margin-top: 10px;
-
-        .search-bar{
-          display: flex;
-          justify-content: flex-end;  
-
-          .search-input{
-            width: 30%;
-          }
-        }
-    }
-
-
 }
+
 
 app-header,
 app-footer {

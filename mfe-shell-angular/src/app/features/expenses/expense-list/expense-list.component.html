@@ -9,20 +9,12 @@
         <!-- @if (service.loading$ | async) {
         <span class="col col-form-label">Loading...</span>
         } -->
-        <button class="create-expense-button btn" mat-button (click)="openCreateExpenseModal()">
+        <!-- <button class="create-expense-button btn" mat-button (click)="openCreateExpenseModal()">
             Create New Expense
-        </button>
+        </button> -->
     </section>
 
-    <section class="mb-6 row filter">
-        <div class="search-bar">
-            <mat-form-field class="search-input">
-                <mat-label>Search</mat-label>
-                <input matInput type="text" placeholder="Search" (keyup)="onSearch($event)" />
-            </mat-form-field>
-        </div>
-
-    </section>
+    <app-filter (filterChange)="onFitlerChanged($event)" [inputDataSource]="dataSource"></app-filter>
 
     <table mat-table [dataSource]="dataSource">
         <!--- Note that these columns can be defined in any order.

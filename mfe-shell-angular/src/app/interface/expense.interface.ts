@@ -27,3 +27,9 @@ export interface editExpense extends ExpenseList {
 }
 
 export type PaidMethodDropdownList = DropdownList<PaidMethodEnum>
+
+export interface FilterParams {
+    searchTerm: string;
+    month: number;
+    year: number;
+}
