@@ -6,7 +6,7 @@ import { ExpenseService } from '../../../services/ExpenseService/expense.service
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DateFormatValue, LocalStorageKey, ModalMessage } from '../../../strings/login.strings';
+import { DateFormatValue, LocalStorageKey, ModalMessage } from '../../../common/login.strings';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,7 +22,7 @@ import { LocalStorageService } from '../../../services/LocalStorage/local-storag
 import { MatInputModule } from '@angular/material/input';
 import { EnumToStringPipe } from '../../../shared/EnumToStringPipe/enum-to-string.pipe';
 import { AuthStore } from '../../../services/RouteGuard/Akita/auth.store';
-import { months } from '../../../strings/object';
+import { months } from '../../../common/common-list';
 import { FilterComponent } from "../../../shared/components/filter/filter.component";
 
 @Component({

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { BaseModalComponent } from '../base-modal/base-modal.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogActionEnum } from '../../interface/modal.interface';
-import { ConfirmExitModal } from '../../strings/login.strings';
+import { ConfirmExitModal } from '../../common/login.strings';
 
 @Component({
   selector: 'app-register-modal',

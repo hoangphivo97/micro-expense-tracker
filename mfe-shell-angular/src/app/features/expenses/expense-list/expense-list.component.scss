@@ -4,8 +4,7 @@ $color-active: #7D45FF;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    // justify-content: space-between;
-    align-items: center;
+    padding: 30px;
 
     .create-expense-button {
         margin-top: 5px;
@@ -16,7 +15,7 @@ $color-active: #7D45FF;
     }
 
     .expense-list {
-        width: 60%;
+        width: 100%;
     }
 
 }

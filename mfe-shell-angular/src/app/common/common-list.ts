@@ -12,3 +12,11 @@ export const months = [
     { value: 11, label: 'November' },
     { value: 12, label: 'December' },
 ];
+
+export const navItems = [
+    { icon: 'dashboard', label: 'Dashboard' },
+    { icon: 'local_atm', label: 'Expenses' },
+    { icon: 'accessibility_new', label: 'User' },
+    { icon: 'insert_chart_outlined', label: 'Report' },
+    { icon: 'message', label: 'Messages' }
+];
