@@ -1,6 +1,6 @@
 <!-- Collapse Button -->
-<button mat-icon-button class="collapse-button" [class.collapsed]="collapsed" (click)="toggleSidebar()">
-  <mat-icon>{{toggleIcon}}</mat-icon>
+<button mat-icon-button class="collapse-btn" [class.collapsed]="collapsed" (click)="toggleSidebar()">
+  <mat-icon class="collapse-icon">{{toggleIcon}}</mat-icon>
 </button>
 <!-- Sidebar Container -->
 <mat-sidenav-container class="sidenav-container">
@@ -19,31 +19,6 @@
             <a class="label" [class.hide]="collapsed">{{ item.label }}</a>
           </div>
         </li>
-        <!-- <li>
-          <div class="ls-nav">
-            <mat-icon>dashboard</mat-icon><a mat-button routerLink="/home">Dashboard</a>
-          </div>
-        </li>
-        <li>
-          <div class="ls-nav">
-            <mat-icon> local_atm</mat-icon><a mat-button routerLink="/">Expenses</a>
-          </div>
-        </li>
-        <li>
-          <div class="ls-nav">
-            <mat-icon>accessibility_new</mat-icon><a mat-button routerLink="/">User</a>
-          </div>
-        </li>
-        <li>
-          <div class="ls-nav">
-            <mat-icon> insert_chart_outlined</mat-icon><a mat-button routerLink="/">Report</a>
-          </div>
-        </li>
-        <li>
-          <div class="ls-nav">
-            <mat-icon> message</mat-icon><a mat-button routerLink="/">Messege</a>
-          </div>
-        </li> -->
       </ul>
       <div class="logout-section">
         <button (click)="logout()" class="logout-btn"><fa-icon class="fa-solid icon-style"

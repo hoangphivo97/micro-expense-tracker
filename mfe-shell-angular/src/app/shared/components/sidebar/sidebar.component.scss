@@ -63,6 +63,10 @@ $purple-bland-8: rgba($color-active, 0.08);
         width: 100%;
         transition: color 0.3s ease;
 
+        label{
+          cursor: pointer;
+        }
+
         fa-icon {
           color: $icon-color-inactive;
           z-index: 1;
@@ -167,7 +171,7 @@ $purple-bland-8: rgba($color-active, 0.08);
 }
 
 
-.collapse-button {
+.collapse-btn {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
@@ -183,6 +187,30 @@ $purple-bland-8: rgba($color-active, 0.08);
 
   &.collapsed {
     left: 65px;
+  }
+}
+
+
+.collapse-btn:hover .collapse-icon {
+  animation: raceMove 0.6s ease-in-out;
+}
+
+@keyframes raceMove {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  40% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
