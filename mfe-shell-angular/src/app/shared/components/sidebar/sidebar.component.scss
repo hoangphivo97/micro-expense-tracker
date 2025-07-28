@@ -14,7 +14,11 @@ $purple-bland-8: rgba($color-active, 0.08);
 
 .app-sidenav {
   width: 260px;
-  transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease;
+
+  &.collapsed {
+    width: 80px;
+  }
 
   ::ng-deep .mat-icon {
     overflow: visible !important;
@@ -88,12 +92,14 @@ $purple-bland-8: rgba($color-active, 0.08);
     }
 
   }
+}
 
+mat-sidenav-content {
+  transition: margin-left 0.3s ease;
+  margin-left: 260px !important;
 
   &.collapsed {
-    width: 80px;
-
-    // transform: translateX(80px);
+    margin-left: 80px !important; 
   }
 }
 
