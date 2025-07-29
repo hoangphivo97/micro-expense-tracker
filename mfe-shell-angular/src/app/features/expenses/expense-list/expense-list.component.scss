@@ -1,11 +1,17 @@
 $color-active: #7D45FF;
 
+html,
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 :host {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    // justify-content: space-between;
-    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
 
     .create-expense-button {
         margin-top: 5px;
@@ -16,7 +22,17 @@ $color-active: #7D45FF;
     }
 
     .expense-list {
-        width: 60%;
+        padding: 40px;
+        flex: 1 1 auto;
+
+        .no-data {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-size: 25px;
+            padding-bottom: 40px;
+        }
     }
 
 }

@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableDataSource } from '@angular/material/table';
 import { ExpenseList, FilterParams } from '../../../interface/expense.interface';
 import { CommonModule } from '@angular/common';
-import { months } from '../../../strings/object';
+import { months } from '../../../common/common-list';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
@@ -45,6 +45,11 @@ export class FilterComponent implements OnInit {
     this.handleYearSelected();
     this.initFilter();
     this.handleFilter();
+    this.emitDefaultList();
+  }
+
+  emitDefaultList(){ //Send Default Value to Comp 
+    this.filterChange.emit(this.initFilterState);
   }
 
   onSearch(event: Event) {

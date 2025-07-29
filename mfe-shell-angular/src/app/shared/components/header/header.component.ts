@@ -5,11 +5,12 @@ import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsModalComponent } from '../../../modal/settings-modal/settings-modal.component';
 import { DialogActionEnum, DialogData } from '../../../interface/modal.interface';
+import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatIcon],
+  imports: [MatButtonModule, MatIcon, BreadcrumbComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

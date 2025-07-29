@@ -3,7 +3,7 @@ import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { UserSettings } from '../../interface/settings.interface';
-import { DateFormatValue } from '../../strings/login.strings';
+import { DateFormatValue } from '../../common/login.strings';
 
 @Injectable({
   providedIn: 'root'

@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsModalComponent } from '../../../modal/settings-modal/settings-modal.component';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { navItems } from '../../../common/common-list';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,13 +25,6 @@ export class SidebarComponent implements OnInit {
   collapsed = false;
   dialogActionEnum = DialogActionEnum
   faArrowRightFromBracket = faArrowRightFromBracket
-  navItems = [
-    { icon: 'dashboard', label: 'Dashboard' },
-    { icon: 'local_atm', label: 'Expenses' },
-    { icon: 'accessibility_new', label: 'User' },
-    { icon: 'insert_chart_outlined', label: 'Report' },
-    { icon: 'message', label: 'Messages' }
-  ];
 
   activeIndex = 0;
 
@@ -63,5 +57,9 @@ export class SidebarComponent implements OnInit {
 
   get toggleIcon(){
     return this.collapsed ? "chevron_right" : "chevron_left"
+  }
+  
+  get navItems(){
+    return navItems;
   }
 }

@@ -9,7 +9,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     {
-        path: 'home', loadComponent: () => import("./shared/components/sidebar/sidebar.component").then(m => m.SidebarComponent),
+        path: 'dashboard', loadComponent: () => import("./shared/components/sidebar/sidebar.component").then(m => m.SidebarComponent),
         canActivate: [authGuard]
     },
 ];

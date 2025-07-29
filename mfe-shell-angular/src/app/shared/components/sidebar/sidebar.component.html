@@ -31,7 +31,7 @@
   </mat-sidenav>
 
   <!-- Content -->
-  <mat-sidenav-content>
+  <mat-sidenav-content [class.collapsed]="collapsed">
     <app-expense-list></app-expense-list>
   </mat-sidenav-content>
 </mat-sidenav-container>

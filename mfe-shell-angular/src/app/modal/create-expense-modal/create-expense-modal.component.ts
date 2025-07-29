@@ -14,7 +14,7 @@ import { CustomDateAdapter } from '../../shared/custom-date';
 import { createExpense, editExpense, PaidMethodDropdownList, PaidMethodEnum } from '../../interface/expense.interface';
 import { DecimalPipe } from '@angular/common';;
 import { MatSelect } from '@angular/material/select';
-import { PaidMethodStringValue } from '../../strings/login.strings';
+import { PaidMethodStringValue } from '../../common/login.strings';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   parse: {

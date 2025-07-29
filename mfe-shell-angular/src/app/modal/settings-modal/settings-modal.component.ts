@@ -5,7 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { SettingsServiceService } from '../../services/SettingsService/settings-service.service';
-import { CurrencyStringValue, DateFormatStringValue, DateFormatValue, LocalStorageKey } from '../../strings/login.strings';
+import { CurrencyStringValue, DateFormatStringValue, DateFormatValue, LocalStorageKey } from '../../common/login.strings';
 import { CurrencyEnum, CurrencyDropdownList, DateFormatDropdownList } from '../../interface/settings.interface';
 import { UserServiceService } from '../../services/UserService/user-service.service';
 import { AsyncPipe } from '@angular/common';
