@@ -38,7 +38,6 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   readonly settingsService = inject(SettingsServiceService)
   readonly localStorageService = inject(LocalStorageService)
   readonly dialog = inject(MatDialog)
-  // readonly expenseService = inject(ExpenseService)
   readonly renderer = inject(Renderer2)
   readonly authStore = inject(AuthStore)
 

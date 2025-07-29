@@ -29,10 +29,20 @@ export class ExpenseService {
 
         const constraints: QueryConstraint[] = [where('userId', '==', user.uid)];
 
-        // Need Improve this b/c Date on Firebase is Timestamp
-        // if (month !== undefined) constraints.push(where('month', '==', month));
-        // if (year !== undefined) constraints.push(where('year', '==', year));
-        // if (searchTerm) constraints.push(where('name', '>=', searchTerm), where('name', '<=', searchTerm + '\uf8ff'));
+        if (month !== undefined && year !== undefined) {
+          const startDate = new Date(year, month - 1, 1) // First Month
+          const endDate = new Date(year, month, 0, 23, 59, 59, 999);
+
+          constraints.push(where('date', '>=', startDate));
+          constraints.push(where('date', '<=', endDate));
+        }
+
+        if (searchTerm) {
+          constraints.push(
+            where('description', '>=', searchTerm),
+            where('description', '<=', searchTerm + '\uf8ff')
+          );
+        }
 
         const userExpensesQuery = query(this.expensesCollection, ...constraints);
 
