@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { CreateExpenseModalComponent } from '../../../modal/create-expense-modal/create-expense-modal.component';
 import { DialogActionEnum, DialogData } from '../../../interface/modal.interface';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { BaseModalComponent } from '../../../modal/base-modal/base-modal.component';
 import { UserServiceService } from '../../../services/UserService/user-service.service';
 import { CurrencyEnum } from '../../../interface/settings.interface';
@@ -38,6 +38,9 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   readonly settingsService = inject(SettingsServiceService)
   readonly localStorageService = inject(LocalStorageService)
   readonly dialog = inject(MatDialog)
+  // readonly expenseService = inject(ExpenseService)
+  readonly renderer = inject(Renderer2)
+  readonly authStore = inject(AuthStore)
 
   displayedColumns: string[] = ['date', 'description', 'purpose', 'paid', 'for', 'amount', 'action'];
 
@@ -48,20 +51,20 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   dialogActionEnum = DialogActionEnum
   paidMethodEnum = PaidMethodEnum
 
-  constructor(private expenseService: ExpenseService, private renderer: Renderer2, private authStore: AuthStore) { }
+  constructor(private expenseService: ExpenseService) { }
 
   ngOnInit() {
     this.getToken();
-    this.getExpenseList();
     this.initDateFormat();
   }
 
-  getExpenseList() {
-    // this.expenseService.getExpenseList().pipe(takeUntil(this.destroy$)).subscribe((data: ExpenseList[]) => {
-    //   this.dataSource.data = data
-    // }, (error) => {
-    //   console.log(error)
-    // })
+  getExpenseList(params: FilterParams) {
+    this.expenseService.getExpenseList(params).pipe(takeUntil(this.destroy$)).subscribe((data: ExpenseList[]) => {
+      this.dataSource.data = data
+      // console.log(data)
+    }, (error) => {
+      console.log(error)
+    })
   }
 
   getToken() {
@@ -93,10 +96,10 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   getListAfterSuccessCallApi(dialogRef: MatDialogRef<CreateExpenseModalComponent | BaseModalComponent>) {
-    dialogRef.afterClosed().subscribe((res: DialogData) => {
-      if (!res.isSuccess) return
-      this.getExpenseList()
-    })
+    // dialogRef.afterClosed().subscribe((res: DialogData) => {
+    //   if (!res.isSuccess) return
+    //   this.getExpenseList()
+    // })
   }
 
   openDeleteConfirmModal(id: string) {
@@ -128,6 +131,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
   onFitlerChanged(params: FilterParams){
     console.log(params)
+    this.getExpenseList(params);
   }
 
   ngOnDestroy(): void {

@@ -45,6 +45,11 @@ export class FilterComponent implements OnInit {
     this.handleYearSelected();
     this.initFilter();
     this.handleFilter();
+    this.emitDefaultList();
+  }
+
+  emitDefaultList(){ //Send Default Value to Comp 
+    this.filterChange.emit(this.initFilterState);
   }
 
   onSearch(event: Event) {
