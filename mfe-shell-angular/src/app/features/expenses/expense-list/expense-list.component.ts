@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { FooterComponent } from "../../../shared/components/footer/footer.component";
-import { editExpense, ExpenseList, FilterParams, PaidMethodEnum } from '../../../interface/expense.interface';
+import { EditExpense, ExpenseList, FilterParams, PaidMethodEnum } from '../../../interface/expense.interface';
 import { ExpenseService } from '../../../services/ExpenseService/expense.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -50,6 +50,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   dialogActionEnum = DialogActionEnum
   paidMethodEnum = PaidMethodEnum
 
+  params!: FilterParams
+
   constructor(private expenseService: ExpenseService) { }
 
   ngOnInit() {
@@ -60,7 +62,6 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   getExpenseList(params: FilterParams) {
     this.expenseService.getExpenseList(params).pipe(takeUntil(this.destroy$)).subscribe((data: ExpenseList[]) => {
       this.dataSource.data = data
-      // console.log(data)
     }, (error) => {
       console.log(error)
     })
@@ -83,7 +84,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this.getListAfterSuccessCallApi(dialogRef)
   }
 
-  openEditExpenseModal(data: editExpense) {
+  openEditExpenseModal(data: EditExpense) {
     const dialogRef = this.dialog.open(CreateExpenseModalComponent, {
       height: '400px',
       width: '600px',
@@ -95,10 +96,10 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   getListAfterSuccessCallApi(dialogRef: MatDialogRef<CreateExpenseModalComponent | BaseModalComponent>) {
-    // dialogRef.afterClosed().subscribe((res: DialogData) => {
-    //   if (!res.isSuccess) return
-    //   this.getExpenseList()
-    // })
+    dialogRef.afterClosed().subscribe((res: DialogData) => {
+      if (!res.isSuccess) return
+      this.getExpenseList(this.params)
+    })
   }
 
   openDeleteConfirmModal(id: string) {
@@ -129,7 +130,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   onFitlerChanged(params: FilterParams){
-    console.log(params)
+    this.params = params
     this.getExpenseList(params);
   }
 

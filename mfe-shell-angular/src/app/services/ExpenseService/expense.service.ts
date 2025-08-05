@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
-import { collection, collectionData, Firestore, query, QueryConstraint, where } from '@angular/fire/firestore';
-import { Observable, switchMap, take } from 'rxjs';
-import { ExpenseList, FilterParams } from '../../interface/expense.interface';
+import { addDoc, collection, collectionData, doc, DocumentReference, Firestore, getDoc, query, QueryConstraint, updateDoc, where } from '@angular/fire/firestore';
+import { from, Observable, switchMap, take } from 'rxjs';
+import { CreateExpense, ExpenseList, FilterParams } from '../../interface/expense.interface';
 
 
 @Injectable({
@@ -52,19 +52,34 @@ export class ExpenseService {
   }
 
 
-  // createExpense(data: Omit<createExpense, 'userId'>) {
-  //   const userId = this.auth.currentUser?.uid;
-  //   if (!userId) throw new Error('User is not logged in');
+  createExpense(data: Omit<CreateExpense, 'userId'>): Observable<DocumentReference> {
+    return this.user$.pipe(
+      take(1),
+      switchMap(user => {
+        if (!user) {
+          throw new Error('User is not logged in');
+        }
 
-  //   const expenseWithUser = { ...data, userId };
-  //   return from(addDoc(this.expensesCollection, expenseWithUser));
-  // }
+        const expenseWithUser = { ...data, userId: user.uid };
+        return from(addDoc(this.expensesCollection, expenseWithUser));
+      })
+    );
+  }
 
 
-  // editExpense(id: string, data: Omit<createExpense, 'userId'>) {
-  //   const expenseRef = doc(this.firestore, `expenses/${id}`);
-  //   return from(updateDoc(expenseRef, data));
-  // }
+
+  editExpense(id: string, data: Omit<CreateExpense, 'userId' | 'createdAt'>) {
+    const expenseRef = doc(this.firestore, `expenses/${id}`);
+    // return from(updateDoc(expenseRef, data));
+    return from(getDoc(expenseRef)).pipe(
+      switchMap(snapshot => {
+        if (!snapshot.exists()) {
+          throw new Error('Document does not exist');
+        }
+        return updateDoc(expenseRef, data);
+      })
+    )
+  }
 
 
   // deleteExpense(id: string) {

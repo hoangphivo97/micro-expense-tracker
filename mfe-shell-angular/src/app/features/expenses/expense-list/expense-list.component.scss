@@ -1,4 +1,6 @@
 $color-active: #7D45FF;
+$color-border: #4B1FA6;
+$purple-bland-8: rgba($color-active, 0.08);
 
 html,
 body {
@@ -13,17 +15,32 @@ body {
     height: 100%;
     box-sizing: border-box;
 
-    .create-expense-button {
-        margin-top: 5px;
-    }
-
     .button:hover {
         cursor: pointer;
     }
 
     .expense-list {
-        padding: 40px;
+        padding: 0px 40px 60px 40px;
         flex: 1 1 auto;
+
+        .create-section{
+            display: flex;
+            flex-direction: row-reverse;
+
+            .create-btn{
+                border: none;
+                padding: 20px;
+                border-radius: 35px;
+                font-size: 1.2rem;
+                color: $color-active;
+                background-color: $purple-bland-8;
+
+                &:hover{
+                    color: #FFF;
+                    background-color: $color-active;
+                }
+            }
+        }
 
         .no-data {
             display: flex;
