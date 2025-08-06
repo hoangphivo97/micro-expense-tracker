@@ -1,10 +1,10 @@
-import { createExpense, editExpense } from "./expense.interface";
+import { EditExpense } from "./expense.interface";
 
 export interface DialogData {
     title: string;
     action: DialogActionEnum;
     isSuccess: boolean;
-    data?: editExpense | string;
+    data?: EditExpense | string;
     content?: string;
 }
 

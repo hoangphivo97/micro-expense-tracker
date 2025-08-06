@@ -1,5 +1,5 @@
 <mat-dialog-content>
-    <h2 class="dialog-title" mat-dialog-title>{{data.title}}</h2>
+    <h2 class="dialog-title" mat-dialog-title>{{dialogData.title}}</h2>
 
     <form class="dialog-content" [formGroup]="createExpenseForm">
         <mat-form-field class="field-fixed-width">
@@ -42,7 +42,7 @@
 
     <div class="button-wrap">
         <button mat-button (click)="onCancel()">Cancel</button>
-        <button mat-button (click)="onSave()">Save</button>
+        <button mat-button [disabled]="!ExpenseFormIsValid" (click)="onSave()">Save</button>
     </div>
 
 </mat-dialog-content>

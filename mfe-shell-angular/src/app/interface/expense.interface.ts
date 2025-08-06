@@ -1,13 +1,15 @@
+import { Timestamp } from "@angular/fire/firestore";
 import { DropdownList } from "./settings.interface";
 
 export interface ExpenseList {
     id: string;
-    date: string;
+    date: Date | Timestamp;
     description: string;
     purpose: string;
     paid: PaidMethodEnum;
     for?: string;
     amount: number;
+    createdAt: Date;
     // budget: number;
     // remainBalance: number;
 }
@@ -18,11 +20,11 @@ export enum PaidMethodEnum {
     BANK_TRANSFER
 }
 
-export interface createExpense extends Omit<ExpenseList, "id"> {
+export interface CreateExpense extends Omit<ExpenseList, "id"> {
 
 }
 
-export interface editExpense extends ExpenseList {
+export interface EditExpense extends ExpenseList {
 
 }
 
