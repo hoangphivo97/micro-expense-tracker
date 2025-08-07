@@ -3,7 +3,6 @@ import { LoginComponent } from './features/expenses/login/login.component';
 
 import { NgModule } from '@angular/core';
 import { authGuard } from './services/RouteGuard/auth.guard';
-import { ExpenseListComponent } from './features/expenses/expense-list/expense-list.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -12,6 +11,10 @@ export const routes: Routes = [
         path: 'dashboard', loadComponent: () => import("./shared/components/sidebar/sidebar.component").then(m => m.SidebarComponent),
         canActivate: [authGuard]
     },
+    {
+        path: 'report', loadComponent: () => import("./features/expenses/report/report.component").then(m => m.ReportComponent),
+        canActivate: [authGuard]
+    }
 ];
 
 @NgModule({

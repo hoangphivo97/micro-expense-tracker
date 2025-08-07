@@ -13,8 +13,8 @@
         <h2 class="label" [class.hide]="collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
       </div>
       <ul class="ls-links">
-        <li *ngFor="let item of navItems; let i = index" (click)="setActive(i)">
-          <div class="ls-nav" [class.active]="i === activeIndex">
+        <li *ngFor="let item of navItems" (click)="setActive(item.key)">
+          <div class="ls-nav" [class.active]="item.key === activeItem">
             <mat-icon>{{ item.icon }}</mat-icon>
             <a class="label" [class.hide]="collapsed">{{ item.label }}</a>
           </div>

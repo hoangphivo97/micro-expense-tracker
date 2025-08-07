@@ -10,6 +10,7 @@ import { SettingsModalComponent } from '../../../modal/settings-modal/settings-m
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { navItems } from '../../../common/common-list';
+import { NavItem } from '../../../interface/expense.interface';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,7 +27,7 @@ export class SidebarComponent implements OnInit {
   dialogActionEnum = DialogActionEnum
   faArrowRightFromBracket = faArrowRightFromBracket
 
-  activeIndex = 0;
+  activeItem: NavItem = NavItem.DASHBOARD;
 
   ngOnInit(): void {
     
@@ -51,8 +52,8 @@ export class SidebarComponent implements OnInit {
     this.collapsed = !this.collapsed;
   }
 
-  setActive(index: number) {
-    this.activeIndex = index;
+  setActive(itemKey: NavItem) {
+    this.activeItem = itemKey;
   }
 
   get toggleIcon(){

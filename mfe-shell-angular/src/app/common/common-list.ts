@@ -1,3 +1,5 @@
+import { NavItem } from "../interface/expense.interface";
+
 export const months = [
     { value: 1, label: 'January' },
     { value: 2, label: 'February' },
@@ -14,9 +16,9 @@ export const months = [
 ];
 
 export const navItems = [
-    { icon: 'dashboard', label: 'Dashboard' },
-    { icon: 'local_atm', label: 'Expenses' },
-    { icon: 'accessibility_new', label: 'User' },
-    { icon: 'insert_chart_outlined', label: 'Report' },
-    { icon: 'message', label: 'Messages' }
+    { icon: 'dashboard', label: 'Dashboard' , route: "/dashboard", key: NavItem.DASHBOARD},
+    { icon: 'local_atm', label: 'Expenses', key: NavItem.EXPENSE },
+    { icon: 'accessibility_new', label: 'User', key: NavItem.USER },
+    { icon: 'insert_chart_outlined', label: 'Report', route: "/report", key: NavItem.REPORT },
+    { icon: 'message', label: 'Messages' , key: NavItem.MESSAGE}
 ];
