@@ -72,10 +72,6 @@ export class SidebarComponent implements OnInit {
     this.router.navigateByUrl(itemKey)
   }
 
-  get toggleIcon() {
-    return this.collapsed ? "chevron_right" : "chevron_left"
-  }
-
   get navItems() {
     return navItems;
   }

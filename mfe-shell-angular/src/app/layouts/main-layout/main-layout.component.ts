@@ -3,11 +3,12 @@ import { SidebarComponent } from "../../shared/components/sidebar/sidebar.compon
 import { RouterModule } from "@angular/router";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AuthService } from '../../services/RouteGuard/auth.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [SidebarComponent, RouterModule, MatSidenavModule],
+  imports: [SidebarComponent, RouterModule, MatSidenavModule, MatIcon],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
 })
@@ -22,5 +23,9 @@ export class MainLayoutComponent {
 
   toggleSidebar() {
     this.collapsed = !this.collapsed;
+  }
+
+  get toggleIcon() {
+    return this.collapsed ? "chevron_right" : "chevron_left"
   }
 }
