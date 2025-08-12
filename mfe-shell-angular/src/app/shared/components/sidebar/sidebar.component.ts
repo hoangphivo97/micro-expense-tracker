@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit {
   @Output() logout = new EventEmitter<void>();
   @Input() collapsed = false;
 
-  user$ = this.authService.user$;
+  user$ = this.authService.userObs$;
   dialogActionEnum = DialogActionEnum
   faArrowRightFromBracket = faArrowRightFromBracket
 

@@ -1,32 +1,26 @@
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
+import { filter, map, Observable, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class authGuard implements CanActivate {
-  private router: Router = inject(Router);
+  private router = inject(Router);
+  private auth = inject(AuthService);
 
-  // isUserAuthenticated(): Observable<boolean> {
-  //   return this.user$.pipe(
-  //     take(1), // Only take first state
-  //     map(user => !!user || !!localStorage.getItem('token'))
-  //   );
-  // }
-
-  // canActivate(): Observable<boolean> {
-  //   return this.isUserAuthenticated();
-  // }
-
-  canActivate(): boolean {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-
-    if (token) {
-      return true;
-    }
-
-    this.router.navigate(['/login']);
-    return false;
+  canActivate(): Observable<boolean | UrlTree> {
+    return this.auth.isLoading$.pipe(
+      // 1) Chờ đến khi loading = false
+      filter(loading => !loading),
+      take(1),
+      // 2) Có user -> true; không có -> UrlTree tới /auth/login
+      map(() => {
+        const user = this.auth.currentUser;
+        return user ? true : this.router.createUrlTree(['/auth/login']);
+      })
+    );
   }
 }

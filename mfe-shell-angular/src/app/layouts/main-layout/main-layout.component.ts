@@ -17,7 +17,7 @@ export class MainLayoutComponent {
 
 
   logout() {
-    this.authService.logout();
+    this.authService.signOut();
   }
 
   toggleSidebar() {
