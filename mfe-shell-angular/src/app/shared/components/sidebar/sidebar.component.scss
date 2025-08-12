@@ -6,101 +6,73 @@ $red-bland-8: rgba(220, 38, 38, 0.08);
 $purple-bland-8: rgba($color-active, 0.08);
 
 
-.sidenav-container {
-  height: 100vh;
-  position: relative;
-  font-size: 1.4rem;
-}
+.sidebar-section {
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  padding-top: 25px;
 
-.app-sidenav {
-  width: 260px;
-  transition: width 0.3s ease;
+  .label {
+    display: inline-block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+    transform: translateX(0);
+    white-space: nowrap;
 
-  &.collapsed {
-    width: 80px;
+    &.hide {
+      opacity: 0;
+      transform: translateX(-10px);
+      pointer-events: none;
+    }
   }
 
-  ::ng-deep .mat-icon {
-    overflow: visible !important;
-  }
-
-  .sidebar-section {
-    height: 100%;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    overflow: clip;
-    padding-top: 25px;
-
-    .label {
-      display: inline-block;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      opacity: 1;
-      transform: translateX(0);
-      white-space: nowrap;
-
-      &.hide {
-        opacity: 0;
-        transform: translateX(-10px);
-        pointer-events: none;
-      }
+  .logout {
+    &-section {
+      margin-top: auto;
+      text-align: left;
     }
 
-    .logout {
-      &-section {
-        margin-top: auto;
-        text-align: left;
+    &-btn {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      padding: 10px;
+      border: none;
+      background: none;
+      color: $text-color-inactive;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      z-index: 0;
+      width: 100%;
+      transition: color 0.3s ease;
+
+      label {
+        cursor: pointer;
       }
 
-      &-btn {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        padding: 10px;
-        border: none;
-        background: none;
-        color: $text-color-inactive;
-        font-weight: 500;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-        z-index: 0;
-        width: 100%;
+      fa-icon {
+        color: $icon-color-inactive;
+        z-index: 1;
         transition: color 0.3s ease;
+      }
 
-        label {
-          cursor: pointer;
-        }
+      &:hover {
+        color: $color-danger;
+        background-color: $red-bland-8;
 
         fa-icon {
-          color: $icon-color-inactive;
-          z-index: 1;
-          transition: color 0.3s ease;
-        }
-
-        &:hover {
           color: $color-danger;
-          background-color: $red-bland-8;
-
-          fa-icon {
-            color: $color-danger;
-          }
-
-          animation: shake 0.3s ease-in-out;
         }
+
+        animation: shake 0.3s ease-in-out;
       }
     }
-
   }
-}
 
-mat-sidenav-content {
-  transition: margin-left 0.3s ease;
-  margin-left: 260px !important;
-
-  &.collapsed {
-    margin-left: 80px !important; 
-  }
 }
 
 .account {
@@ -174,102 +146,5 @@ mat-sidenav-content {
         }
       }
     }
-  }
-}
-
-
-.collapse-btn {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  padding: 0;
-  transition: left 0.3s ease;
-  left: 245px;
-
-  &.collapsed {
-    left: 65px;
-  }
-}
-
-
-.collapse-btn:hover .collapse-icon {
-  animation: raceMove 0.6s ease-in-out;
-}
-
-.collapsed:hover .collapse-icon {
-  animation: raceBack 0.6s ease-in-out;
-}
-
-
-
-@keyframes raceMove {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  40% {
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-
-  60% {
-    transform: translateX(50px);
-    opacity: 0;
-  }
-
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes raceBack {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  40% {
-    transform: translateX(50px);
-    opacity: 0;
-  }
-
-  60% {
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes shake {
-  0% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-2px);
-  }
-
-  50% {
-    transform: translateX(2px);
-  }
-
-  75% {
-    transform: translateX(-1px);
-  }
-
-  100% {
-    transform: translateX(0);
   }
 }

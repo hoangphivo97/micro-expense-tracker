@@ -1,0 +1,29 @@
+:host {
+    background-color: #F9f9fc;
+
+    .header-row{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        .filter{
+            padding-right: 30px;
+        }
+    }
+    
+    .report-page {
+
+        .summarize-section {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px 40px 40px;
+
+            div{
+                background-color: #FFF;
+                padding: 20px;
+                border: 1px solid #dbdddd;
+            }
+        }
+    }
+}
