@@ -13,10 +13,18 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="outline" class="custom-select search-input">
-        <mat-label>Search</mat-label>
-        <input matInput type="text" placeholder="Search" formControlName="searchTerm" />
-    </mat-form-field>
+    @if(!isReportPage){
+        <mat-form-field appearance="outline" class="custom-select search-input">
+            <mat-label>Search</mat-label>
+            <input matInput type="text" placeholder="Search" formControlName="searchTerm" />
+        </mat-form-field>
+    } @else{
+        <button class="export-btn">
+            <mat-icon>get_app</mat-icon>
+            <span>Export</span>
+        </button>
+    }
+
     @if (hasUserFiltered) {
     <button class="reset-btn" matTooltip="Reset filters" (click)="resetFilter()">
         <mat-icon class="rotate-icon">rotate_left</mat-icon>

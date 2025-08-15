@@ -5,20 +5,36 @@
 <div class="report-page">
     <section class="summarize-section">
         <div class="total-expense">
-            <p>Total Expense</p>
-            <p>$3500</p>
+            <mat-icon>account_balance_wallet</mat-icon>
+            <div class="child">
+                <p>Total Expense</p>
+                <p>$3500</p>
+            </div>
         </div>
         <div class="num-transactions">
-            <p>Transactions</p>
-            <p>120</p>
+            <mat-icon>swap_horiz</mat-icon>
+            <div class="child">
+                <p>Transactions</p>
+                <p>120</p>
+            </div>
         </div>
         <div class="max-expense">
-            <p>Max Expense</p>
-            <p>$420</p>
+            <mat-icon> attach_money</mat-icon>
+            <div class="child">
+                <p>Max Expense</p>
+                <p>$420</p>
+            </div>
         </div>
         <div class="change">
-            <p>Change</p>
-            <p>+15,8%</p>
+            @if(true){
+            <mat-icon>trending_up</mat-icon>
+            } @else{
+            <mat-icon>trending_up</mat-icon>
+            }
+            <div class="child">
+                <p>Change</p>
+                <p>+15,8%</p>
+            </div>
         </div>
 
     </section>

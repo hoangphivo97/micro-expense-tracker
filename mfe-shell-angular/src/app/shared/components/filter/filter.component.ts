@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
 import { MatSelect } from "@angular/material/select";
 import { MatOption } from '@angular/material/select';
 import { MatInputModule } from "@angular/material/input";
@@ -11,6 +11,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './filter.component.scss'
 })
 export class FilterComponent implements OnInit {
+  private router = inject(Router)
   inputDataSource = input<MatTableDataSource<ExpenseList>>()
   currMonth: number = new Date().getMonth() + 1;
   currYear: number = new Date().getFullYear();
@@ -94,4 +96,7 @@ export class FilterComponent implements OnInit {
     return JSON.stringify(this.filterForm.value) !== JSON.stringify(this.initFilterState);
   }
 
+    get isReportPage(): boolean{
+    return this.router.url.includes('/report')
+  }
 }
