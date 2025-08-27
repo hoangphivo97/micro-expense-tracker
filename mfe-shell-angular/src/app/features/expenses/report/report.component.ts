@@ -55,7 +55,7 @@ export class ReportComponent{
   );
 
   lineOpts$ = this.month$.pipe(map(makeLineChart));
-  pieOpts$ = this.month$.pipe(map(list => makePieChart(list, { title: 'By Category' , colors: mainColorPieChart})));
+  pieOpts$ = this.month$.pipe(map(list => makePieChart(list, { title: 'Expense By Category' , colors: mainColorPieChart})));
   barOpts$ = this.year$.pipe(
     map(list => makeMonthlyColumnChart(list, this.filter$.value.year as number, {
       title: 'Monthly Expenses',

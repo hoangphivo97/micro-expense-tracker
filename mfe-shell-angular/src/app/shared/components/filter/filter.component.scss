@@ -7,12 +7,18 @@ $color-active: #7D45FF;
         background-color: transparent;
         margin-top: 10px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
 
         .custom-select {
-            width: 30%;
+
+            &.cs-width-30{
+                width: 30%;
+            }
+
+            &.cs-width-40{
+                width: 40%;
+            }
 
             ::ng-deep .mat-mdc-form-field-subscript-wrapper,
             .mat-mdc-form-field-bottom-align::before {
@@ -28,21 +34,6 @@ $color-active: #7D45FF;
 
             .rotate-icon {
                 transition: transform 0.5s ease;
-            }
-        }
-
-        .export-btn{
-            width: 120px;
-            height: 56px;
-            display: flex;
-            align-items: center;
-            color: $color-active;
-            background-color: transparent;
-            border: 1px solid $icon-color-inactive;
-            gap: 10px;
-
-            span{
-             font-size: 1rem;   
             }
         }
 

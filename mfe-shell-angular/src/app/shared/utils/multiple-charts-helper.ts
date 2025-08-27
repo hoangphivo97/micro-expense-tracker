@@ -1,7 +1,7 @@
 import {
-    ApexAxisChartSeries, ApexNonAxisChartSeries,
-    ApexChart, ApexStroke, ApexXAxis, ApexTitleSubtitle,
-    ChartType
+  ApexAxisChartSeries, ApexNonAxisChartSeries,
+  ApexChart, ApexStroke, ApexXAxis, ApexTitleSubtitle,
+  ChartType
 } from 'ng-apexcharts';
 import { ExpenseList } from '../../interface/expense.interface';
 import { AxisChartOptions, NonAxisChartOptions } from '../../interface/chart.interface';
@@ -10,36 +10,37 @@ import { tsToDate, tsToMs } from '../custom-date';
 import { Timestamp } from '@angular/fire/firestore';
 
 export type LineOpts = {
-    series: ApexAxisChartSeries;
-    chart: ApexChart;
-    stroke?: ApexStroke;
-    xaxis?: ApexXAxis;
-    title?: ApexTitleSubtitle;
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  stroke?: ApexStroke;
+  xaxis?: ApexXAxis;
+  title?: ApexTitleSubtitle;
 }
 
 function groupByCategory(list: ExpenseList[]) {
-    const b: Record<string, number> = {};
-    for (const e of list) {
-        const key = (e.purpose || 'Others').trim();
-        b[key] = (b[key] || 0) + (Number(e.amount) || 0);
-    }
-    const labels = Object.keys(b);
-    const series = labels.map(k => b[k]);
-    return { labels, series };
+  const b: Record<string, number> = {};
+  for (const e of list) {
+    const key = (e.purpose || 'Others').trim();
+    b[key] = (b[key] || 0) + (Number(e.amount) || 0);
+  }
+  const labels = Object.keys(b);
+  const series = labels.map(k => b[k]);
+  return { labels, series };
 }
 
 export function makeLineChart(expenses: ExpenseList[]): Partial<AxisChartOptions> {
-    const categories = expenses.map(e =>
-        formatDate(tsToDate(e.date as Timestamp) as Date, 'MMM dd', 'en-US')
-    );
-    const data = expenses.map(e => e.amount);
+  const categories = expenses.map(e =>
+    formatDate(tsToDate(e.date as Timestamp) as Date, 'MMM dd', 'en-US')
+  );
+  const data = expenses.map(e => e.amount);
 
-    return {
-        chart: { type: 'line', height: 350, width: '100%' },
-        stroke: { curve: 'smooth' },
-        xaxis: { categories },
-        series: [{ name: 'Expenses', data, color: '#7D45FF' }]
-    };
+  return {
+    title: {text:"Expenses Over Time"},
+    chart: { type: 'line', height: 350, width: '100%' },
+    stroke: { curve: 'smooth' },
+    xaxis: { categories },
+    series: [{ name: 'Expenses', data, color: '#7D45FF' }]
+  };
 }
 
 export function makeMonthlyColumnChart(
@@ -54,7 +55,7 @@ export function makeMonthlyColumnChart(
   const monthly = Array.from({ length: 12 }, () => 0);
 
   for (const e of expenses) {
-    const ms = tsToMs( e.date as Timestamp);
+    const ms = tsToMs(e.date as Timestamp);
     if (!Number.isFinite(ms)) continue;
     const d = new Date(ms);
     if (d.getFullYear() !== year) continue;        // chỉ tính trong năm cần hiển thị
@@ -63,14 +64,14 @@ export function makeMonthlyColumnChart(
   }
 
   const categories = Array.from({ length: 12 }, (_, i) =>
-    new Date(year, i, 1).toLocaleString(undefined, { month: 'short' }) // Jan..Dec
+    new Date(year, i, 1).toLocaleString('en-US', { month: 'short' }) // Jan..Dec
   );
 
   return {
     chart: { type: 'bar' as ChartType, height, width: '100%' },
     title: opts?.title ? { text: opts.title } : undefined,
     xaxis: { categories },
-    series: [{ name: seriesName, data: monthly , color: "#7D45FF"}],
+    series: [{ name: seriesName, data: monthly, color: "#7D45FF" }],
     plotOptions: {
       bar: {
         horizontal: false,          // column chart (vertical)
@@ -89,7 +90,7 @@ export function makePieChart(
 ): Partial<NonAxisChartOptions> {
   const { labels, series } = groupByCategory(expenses);
   const height = opts?.height ?? 300;
-  const donut  = opts?.donut ?? true; // default donut
+  const donut = opts?.donut ?? true; // default donut
 
   return {
     chart: { type: (donut ? 'donut' : 'pie') as ChartType, height, width: '100%' },
