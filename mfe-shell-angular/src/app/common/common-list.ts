@@ -22,3 +22,5 @@ export const navItems = [
     { icon: 'insert_chart_outlined', label: 'Report', route: "/report", key: NavItem.REPORT },
     { icon: 'message', label: 'Messages' , key: NavItem.MESSAGE}
 ];
+
+export const mainColorPieChart : string[] = ['#7D45FF', "#A27BE7", "#4666D4", "#35B4C0"]

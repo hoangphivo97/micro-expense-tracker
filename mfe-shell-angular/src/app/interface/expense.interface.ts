@@ -9,7 +9,7 @@ export interface ExpenseList {
     paid: PaidMethodEnum;
     for?: string;
     amount: number;
-    createdAt: Date;
+    createdAt: Date | Timestamp;
     // budget: number;
     // remainBalance: number;
 }

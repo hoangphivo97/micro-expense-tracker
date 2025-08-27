@@ -20,7 +20,7 @@ export class ExpenseService {
   ) { }
 
 
-  getExpenseList(params: FilterParams): Observable<ExpenseList[]> {
+  getExpenseList(params: Partial<FilterParams>): Observable<ExpenseList[]> {
     const { month, year, searchTerm } = params;
     return this.user$.pipe(
       take(1),

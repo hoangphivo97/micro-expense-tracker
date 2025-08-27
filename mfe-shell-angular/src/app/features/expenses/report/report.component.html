@@ -1,49 +1,66 @@
 <section class="header-row">
     <app-header></app-header>
-    <app-filter class="filter"></app-filter>
+    <app-filter class="filter" (filterChange)="onFitlerChanged($event)"></app-filter>
 </section>
 <div class="report-page">
     <section class="summarize-section">
+        @if(kpis$ | async; as k){
         <div class="total-expense">
             <mat-icon>account_balance_wallet</mat-icon>
             <div class="child">
                 <p>Total Expense</p>
-                <p>$3500</p>
+                <p>{{ k.total | number:'1.0-0' }}</p>
             </div>
         </div>
         <div class="num-transactions">
             <mat-icon>swap_horiz</mat-icon>
             <div class="child">
                 <p>Transactions</p>
-                <p>120</p>
+                <p>{{ k.count }}</p>
             </div>
         </div>
         <div class="max-expense">
             <mat-icon> attach_money</mat-icon>
             <div class="child">
                 <p>Max Expense</p>
-                <p>$420</p>
+                <p>{{ k.max | number:'1.0-0' }}</p>
             </div>
         </div>
         <div class="change">
-            @if(true){
-            <mat-icon>trending_up</mat-icon>
+            @if(k.changePct && k.changePct > 0){
+            <mat-icon class="bad">trending_up</mat-icon>
             } @else{
-            <mat-icon>trending_up</mat-icon>
+            <mat-icon class="good">trending_down</mat-icon>
             }
             <div class="child">
-                <p>Change</p>
-                <p>+15,8%</p>
+                <p>Change (Last month)</p>
+                <p [ngClass]="(k.changePct && k.changePct > 0) ? 'bad' : 'good'">{{ k.changePct===null? '—' :
+                    (k.changePct | number:'1.0-1') + '%' }}</p>
             </div>
         </div>
+        }
 
     </section>
     <section class="chart">
-        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
-            [title]="chartOptions.title"></apx-chart>
-    </section>
-
-    <section class="transection-detail">
-
+        <div class="card chart-large">
+            @if(lineOpts$ | async; as line){
+            <apx-chart [series]="line.series" [chart]="line.chart" [xaxis]="line.xaxis" [stroke]="line.stroke"
+                [title]="line.title"></apx-chart>
+            }
+        </div>
+        <div class="card chart-left">
+            @if(pieOpts$ | async; as pie){
+            <apx-chart [series]="pie.series" [chart]="pie.chart" [title]="pie.title" [labels]="pie.labels"
+                [legend]="pie.legend" [dataLabels]="pie.dataLabels" [plotOptions]="pie.plotOptions"
+                [colors]="pie.colors" [tooltip]="pie.tooltip"></apx-chart>
+            }
+        </div>
+        <div class="card chart-right">
+            @if (barOpts$ | async; as bar) {
+            <apx-chart [series]="bar.series" [chart]="bar.chart" [xaxis]="bar.xaxis" [plotOptions]="bar.plotOptions"
+                [dataLabels]="bar.dataLabels" [title]="bar.title" [tooltip]="bar.tooltip">
+            </apx-chart>
+            }
+        </div>
     </section>
 </div>
