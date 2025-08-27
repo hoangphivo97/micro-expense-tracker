@@ -1,11 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider, UserCredential, signOut, FacebookAuthProvider, AuthProvider, User, onAuthStateChanged } from '@angular/fire/auth';
-import { BehaviorSubject, firstValueFrom, from, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, from, Observable, switchMap } from 'rxjs';
 import { LoginResponse } from '../../interface/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { AuthStore } from './Akita/auth.store';
 import { Router } from '@angular/router';
-import { LocalStorageService } from '../LocalStorage/local-storage.service';
 
 
 @Injectable({
@@ -16,19 +15,20 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000/auth';
   private apiGoogleUrl = 'http://localhost:3000/auth/google-login';
   private apiFacebookUrl = 'http://localhost:3000/auth/facebook-login'
-  private userSubject = new BehaviorSubject<User | undefined>(undefined);
-  user$ = this.userSubject.asObservable();
+  private user$ = new BehaviorSubject<User | null>(null);
+  private loading$ = new BehaviorSubject<boolean>(true);
 
   constructor(private http: HttpClient, private authStore: AuthStore, private router: Router) {
     onAuthStateChanged(this.auth, (user: User | null) => {
       if (user) {
-        this.userSubject.next({
+        this.user$.next({
           displayName: user.displayName,
           email: user.email
         } as User);
       } else {
-        this.userSubject.next(undefined);
+        this.user$.next(null);
       }
+      this.loading$.next(false);
     });
   }
 
@@ -62,27 +62,25 @@ export class AuthService {
     );
   }
 
-  clearAuthData() {
-    this.authStore.update({ token: null }); // Clear Akita store
-    localStorage.removeItem('token'); // Remove token from local storage
-    this.router.navigate(['/login']); // Redirect to login
+  // clearAuthData() {
+  //   this.authStore.update({ token: null }); // Clear Akita store
+  //   this.router.navigate(['/login']); // Redirect to login
+  // }
+
+  async signOut() {
+    await this.auth.signOut();
+    this.router.navigate(['/auth/login']);
   }
 
-  logout() {
-    const token = localStorage.getItem('token');
-    if (!token) return
-    const isGoogleUser = this.auth.currentUser !== null;
-
-    if (isGoogleUser) {
-      signOut(this.auth).then(() => {
-        this.clearAuthData()
-      })
-        .catch(err => console.error('Google logout failed', err))
-    } else {
-      this.clearAuthData()
-    }
+  getIdToken(forceRefresh = false) {
+    const user = this.auth.currentUser;
+    return user ? user.getIdToken(forceRefresh) : ""
   }
 
+  get isLoading$(): Observable<boolean> { return this.loading$.asObservable() };
+  get userObs$(): Observable<User | null> { return this.user$.asObservable() };
+
+  get currentUser(): User | null { return this.user$.value; }
 }
 
 

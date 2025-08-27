@@ -9,7 +9,7 @@ export interface ExpenseList {
     paid: PaidMethodEnum;
     for?: string;
     amount: number;
-    createdAt: Date;
+    createdAt: Date | Timestamp;
     // budget: number;
     // remainBalance: number;
 }
@@ -34,4 +34,12 @@ export interface FilterParams {
     searchTerm?: string;
     month?: number;
     year?: number;
+}
+
+export enum NavItem{
+    DASHBOARD = 'dashboard',
+    REPORT = 'report',
+    EXPENSE = "expense",
+    USER = "user",
+    MESSAGE = "message"
 }

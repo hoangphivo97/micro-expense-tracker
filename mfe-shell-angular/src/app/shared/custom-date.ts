@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Timestamp } from '@angular/fire/firestore';
 import { NativeDateAdapter } from '@angular/material/core';
 
 @Injectable()
@@ -19,4 +20,19 @@ export class CustomDateAdapter extends NativeDateAdapter {
     }
     return super.parse(value);
   }
+}
+
+export function tsToMs(ts: Timestamp): number {
+  if (!ts) return NaN;
+  // Firestore Timestamp instance
+  if (typeof ts.toDate === 'function') return ts.toDate().getTime();
+  // Plain object {seconds, nanoseconds}
+  if (typeof ts.seconds === 'number')
+    return ts.seconds * 1000 + Math.floor((ts.nanoseconds || 0) / 1e6);
+  return NaN;
+}
+
+export function tsToDate(ts: Timestamp): Date | null {
+  const ms = tsToMs(ts);
+  return isNaN(ms) ? null : new Date(ms);
 }

@@ -10,7 +10,7 @@ import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatIcon, BreadcrumbComponent],
+  imports: [MatButtonModule, BreadcrumbComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -23,7 +23,7 @@ export class HeaderComponent {
   dialogActionEnum = DialogActionEnum
 
   logout() {
-    this.authService.logout();
+    this.authService.signOut();
   }
 
   openSettings() {

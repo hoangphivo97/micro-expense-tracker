@@ -1,37 +1,21 @@
-<!-- Collapse Button -->
-<button mat-icon-button class="collapse-btn" [class.collapsed]="collapsed" (click)="toggleSidebar()">
-  <mat-icon class="collapse-icon">{{toggleIcon}}</mat-icon>
-</button>
-<!-- Sidebar Container -->
-<mat-sidenav-container class="sidenav-container">
-  <!-- Sidebar -->
-  <mat-sidenav #sidenav mode="side" [opened]="true" [fixedInViewport]="true" [class.collapsed]="collapsed"
-    class="app-sidenav"> <!-- [opened]="!collapsed" -->
-    <div class="sidebar-section">
-      <div class="account-section">
-        <mat-icon class="icon-size account-icon">account_circle</mat-icon>
-        <h2 class="label" [class.hide]="collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
+<!-- sidebar.component.html -->
+<div class="sidebar-section">
+  <div class="account-section">
+    <mat-icon class="icon-size account-icon">account_circle</mat-icon>
+    <h2 class="label" [class.hide]="collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
+  </div>
+  <ul class="ls-links">
+    <li *ngFor="let item of navItems" (click)="setActive(item.key)">
+      <div class="ls-nav" [class.active]="item.key === activeItem">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <a class="label" [class.hide]="collapsed">{{ item.label }}</a>
       </div>
-      <ul class="ls-links">
-        <li *ngFor="let item of navItems; let i = index" (click)="setActive(i)">
-          <div class="ls-nav" [class.active]="i === activeIndex">
-            <mat-icon>{{ item.icon }}</mat-icon>
-            <a class="label" [class.hide]="collapsed">{{ item.label }}</a>
-          </div>
-        </li>
-      </ul>
-      <div class="logout-section">
-        <button (click)="logout()" class="logout-btn"><fa-icon class="fa-solid icon-style"
-            [icon]="faArrowRightFromBracket">
-          </fa-icon>
-          <label class="label" [class.hide]="collapsed">Log Out</label></button>
-      </div>
-    </div>
-
-  </mat-sidenav>
-
-  <!-- Content -->
-  <mat-sidenav-content [class.collapsed]="collapsed">
-    <app-expense-list></app-expense-list>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </li>
+  </ul>
+  <div class="logout-section">
+    <button (click)="logout.emit()" class="logout-btn">
+      <fa-icon class="fa-solid icon-style" [icon]="faArrowRightFromBracket"></fa-icon>
+      <label class="label" [class.hide]="collapsed">Log Out</label>
+    </button>
+  </div>
+</div>

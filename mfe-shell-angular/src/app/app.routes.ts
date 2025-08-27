@@ -3,19 +3,47 @@ import { LoginComponent } from './features/expenses/login/login.component';
 
 import { NgModule } from '@angular/core';
 import { authGuard } from './services/RouteGuard/auth.guard';
-import { ExpenseListComponent } from './features/expenses/expense-list/expense-list.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginComponent },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    // Layout dành cho auth (login)
     {
-        path: 'dashboard', loadComponent: () => import("./shared/components/sidebar/sidebar.component").then(m => m.SidebarComponent),
-        canActivate: [authGuard]
+        path: 'auth',
+        component: AuthLayoutComponent,
+        children: [
+            { path: 'login', component: LoginComponent }
+        ]
     },
+    // Layout chính (có sidebar)
+    {
+        path: '',
+        component: MainLayoutComponent,
+        canActivate: [authGuard],
+        children: [
+            { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+            {
+                path: 'dashboard',
+                loadComponent: () =>
+                    import('./features/expenses/expense-list/expense-list.component').then(m => m.ExpenseListComponent)
+            },
+            {
+                path: 'report',
+                loadComponent: () =>
+                    import('./features/expenses/report/report.component').then(m => m.ReportComponent)
+            }
+        ]
+    },
+    // 404 fallback
+    {
+        path: '**',
+        redirectTo: '/dashboard'
+    }
 ];
 
+
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

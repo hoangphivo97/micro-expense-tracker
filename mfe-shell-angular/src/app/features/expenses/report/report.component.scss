@@ -1,0 +1,117 @@
+:host {
+    background-color: #F9f9fc;
+
+    .header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        .filter {
+            padding-right: 52px;
+        }
+    }
+
+    .report-page {
+
+        .summarize-section {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 40px 40px 40px;
+
+            .total-expense,
+            .num-transactions,
+            .max-expense,
+            .change {
+                background-color: #FFF;
+                padding: 20px;
+                border: 1px solid #dbdddd;
+                width: 350px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                mat-icon {
+                    color: #7D45FF;
+                    width: 50px;
+                    height: 50px;
+                    font-size: 2rem;
+
+                    &.good {
+                        color: green;
+                    }
+
+                    &.bad {
+                        color: red;
+                    }
+
+                }
+
+                
+                .child {
+                    .good {
+                        color: green;
+                    }
+
+                    .bad {
+                        color: red;
+                    }
+                }
+            }
+        }
+
+        .chart {
+            --gap: 24px;
+            padding: 0px 40px 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            /* mobile */
+            gap: var(--gap);
+            grid-auto-rows: min-content;
+
+            @media (min-width: 1024px) {
+                /* 2 hàng: 1 chart full, 2 chart chia đôi */
+                grid-template-columns: repeat(12, minmax(0, 1fr));
+            }
+
+            .card {
+                border: 1px solid var(--border, #e5e7eb);
+                border-radius: 12px;
+                background: var(--surface, #fff);
+                padding: 12px 16px;
+
+                /* NGĂN tràn chồng lên */
+                overflow: hidden;
+                position: relative;
+
+                &.chart-large {
+                    height: 380px;
+
+                    @media (min-width:1024px) {
+                        grid-column: 1 / -1;
+                    }
+                }
+
+                &.chart-left {
+                    height: 320px;
+
+                    @media (min-width:1024px) {
+                        grid-column: 1 / span 6;
+                    }
+
+                    .working{
+                        align-items: center;
+                    }
+                }
+
+                &.chart-right {
+                    height: 320px;
+
+                    @media (min-width:1024px) {
+                        grid-column: 7 / -1;
+                    }
+                }
+            }
+        }
+    }
+}
