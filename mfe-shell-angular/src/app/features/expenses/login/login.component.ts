@@ -39,21 +39,6 @@ export class LoginComponent implements OnInit {
 
   }
 
-  loginAction() {
-    const userNameValue: string = this.loginForm.value.userName;
-    const passWordValue: string = this.loginForm.value.passWord;
-
-
-    this.authService.signInWithUserAccount(userNameValue, passWordValue).pipe(tap((res: LoginResponse) => {
-      this.updateTokenAndReRoute(res.token, '/dashboard')
-    }), catchError((err: FirebaseError) => {
-      // console.error('Đăng nhập thất bại:', err);
-      this.errorModalService.openErrorModal(err)
-      return throwError(() => err)
-    })).subscribe()
-
-  }
-
   loginWithGoogle() {
     if (this.loading) return
     this.loading = true

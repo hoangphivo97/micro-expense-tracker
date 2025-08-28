@@ -13,8 +13,6 @@ import { Router } from '@angular/router';
 export class AuthService {
   private auth = inject(Auth);
   private apiUrl = 'http://localhost:3000/auth';
-  private apiGoogleUrl = 'http://localhost:3000/auth/google-login';
-  private apiFacebookUrl = 'http://localhost:3000/auth/facebook-login'
   private user$ = new BehaviorSubject<User | null>(null);
   private loading$ = new BehaviorSubject<boolean>(true);
 
@@ -32,22 +30,17 @@ export class AuthService {
     });
   }
 
-  signInWithUserAccount(username: string, password: string): Observable<LoginResponse> {
-    const loginData = { username, password }
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginData)
-  }
-
   signInWithGoogleAccount(): Observable<Object> {
     const provider = new GoogleAuthProvider();
 
-    return this.signInWithProvider(provider, this.apiGoogleUrl)
+    return this.signInWithProvider(provider, `${this.apiUrl}/login`)
   }
 
   signInWithFacebookAccount(): Observable<Object> {
     const provider = new FacebookAuthProvider();
     provider.addScope('email')
 
-    return this.signInWithProvider(provider, this.apiFacebookUrl)
+    return this.signInWithProvider(provider, `${this.apiUrl}/login`)
   }
 
   private signInWithProvider(provider: AuthProvider, apiUrl: string): Observable<any> {
