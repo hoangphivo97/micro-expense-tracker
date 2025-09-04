@@ -3,6 +3,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/modules/auth/schema/user.schema';
 import { FirebaseAdminService } from 'src/common/firebase/firebase-admin.service';
+import { AuthProviderEnum, UserRoleEnum } from '../user/enums/user-role.enum';
 
 
 @Injectable()
@@ -15,9 +16,8 @@ export class AuthService {
         return await this.userModel.findOne({ uid });
     }
 
-    async createUser(userData: Partial<User>) {
-        const user = new this.userModel(userData);
-        return await user.save();
+    async createUser(userData: User) {
+        return await this.userModel.create(userData);
     }
 
     async verifyAndGetUser(idToken: string) {
@@ -30,6 +30,7 @@ export class AuthService {
 
         // Tìm user theo uid
         let user = await this.findByUid(decoded.uid);
+        const record = await this.fb.auth().getUser(decoded.uid);
 
         // Nếu chưa có thì tạo mới
         if (!user) {
@@ -38,7 +39,9 @@ export class AuthService {
                 email: decoded.email?.toLowerCase(),
                 displayName: decoded.name || decoded.displayName,
                 photoUrl: decoded.picture,
-                providers: [decoded.firebase?.sign_in_provider],
+                providers: decoded.firebase?.sign_in_provider,
+                role: UserRoleEnum.USER,
+                createdAt: new Date(record.metadata.creationTime),
             });
         }
 

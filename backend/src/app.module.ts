@@ -5,6 +5,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { FirebaseAdminProviderModule } from './common/firebase/firebase-admin-provider.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { FirebaseAdminProviderModule } from './common/firebase/firebase-admin-pr
     ConfigModule.forRoot({isGlobal: true}),
     AuthModule,
     FirebaseAdminProviderModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
