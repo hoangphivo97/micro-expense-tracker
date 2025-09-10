@@ -31,7 +31,8 @@ export const routes: Routes = [
                 path: 'report',
                 loadComponent: () =>
                     import('./features/expenses/report/report.component').then(m => m.ReportComponent)
-            }
+            },
+            { path: 'react-toggle', loadComponent: () => import('./react-wrapper.component').then(m => m.ReactWrapperComponent) },
         ]
     },
     // 404 fallback

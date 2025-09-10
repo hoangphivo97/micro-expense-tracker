@@ -5,10 +5,11 @@
             Create New Expense
         </button>
     </section>
-
+    <dark-mode-toggle></dark-mode-toggle>
     <app-filter (filterChange)="onFitlerChanged($event)" [inputDataSource]="dataSource"></app-filter>
 
-    <ng-container >
+
+    <ng-container>
         <table mat-table [dataSource]="dataSource" *ngIf="dataSource && dataSource.data.length > 0; else noData ">
             <!--- Note that these columns can be defined in any order.
     The actual rendered columns are set as a property on the row definition" -->

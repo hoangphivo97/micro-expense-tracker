@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { FooterComponent } from "../../../shared/components/footer/footer.component";
 import { EditExpense, ExpenseList, FilterParams, PaidMethodEnum } from '../../../interface/expense.interface';
@@ -31,6 +31,7 @@ import { FilterComponent } from "../../../shared/components/filter/filter.compon
   imports: [HeaderComponent, FooterComponent, NgbPaginationModule, FormsModule, DecimalPipe, CommonModule, MatButtonModule, MatTableModule, MatIconModule, MatInputModule, EnumToStringPipe, FilterComponent],
   templateUrl: './expense-list.component.html',
   styleUrl: './expense-list.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
 

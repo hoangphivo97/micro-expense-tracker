@@ -1,0 +1,13 @@
+.light {
+  background: #fff;
+  color: #111;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.dark {
+  background: #111;
+  color: #eee;
+  padding: 16px;
+  border-radius: 8px;
+}
