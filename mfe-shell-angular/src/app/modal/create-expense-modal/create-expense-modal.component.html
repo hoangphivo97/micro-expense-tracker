@@ -4,15 +4,15 @@
     <form class="dialog-content" [formGroup]="createExpenseForm">
         <mat-form-field class="field-fixed-width">
             <mat-label>Date</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="date" />
+            <input data-testid="expense-date-input" matInput [matDatepicker]="picker" formControlName="date" />
             <mat-hint>DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle data-testid="expense-date-toggle" matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Description</mat-label>
-            <input matInput formControlName="description" />
+            <input data-testid="" matInput formControlName="description" />
         </mat-form-field>
 
         <mat-form-field>
