@@ -34,7 +34,14 @@ describe('Expense', () => {
     cy.get('[data-testid="open-create-modal-btn"]').click()
     cy.get('mat-dialog-container').should('be.visible')
 
+    //open datepicker 
     cy.get('[data-testid="expense-date-toggle"]').click()
     cy.get('.mat-datepicker-content').should('be.visible')
+
+    //input date
+    cy.get('.cdk-overlay-container .mat-calendar-body-cell:not(.mat-calendar-body-disabled) .mat-calendar-body-cell-content')
+      .contains(/^11$/)
+      .click();
+    cy.get('[data-testid="expense-date-input"]').invoke('val').should('match', /\d{2}\/\d{2}\/\d{4}/);
   })
 })
