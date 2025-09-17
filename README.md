@@ -54,24 +54,24 @@ Select E2E -> Your Favor browser -> Select expense-crud.cy.ts
 
 ## Quick Demo
 ### Windows Powershell
-# Terminal 1 - Frontend
+#### Terminal 1 - Frontend
 ```
 cd mfe-shell-angular
 npm install
 ng serve
 ```
-# Terminal 2 - Backend
+#### Terminal 2 - Backend
 ```
 cd backend
 npm install
 npm run start:dev
 ```
-# Terminal 3 - Cypress Test
+#### Terminal 3 - Cypress Test
 ```
 cd mfe-shell-angular
 npx cypress run --spec "cypress/e2e/expense-crud.cy.ts"
 ```
-# Quick Demo (Linux / Git Bash / macOS)
+#### Quick Demo (Linux / Git Bash / macOS)
 ```
 cd mfe-shell-angular && ng serve &
 cd backend && npm run start:dev &
