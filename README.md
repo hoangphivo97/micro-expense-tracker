@@ -84,11 +84,12 @@ cd mfe-shell-angular && npx cypress run --spec "cypress/e2e/expense-crud.cy.ts"
 
 ### Clone the repo
 
-```bash
+```
 git clone https://github.com/hoangphivo97/micro-expense-tracker.git
 cd micro-expense-tracker
 FE: cd mfe-shell-angular -> ng serve
 BE: cd backend -> npm run start:dev
+```
 
 ### Note
 - This project is for learning & demonstration purposes only.
