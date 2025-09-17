@@ -52,6 +52,13 @@ Make sure both frontend and backend are running before starting tests.
   ```
 Select E2E -> Your Favor browser -> Select expense-crud.cy.ts
 
+## Quick Demo
+```
+cd mfe-shell-angular && ng serve &
+cd backend && npm run start:dev &
+cd mfe-shell-angular && npx cypress run --spec "cypress/e2e/expense-crud.cy.ts"
+```
+
 ### Prerequisites
 - Node.js (v14+)
 - npm or Yarn
