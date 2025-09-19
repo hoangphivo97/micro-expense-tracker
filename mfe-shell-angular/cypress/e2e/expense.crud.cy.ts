@@ -43,5 +43,6 @@ describe('Expense', () => {
       .contains(/^11$/)
       .click();
     cy.get('[data-testid="expense-date-input"]').invoke('val').should('match', /\d{2}\/\d{2}\/\d{4}/);
+    
   })
 })
