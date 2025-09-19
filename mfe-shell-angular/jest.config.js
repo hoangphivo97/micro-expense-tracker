@@ -2,7 +2,7 @@ module.exports = {
   preset: 'jest-preset-angular',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-  testMatch: ['**/*.spec.ts'],
+  testMatch: ['<rootDir>/src/**/*.spec.ts'],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
@@ -12,6 +12,8 @@ module.exports = {
       },
     ],
   },
-  moduleFileExtensions: ['ts', 'html', 'js', 'json'],
-  coverageReporters: ['html', 'text-summary']
+transformIgnorePatterns: [
+  'node_modules/(?!@angular|rxjs|@datorama/akita|@ng-bootstrap|@fortawesome)',
+],
+  moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
 };
