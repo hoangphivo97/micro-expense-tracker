@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/RouteGuard/auth.service';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FirebaseError } from 'firebase/app';
 import { ErrorModalService } from '../../../services/utils/error-modal.service';
 import { RegisterModalComponent } from '../../../modal/register-modal/register-modal.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   router: Router;
   readonly dialog = inject(MatDialog)
+  private readonly destroyRef = inject(DestroyRef);
 
   loading: boolean = false;
 
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
       // console.error('Đăng nhập thất bại:', err);
       this.errorModalService.openErrorModal(err)
       return throwError(() => err)
-    })).subscribe()
+    })).pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
 
   }
 
@@ -67,7 +69,7 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         return throwError(() => err)
       })
-    ).subscribe()
+    ).pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
   }
 
   loginWithFacebook() {
@@ -83,7 +85,7 @@ export class LoginComponent implements OnInit {
         this.loading = false;
         return throwError(() => err)
       })
-    ).subscribe()
+    ).pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
   }
 
   updateTokenAndReRoute(token: string, direction: string) {

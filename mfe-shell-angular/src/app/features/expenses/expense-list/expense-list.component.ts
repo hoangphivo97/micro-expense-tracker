@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, Renderer2 } from '@angular/core';
 import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { FooterComponent } from "../../../shared/components/footer/footer.component";
 import { EditExpense, ExpenseList, FilterParams, PaidMethodEnum } from '../../../interface/expense.interface';
@@ -13,7 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { CreateExpenseModalComponent } from '../../../modal/create-expense-modal/create-expense-modal.component';
 import { DialogActionEnum, DialogData } from '../../../interface/modal.interface';
-import { Subject, takeUntil } from 'rxjs';
 import { BaseModalComponent } from '../../../modal/base-modal/base-modal.component';
 import { UserServiceService } from '../../../services/UserService/user-service.service';
 import { CurrencyEnum } from '../../../interface/settings.interface';
@@ -22,8 +21,8 @@ import { LocalStorageService } from '../../../services/LocalStorage/local-storag
 import { MatInputModule } from '@angular/material/input';
 import { EnumToStringPipe } from '../../../shared/EnumToStringPipe/enum-to-string.pipe';
 import { AuthStore } from '../../../services/RouteGuard/Akita/auth.store';
-import { months } from '../../../common/common-list';
 import { FilterComponent } from "../../../shared/components/filter/filter.component";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-expense-list',
@@ -32,7 +31,7 @@ import { FilterComponent } from "../../../shared/components/filter/filter.compon
   templateUrl: './expense-list.component.html',
   styleUrl: './expense-list.component.scss',
 })
-export class ExpenseListComponent implements OnInit, OnDestroy {
+export class ExpenseListComponent implements OnInit {
 
   readonly userService = inject(UserServiceService)
   readonly settingsService = inject(SettingsServiceService)
@@ -40,12 +39,11 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   readonly dialog = inject(MatDialog)
   readonly renderer = inject(Renderer2)
   readonly authStore = inject(AuthStore)
+  private readonly destroyRef = inject(DestroyRef)
 
   displayedColumns: string[] = ['date', 'description', 'purpose', 'paid', 'for', 'amount', 'action'];
 
   dataSource = new MatTableDataSource<ExpenseList>();
-
-  private destroy$ = new Subject<void>()
 
   dialogActionEnum = DialogActionEnum
   paidMethodEnum = PaidMethodEnum
@@ -60,7 +58,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   getExpenseList(params: FilterParams) {
-    this.expenseService.getExpenseList(params).pipe(takeUntil(this.destroy$)).subscribe((data: ExpenseList[]) => {
+    this.expenseService.getExpenseList(params).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data: ExpenseList[]) => {
       this.dataSource.data = data
     }, (error) => {
       console.log(error)
@@ -96,7 +94,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   getListAfterSuccessCallApi(dialogRef: MatDialogRef<CreateExpenseModalComponent | BaseModalComponent>) {
-    dialogRef.afterClosed().subscribe((res: DialogData) => {
+    dialogRef.afterClosed().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res: DialogData) => {
       if (!res.isSuccess) return
       this.getExpenseList(this.params)
     })
@@ -114,7 +112,8 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   }
 
   getUserSettings() {
-    this.settingsService.getUserSettings().subscribe(res => {
+    this.settingsService.getUserSettings()
+    .pipe(takeUntilDestroyed(this.destroyRef)).subscribe(res => {
       res?.currency as CurrencyEnum
     })
   }
@@ -132,11 +131,6 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
   onFitlerChanged(params: FilterParams){
     this.params = params
     this.getExpenseList(params);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(); // Emit the signal to unsubscribe
-    this.destroy$.complete(); // Complete the subject
   }
 
   get GlobalDateFormat(): string {

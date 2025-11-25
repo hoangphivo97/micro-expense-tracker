@@ -1,8 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SettingsServiceService } from '../../../services/SettingsService/settings-service.service';
-import { LocalStorageService } from '../../../services/LocalStorage/local-storage.service';
-import { LocalStorageKey } from '../../../common/login.strings';
 
 @Component({
   selector: 'app-footer',

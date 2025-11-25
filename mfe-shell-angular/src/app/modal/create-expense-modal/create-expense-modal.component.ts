@@ -1,4 +1,4 @@
-import { Component, inject, OnChanges, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnChanges, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogActionEnum, DialogData } from '../../interface/modal.interface';
 import { MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -16,6 +16,7 @@ import { DecimalPipe } from '@angular/common';;
 import { MatSelect } from '@angular/material/select';
 import { PaidMethodStringValue } from '../../common/login.strings';
 import { Timestamp } from '@angular/fire/firestore';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -47,6 +48,7 @@ export class CreateExpenseModalComponent implements OnInit {
   private formBuilder = inject(FormBuilder)
   readonly expenseService = inject(ExpenseService)
   private decimalPipe = inject(DecimalPipe)
+  private destroyRef = inject(DestroyRef)
 
   formattedValue: string = '';
   dialogActionEnum = DialogActionEnum
@@ -99,7 +101,7 @@ export class CreateExpenseModalComponent implements OnInit {
   }
 
   createExpense(payload: CreateExpense) {
-    this.expenseService.createExpense(payload).subscribe(
+    this.expenseService.createExpense(payload).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       {
         error: e => { console.log(e) },
         complete: () => this.dialogRef.close({ title: "Create new Expense", action: this.dialogActionEnum.Create, isSuccess: true } as DialogData)
@@ -108,7 +110,7 @@ export class CreateExpenseModalComponent implements OnInit {
   }
 
   editExpense(id: string, payload: EditExpense) {
-    this.expenseService.editExpense(id, payload).subscribe(
+    this.expenseService.editExpense(id, payload).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       {
         error: e => { console.log(e) },
         complete: () => this.dialogRef.close({ title: "Edit Expense", action: this.dialogActionEnum.Edit, isSuccess: true } as DialogData
