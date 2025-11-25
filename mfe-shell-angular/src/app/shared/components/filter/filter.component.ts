@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
 import { MatSelect } from "@angular/material/select";
 import { MatOption } from '@angular/material/select';
 import { MatInputModule } from "@angular/material/input";
@@ -12,6 +12,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class FilterComponent implements OnInit {
   currMonth: number = new Date().getMonth() + 1;
   currYear: number = new Date().getFullYear();
   yearsList: number[] = []; //Will get from list of Expense created Date
+  private readonly destroyRef = inject(DestroyRef)
 
   initFilterState = {
     searchTerm: '',
@@ -50,7 +52,7 @@ export class FilterComponent implements OnInit {
     this.emitDefaultList();
   }
 
-  emitDefaultList(){ //Send Default Value to Comp 
+  emitDefaultList() { //Send Default Value to Comp 
     this.filterChange.emit(this.initFilterState);
   }
 
@@ -75,7 +77,7 @@ export class FilterComponent implements OnInit {
     this.filterForm.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged()
-    ).subscribe(value => {
+    ).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
       this.filterChange.emit(value as FilterParams)
     })
   }
@@ -92,11 +94,11 @@ export class FilterComponent implements OnInit {
     return months
   }
 
-  get hasUserFiltered() : boolean {
+  get hasUserFiltered(): boolean {
     return JSON.stringify(this.filterForm.value) !== JSON.stringify(this.initFilterState);
   }
 
-    get isReportPage(): boolean{
+  get isReportPage(): boolean {
     return this.router.url.includes('/report')
   }
 }
