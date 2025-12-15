@@ -5,19 +5,43 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.tsx", // ✅ entry dev
+  entry: "./src/index.tsx", // entry dev
   devServer: {
     port: 5000,
     open: true,
     historyApiFallback: true,
     static: path.resolve(__dirname, "public"),
-    headers: { "Access-Control-Allow-Origin": "*" }, // ✅ để host khác (Angular) load được
+    headers: { "Access-Control-Allow-Origin": "*" }, // để host khác (Angular) load được
   },
   output: { publicPath: "auto", clean: true },
-  resolve: { extensions: [".tsx", ".ts", ".js"] },
+  resolve: { extensions: [".tsx", ".ts", ".js", ".css"] },
   module: {
     rules: [
-      { test: /\.(ts|tsx|js|jsx)$/, exclude: /node_modules/, use: "babel-loader" },
+      // Rule cho JS/TSX/JSX
+      {
+        test: /\.(ts|tsx|js|jsx)$/,
+        exclude: /node_modules/,
+        use: "babel-loader",
+      },
+
+      // 1. RULE CHO CSS MODULES (*.module.css)
+      {
+        test: /\.module\.css$/,
+        exclude: /node_modules/, 
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                namedExport: false,
+                localIdentName: "[name]__[local]--[hash:base64:5]"
+              },
+              importLoaders: 1,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
