@@ -1,11 +1,11 @@
 .light {
-  background: #fff;
-  color: #111;
+  background: #111;
+  color: #eee;
 }
 
 .dark {
-  background: #111;
-  color: #eee;
+  background: #fff;
+  color: #111;
 }
 
 .darkModeButton {
