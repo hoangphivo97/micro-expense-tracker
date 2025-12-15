@@ -24,11 +24,12 @@ import { EnumToStringPipe } from '../../../shared/EnumToStringPipe/enum-to-strin
 import { AuthStore } from '../../../services/RouteGuard/Akita/auth.store';
 import { months } from '../../../common/common-list';
 import { FilterComponent } from "../../../shared/components/filter/filter.component";
+import { DarkModeWrapperComponent } from '../../../shared/components/dark-mode-wrapper/dark-mode-wrapper.component';
 
 @Component({
   selector: 'app-expense-list',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, NgbPaginationModule, FormsModule, DecimalPipe, CommonModule, MatButtonModule, MatTableModule, MatIconModule, MatInputModule, EnumToStringPipe, FilterComponent],
+  imports: [HeaderComponent, FooterComponent, NgbPaginationModule, FormsModule, DecimalPipe, CommonModule, MatButtonModule, MatTableModule, MatIconModule, MatInputModule, EnumToStringPipe, FilterComponent, DarkModeWrapperComponent],
   templateUrl: './expense-list.component.html',
   styleUrl: './expense-list.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA ],
