@@ -23,7 +23,6 @@ import { mainColorPieChart } from '../../../common/common-list';
 export class ReportComponent{
   readonly expenseService = inject(ExpenseService);
 
-  private destroy$ = new Subject<void>();
   expense$!: Observable<ExpenseList[]>;
   private filter$ = new BehaviorSubject<FilterParams>({});
 
