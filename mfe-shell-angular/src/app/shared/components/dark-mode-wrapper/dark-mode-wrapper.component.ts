@@ -30,10 +30,16 @@ export class DarkModeWrapperComponent implements OnInit, OnDestroy {
       const rootElement = this.container.nativeElement;
       this.root = ReactDOM.createRoot(rootElement);
       this.root.render(
-        React.createElement(DarkModeToggle, null)
+        React.createElement(DarkModeToggle, {
+          onStateChange: (state: boolean) => this.handleReactState(state)
+        })
       );
     })
     .catch(err => console.error('Lỗi tải module React:', err));
+  }
+
+  handleReactState(isDark: boolean){
+    console.log('State from React', isDark)
   }
 
   // Dọn dẹp

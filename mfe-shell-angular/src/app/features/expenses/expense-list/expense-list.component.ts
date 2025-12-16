@@ -22,14 +22,12 @@ import { LocalStorageService } from '../../../services/LocalStorage/local-storag
 import { MatInputModule } from '@angular/material/input';
 import { EnumToStringPipe } from '../../../shared/EnumToStringPipe/enum-to-string.pipe';
 import { AuthStore } from '../../../services/RouteGuard/Akita/auth.store';
-import { months } from '../../../common/common-list';
 import { FilterComponent } from "../../../shared/components/filter/filter.component";
-import { DarkModeWrapperComponent } from '../../../shared/components/dark-mode-wrapper/dark-mode-wrapper.component';
 
 @Component({
   selector: 'app-expense-list',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, NgbPaginationModule, FormsModule, DecimalPipe, CommonModule, MatButtonModule, MatTableModule, MatIconModule, MatInputModule, EnumToStringPipe, FilterComponent, DarkModeWrapperComponent],
+  imports: [HeaderComponent, FooterComponent, NgbPaginationModule, FormsModule, DecimalPipe, CommonModule, MatButtonModule, MatTableModule, MatIconModule, MatInputModule, EnumToStringPipe, FilterComponent],
   templateUrl: './expense-list.component.html',
   styleUrl: './expense-list.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA ],

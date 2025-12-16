@@ -11,11 +11,12 @@ import { navItems } from '../../../common/common-list';
 import { NavItem } from '../../../interface/expense.interface';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { DarkModeWrapperComponent } from '../dark-mode-wrapper/dark-mode-wrapper.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [MatSidenavModule, CommonModule, MatIcon, FontAwesomeModule, RouterModule],
+  imports: [MatSidenavModule, CommonModule, MatIcon, FontAwesomeModule, RouterModule, DarkModeWrapperComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })

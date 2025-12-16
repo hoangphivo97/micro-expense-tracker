@@ -13,7 +13,7 @@ module.exports = {
     static: path.resolve(__dirname, "public"),
     headers: { "Access-Control-Allow-Origin": "*" }, // để host khác (Angular) load được
   },
-  output: { publicPath: "auto", clean: true },
+  output: { publicPath: "auto", clean: true, module: false },
   resolve: { extensions: [".tsx", ".ts", ".js", ".css"] },
   module: {
     rules: [
@@ -33,13 +33,13 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
+              esModule: false,
               modules: {
-                namedExport: false,
                 localIdentName: "[name]__[local]--[hash:base64:5]"
               },
               importLoaders: 1,
             },
-          },
+          }
         ],
       },
     ],
