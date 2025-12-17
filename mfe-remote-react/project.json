@@ -1,0 +1,43 @@
+{
+  "name": "mfe-remote-react",
+  "$schema": "./node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "mfe-remote-react/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/mfe-remote-react",
+        "index": "mfe-remote-react/src/index.html",
+        "baseHref": "/",
+        "main": "mfe-remote-react/src/main.tsx",
+        "tsConfig": "mfe-remote-react/tsconfig.app.json",
+        "assets": [
+          "mfe-remote-react/src/favicon.ico",
+          "mfe-remote-react/src/assets"
+        ],
+        "styles": ["mfe-remote-react/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "mfe-remote-react/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "options": {
+        "buildTarget": "mfe-remote-react:build:development",
+        "port": 5000
+      }
+    }
+  }
+}
