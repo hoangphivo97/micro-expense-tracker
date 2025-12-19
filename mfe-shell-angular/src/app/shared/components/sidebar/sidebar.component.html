@@ -4,6 +4,7 @@
     <mat-icon class="icon-size account-icon">account_circle</mat-icon>
     <h2 class="label" [class.hide]="collapsed">Welcome<span *ngIf="user$ | async as user"> {{user.displayName}}</span></h2>
   </div>
+  <app-react-wrapper></app-react-wrapper>
   <ul class="ls-links">
     <li *ngFor="let item of navItems" (click)="setActive(item.key)">
       <div class="ls-nav" [class.active]="item.key === activeItem">

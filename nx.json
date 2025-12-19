@@ -63,6 +63,19 @@
         "style": "scss",
         "linter": "eslint"
       }
+    },
+    "@nx/angular:component": {
+      "style": "css"
+    }
+  },
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "master",
+  "nxCloudId": "694416a963b1cd6a321319f6",
+  "targetDefaults": {
+    "@nx/angular:webpack-browser": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default"]
     }
   }
 }
