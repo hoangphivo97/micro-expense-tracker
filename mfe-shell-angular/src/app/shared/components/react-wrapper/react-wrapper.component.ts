@@ -1,5 +1,4 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-// FIX: Dùng loadRemote từ thư viện runtime chuẩn
 import { loadRemote, registerRemotes } from '@module-federation/enhanced/runtime';
 import * as React from 'react';
 import { createRoot, Root } from 'react-dom/client';
@@ -29,7 +28,11 @@ export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
       if (m && m.default) {
         const ReactComp = m.default;
         this.root = createRoot(this.containerRef.nativeElement);
-        this.root.render(React.createElement(ReactComp, ));
+        this.root.render(React.createElement(ReactComp, {
+          onThemeChange: (isDark: boolean) => {
+            console.log(isDark)
+          }
+        }));
       } else {
         console.error('Remote module trả về null hoặc không có default export.');
       }

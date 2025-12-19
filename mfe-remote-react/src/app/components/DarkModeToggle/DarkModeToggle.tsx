@@ -1,18 +1,27 @@
-import React from 'react';
+import { useState } from "react";
 import styles from './DarkModeToggle.module.scss';
+import { DarkModeToggleProps } from '@shared/types';
 
-export default function DarkModeToggle({ onToggle }: { onToggle?: (isDark: boolean) => void }) {
-  const [isDark, setIsDark] = React.useState(false);
+export default function DarkModeToggle({ onThemeChange }: DarkModeToggleProps) {
+  const [dark, setDark] = useState(false);
 
-  const handleToggle = () => {
-    const newState = !isDark;
-    setIsDark(newState);
-    if (onToggle) onToggle(newState);
-  };
+  // Cách kết hợp class:
+  const buttonClasses = `${styles.darkModeButton} ${dark ? styles.dark : styles.light}`
+  const toggleHandler = () => {
+    const newState = !dark;
+    setDark(newState);
+    if (onThemeChange) {
+      onThemeChange(newState)
+    }
+  }
 
   return (
-    <button className={isDark ? styles.dark : styles.light} onClick={handleToggle}>
-      {isDark ? '🌙 Dark Mode' : '☀️ Light Mode'}
+    // If Dark is true, appear Light text
+    <button
+      onClick={toggleHandler}
+      className={buttonClasses}
+    >
+      {dark ? "Light" : "Dark"} Mode
     </button>
   );
-}
+};

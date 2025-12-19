@@ -1,9 +1,5 @@
 import * as React from 'react';
-
-interface DarkModeToggleProps {
-    initialThemme?: 'light' | 'dark';
-}
-
+import { DarkModeToggleProps } from '@shared/types';
 export interface ReactComponentType {
     default: React.ComponentType<DarkModeToggleProps>;
 }
