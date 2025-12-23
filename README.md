@@ -2,19 +2,37 @@
 
 A **micro front-end & back-end** full-stack project for managing personal expenses. Currently includes:
 
-- **Angular (frontend)** – project shell and UI for tracking expenses.
-- **NestJS (backend)** – basic API and data handling.
-- **Cypress & Jest (Testing)** - testing framework 
-- (Note: Still in early development — "micro" refers to modular architecture, future micro front-end expansion planned.)
 
----
+```markdown
+## 📂 Project Structure
+
+
+micro-expense-tracker/
+├── 📱 apps/
+│   ├── mfe-shell-angular/      # 🏠 Host Application (Angular) - Main UI & Routing
+│   ├── mfe-remote-react/       # 🧩 Remote Application (React) - UI Components
+│   └── backend/                # ⚙️ API Server (NestJS) - Logic & Database
+│
+├── 📦 libs/
+│   └── shared/types/           # 🔗 Shared Library (Interfaces & DTOs)
+│
+├── 🧪 e2e/
+│   ├── mfe-shell-angular-e2e/  # Cypress tests for Angular Shell
+│   ├── mfe-remote-react-e2e/   # Cypress tests for React Remote
+│   └── backend-e2e/            # Jest e2e tests for Backend
+│
+└── 🔧 configs/
+    ├── nx.json                 # Nx Configuration
+    ├── package.json            # Root Dependencies
+    └── tsconfig.base.json      # Global TypeScript Config
+```
 
 ## ​ Tech Stack
 
-- **Frontend**: Angular, TypeScript, SCSS  
+- **Frontend**: Angular, TypeScript, SCSS , React
 - **Backend**: NestJS, TypeScript  
 - **Architecture**: Modular, Clean Architecture principles  
-- **Tools**: Git, Angular CLI, Nest CLI, Github Project
+- **Tools**: Git, Angular CLI, Nest CLI, Github Project, NX, ApexCharts
 - **Testing framework**: Jest for Unit test, Cypress for Automation test
 
 ---
@@ -24,71 +42,55 @@ A **micro front-end & back-end** full-stack project for managing personal expens
 - Angular-based shell with routing and component structure
 - NestJS backend with placeholder endpoints (e.g. `/expenses`)
 - Shared type definitions to align frontend & backend
-- Ready for micro front-end expansion or integration with other modules
 
 ---
 
 ##  Getting Started
-  ### 1. Start the Frontend (Angular Micro-Frontend)
+  ### Start project using NX
   ```
-  cd mfe-shell-angular
-  npm install
-  ng serve
+  nx run-many -t serve
   ```
-Frontend will run at: http://localhost:4200/
-  ### 2. Start the Backend (NestJS)
-  ```
-  cd backend
-  npm install
-  npm run start:dev
-  ```
-Make sure both frontend and backend are running before starting tests.
-  ### 3. Start testing (Cypress)
-  ```
-  cd mfe-shell-angular
-  npx cypress open   # Interactive mode
-  # or
-  npx cypress run    # Headless mode
-  ```
-Select E2E -> Your Favor browser -> Select expense-crud.cy.ts
+  React run at: localhost:5000
+  Angular run at: localhost:4200
+  backend run at: localhost:3000
 
-## Quick Demo
-### Windows Powershell
-#### Terminal 1 - Frontend
-```
-cd mfe-shell-angular
-npm install
-ng serve
-```
-#### Terminal 2 - Backend
-```
-cd backend
-npm install
-npm run start:dev
-```
-#### Terminal 3 - Cypress Test
-```
-cd mfe-shell-angular
-npx cypress run --spec "cypress/e2e/expense-crud.cy.ts"
-```
-#### Quick Demo (Linux / Git Bash / macOS)
-```
-cd mfe-shell-angular && ng serve &
-cd backend && npm run start:dev &
-cd mfe-shell-angular && npx cypress run --spec "cypress/e2e/expense-crud.cy.ts"
-```
+  ### Start each project (If you prefer)
+  ```
+  nx serve backend
+  nx serve mfe-shell-angular
+  nx serve mfe-react-remote 
+  ```
+  For each new terminal
+
+  ### Unit Test whole App
+  ```
+  nx run-many -t test
+  ```
+
+  ### Unit test specific on backend
+  ```
+  nx test backend
+  ```
+  ### E2E Test Angular App
+  ```
+  nx e2e mfe-shell-angular-e2e
+  ```
+
+  ### run Storybook React Remote App
+  ```
+  nx storybook mfe-remote-react
+  ```
 
 ### Prerequisites
-- Node.js (v14+)
-- npm or Yarn
+- Node.js: v18.x trở lên.
+- MongoDB: Default port is 27017.
+- Nx CLI: npm install -g nx (recommend).
 
 ### Clone the repo
 
 ```
 git clone https://github.com/hoangphivo97/micro-expense-tracker.git
 cd micro-expense-tracker
-FE: cd mfe-shell-angular -> ng serve
-BE: cd backend -> npm run start:dev
 ```
 
 ### Note
