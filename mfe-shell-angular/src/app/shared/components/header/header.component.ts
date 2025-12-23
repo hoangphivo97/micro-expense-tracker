@@ -1,7 +1,6 @@
-import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../services/RouteGuard/auth.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsModalComponent } from '../../../modal/settings-modal/settings-modal.component';
 import { DialogActionEnum, DialogData } from '../../../interface/modal.interface';
