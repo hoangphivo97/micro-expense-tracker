@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { Model } from 'mongoose';
-import { User } from 'src/schema/user.schema';
+import { User } from '../schema/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import * as admin from 'firebase-admin';
 
