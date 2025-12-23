@@ -34,7 +34,12 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["mfe-shell-angular/**/*"]
+      "exclude": [
+        "mfe-shell-angular/**/*",
+        "backend-e2e/**/*",
+        "backend-e2e/**/*",
+        "backend-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/storybook/plugin",

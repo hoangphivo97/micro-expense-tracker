@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { LoginDto } from 'src/DTO/login.dto';
+import { LoginDto } from '../DTO/login.dto';
 import * as admin from 'firebase-admin';
 
 @Controller('auth')
