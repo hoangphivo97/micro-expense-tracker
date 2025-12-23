@@ -21,10 +21,9 @@ micro-expense-tracker/
 │   ├── mfe-remote-react-e2e/   # Cypress tests for React Remote
 │   └── backend-e2e/            # Jest e2e tests for Backend
 │
-└── 🔧 configs/
-    ├── nx.json                 # Nx Configuration
-    ├── package.json            # Root Dependencies
-    └── tsconfig.base.json      # Global TypeScript Config
+├── nx.json                 # Nx Configuration
+├── package.json            # Root Dependencies
+└── tsconfig.base.json      # Global TypeScript Config
 ```
 
 ## ​ Tech Stack
