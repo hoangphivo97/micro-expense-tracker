@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest", "node"],
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "files": [],
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"], // 👈 chỉ src
+  "exclude": ["cypress", "**/*.cy.ts", "node_modules"] // 👈 loại Cypress
+}

@@ -1,0 +1,48 @@
+{
+  "name": "mfe-remote-react",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mfe-remote-react/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/mfe-remote-react",
+        "index": "apps/mfe-remote-react/src/index.html",
+        "baseHref": "/",
+        "main": "apps/mfe-remote-react/src/main.tsx",
+        "tsConfig": "apps/mfe-remote-react/tsconfig.app.json",
+        "assets": [
+          "apps/mfe-remote-react/src/favicon.ico",
+          "apps/mfe-remote-react/src/assets"
+        ],
+        "styles": ["apps/mfe-remote-react/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/mfe-remote-react/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "options": {
+        "buildTarget": "mfe-remote-react:build:development",
+        "port": 5000,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        }
+      }
+    }
+  }
+}
