@@ -1,0 +1,10 @@
+{
+  "name": "mfe-remote-react-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/mfe-remote-react-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["mfe-remote-react"],
+  "// targets": "to see all targets run: nx show project mfe-remote-react-e2e --web",
+  "targets": {}
+}

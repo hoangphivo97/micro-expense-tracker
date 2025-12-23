@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.uppercase_title {
+  text-transform: capitalize;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.icon-size {
+  font-size: 26px;
+}
+
+html,
+body {
+  height: 100%;
+}

@@ -1,0 +1,105 @@
+$icon-color-inactive: #bdc2c5;
+$text-color-inactive: #7d8388;
+$color-active: #7d45ff;
+$color-danger: #dc2626;
+$red-bland-8: rgba(220, 38, 38, 0.08);
+$purple-bland-8: rgba($color-active, 0.08);
+
+.sidenav-container {
+  height: 100vh;
+  position: relative;
+  font-size: 1.4rem;
+}
+
+.app-sidenav {
+  width: 260px;
+  transition: width 0.3s ease;
+
+  &.collapsed {
+    width: 80px;
+  }
+
+  ::ng-deep .mat-icon {
+    overflow: visible !important;
+  }
+}
+
+mat-sidenav-content {
+  transition: margin-left 0.3s ease;
+  margin-left: 260px !important;
+
+  &.collapsed {
+    margin-left: 80px !important;
+  }
+}
+
+.collapse-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  transition: left 0.3s ease;
+  left: 245px;
+
+  &.collapsed {
+    left: 65px;
+  }
+}
+
+.collapse-btn:hover .collapse-icon {
+  animation: raceMove 0.6s ease-in-out;
+}
+
+.collapsed:hover .collapse-icon {
+  animation: raceBack 0.6s ease-in-out;
+}
+
+@keyframes raceMove {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  40% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes raceBack {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  40% {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

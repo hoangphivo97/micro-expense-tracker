@@ -1,0 +1,60 @@
+$color-active: #7d45ff;
+$color-border: #4b1fa6;
+$purple-bland-8: rgba($color-active, 0.08);
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+
+  .button:hover {
+    cursor: pointer;
+  }
+
+  .expense-list {
+    padding: 0px 40px 60px 40px;
+    flex: 1 1 auto;
+
+    .create-section {
+      display: flex;
+      flex-direction: row-reverse;
+
+      .create-btn {
+        border: none;
+        padding: 20px;
+        border-radius: 35px;
+        font-size: 1.2rem;
+        color: $color-active;
+        background-color: $purple-bland-8;
+
+        &:hover {
+          color: #fff;
+          background-color: $color-active;
+        }
+      }
+    }
+
+    .no-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      font-size: 25px;
+      padding-bottom: 40px;
+    }
+  }
+}
+
+app-header,
+app-footer {
+  flex: 0 0 auto;
+  flex-direction: column;
+}
