@@ -6,6 +6,7 @@ import {
   OnDestroy,
   Renderer2,
   Inject,
+  inject,
 } from '@angular/core';
 import {
   loadRemote,
@@ -15,6 +16,7 @@ import * as React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { ReactComponentType } from '../../../interface/shared.interface';
 import { DOCUMENT } from '@angular/common';
+import { ThemeService } from '../../../services/ThemeService/theme.service';
 
 @Component({
   selector: 'app-react-wrapper',
@@ -23,6 +25,7 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./react-wrapper.component.css'],
 })
 export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
+  themeService = inject(ThemeService);
   @ViewChild('reactContainer', { static: true }) containerRef!: ElementRef;
   root!: Root;
 
@@ -50,7 +53,7 @@ export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
         this.root.render(
           React.createElement(ReactComp, {
             onThemeChange: (isDark: boolean) => {
-              this.handleThemeChange(isDark);
+              this.themeService.setDarkMode(isDark);
             },
           }),
         );
@@ -61,14 +64,6 @@ export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
       }
     } catch (error) {
       console.error('Lỗi tải React Remote:', error);
-    }
-  }
-
-  handleThemeChange(isDark: boolean) {
-    if (isDark) {
-      this.renderer.addClass(this.document.body, 'dark-mode');
-    } else {
-      this.renderer.removeClass(this.document.body, 'dark-mode');
     }
   }
 

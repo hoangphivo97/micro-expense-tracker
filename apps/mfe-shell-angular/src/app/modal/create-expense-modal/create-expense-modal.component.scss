@@ -1,6 +1,47 @@
 :host {
+  mat-dialog-content {
+    background-color: var(--bg-modal);
+
+    mat-hint{
+      color: var(--text-primary);
+    }
+
+    button{
+      color: var(--text-primary);
+    }
+
+    ::ng-deep {
+      .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: var(--bg-input);
+      }
+
+      .mdc-text-field__input,
+      .mat-mdc-select-arrow {
+        color: var(--text-primary);
+      }
+
+      .mat-datepicker-toggle{
+        color: var(--text-primary);
+      }
+
+      .mat-mdc-select-value,
+      .mdc-text-field__input,
+      .mat-mdc-select-arrow {
+        color: var(--text-primary);
+      }
+
+      mat-label,
+      input::placeholder {
+        color: var(--text-primary);
+      }
+
+      --mat-select-placeholder-text-color: var(--text-primary);
+    }
+  }
+
   .dialog-title {
     padding-left: 30px;
+    color: var(--text-primary);
   }
 
   .dialog-content {

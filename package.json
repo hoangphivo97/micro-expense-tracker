@@ -25,6 +25,7 @@
     "@nx/webpack": "22.3.3",
     "@nx/workspace": "^22.3.3",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "@schematics/angular": "^21.0.4",
     "@storybook/react-webpack5": "10.1.9",
     "@svgr/webpack": "^8.0.1",
     "@swc-node/register": "^1.11.1",

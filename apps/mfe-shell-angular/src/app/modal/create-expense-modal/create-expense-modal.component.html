@@ -4,19 +4,10 @@
   <form class="dialog-content" [formGroup]="createExpenseForm">
     <mat-form-field class="field-fixed-width">
       <mat-label>Date</mat-label>
-      <input
-        data-testid="expense-date-input"
-        matInput
-        [matDatepicker]="picker"
-        formControlName="date"
-      />
+      <input data-testid="expense-date-input" matInput [matDatepicker]="picker" formControlName="date" />
       <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle
-        data-testid="expense-date-toggle"
-        matIconSuffix
-        [for]="picker"
-      ></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker-toggle data-testid="expense-date-toggle" matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker panelClass="ct-datepicker-dm" #picker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
@@ -31,9 +22,9 @@
 
     <mat-form-field>
       <mat-label>Paid Method</mat-label>
-      <mat-select [(value)]="paidMethodCurrVal">
+      <mat-select panelClass="ct-select-dm" [(value)]="paidMethodCurrVal">
         @for (item of paidMethodDropdownList; track item) {
-          <mat-option [value]="item.value">{{ item.name }}</mat-option>
+        <mat-option [value]="item.value">{{ item.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
@@ -45,12 +36,7 @@
 
     <mat-form-field>
       <mat-label>Amount</mat-label>
-      <input
-        matInput
-        formControlName="amount"
-        [value]="formattedValue"
-        (input)="onInput($event)"
-      />
+      <input matInput formControlName="amount" [value]="formattedValue" (input)="onInput($event)" />
     </mat-form-field>
   </form>
 
