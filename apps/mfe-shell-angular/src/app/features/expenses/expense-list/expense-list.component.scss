@@ -10,6 +10,7 @@ body {
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
+  transition: background-color 0.3s ease;
   background-color: var(--bg-secondary);
 
   .button:hover {

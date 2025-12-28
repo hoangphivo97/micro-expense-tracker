@@ -1,33 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
-body,
-html {
-  padding: 0;
-  margin: 0;
-}
-
+/* =========================================
+   1. IMPORTS
+   ========================================= */
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
-.uppercase_title {
-  text-transform: capitalize;
+/* =========================================
+   2. BASE STYLES & UTILITIES
+   ========================================= */
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-  margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.uppercase_title {
+  text-transform: capitalize;
 }
 
 .icon-size {
   font-size: 26px;
 }
 
-html,
-body {
-  height: 100%;
-}
+/* =========================================
+   3. THEMING & VARIABLES
+   ========================================= */
 
-/* 1. Định nghĩa màu mặc định (Light Mode) */
+/* --- LIGHT MODE (DEFAULT) --- */
 :root {
   --icon-color-inactive: #bdc2c5;
   --text-color-inactive: #7d8388;
@@ -36,157 +40,179 @@ body {
   --purple-bland-8: color-mix(in srgb, var(--text-primary) 8%, transparent);
   --bg-secondary: #FFF;
   --bg-modal-primary: #2d3748;
-  --bg-input: #f3f4f6;
-  /* Nền input xám nhạt (chuẩn hơn trắng tinh) */
+  --bg-input: #f3f4f6; /* Nền input xám nhạt */
   --text-input: #111827;
 }
 
-/* 2. Ghi đè màu khi body có class .dark-mode */
+/* --- DARK MODE CONFIGURATION --- */
 body.dark-mode {
-  /* Định nghĩa biến cho nút Disabled */
+  /* A. Variable Overrides */
   --btn-disabled-bg: rgba(255, 255, 255, 0.12);
   --btn-disabled-text: rgba(255, 255, 255, 0.38);
-  
-  --bg-input: #1e293b;
-  /* Slate-800: Nền input tối */
+  --bg-input: #1e293b; /* Slate-800 */
   --text-input: #f9fafb;
-  /* Nền chính (Main content) */
-  --bg-primary: #0f172a;
-  /* Slate 900 - Xanh than rất đậm */
-
-  /* Nền phụ (Sidebar, Card, Header) */
-  --bg-secondary: #1e293b;
-
-  /* Nền Modal và Dialog */
+  --bg-primary: #0f172a; /* Slate 900 */
+  --bg-secondary: #1e293b; /* Slate 800 */
   --bg-modal: #2d3748;
-
-  /* Chữ chính (Tiêu đề) - Không dùng trắng tinh (fff) vì gây chói */
-  --text-primary: #f1f5f9;
-  /* Slate 100 */
-
-  /* Chữ phụ (Mô tả, Icon chưa active) */
-  --text-secondary: #94a3b8;
-  /* Slate 400 */
-
-  /* Đường viền ngăn cách */
-  --border-color: #818cf8;
-  /* Slate 700 */
-
-  /* Màu chủ đạo (Màu Tím của bạn) */
-  /* Lưu ý: Trên nền tối, màu tím gốc cần sáng hơn 1 chút để nổi bật */
-  --primary-color: #818cf8;
-  /* Indigo 400 - Tím sáng */
-
-  /* Màu nền khi hover vào menu */
+  --text-primary: #f1f5f9; /* Slate 100 */
+  --text-secondary: #94a3b8; /* Slate 400 */
+  --border-color: #818cf8; /* Slate 700 */
+  --primary-color: #818cf8; /* Indigo 400 */
   --hover-bg: rgba(129, 140, 248, 0.1);
-
+  
+  /* Material Datepicker Variables */
   --mat-datepicker-calendar-container-background-color: var(--bg-primary);
-
-  /* Đổi luôn màu chữ cho đồng bộ */
   --mat-datepicker-calendar-container-text-color: var(--text-primary);
-
-  /* (Tùy chọn) Xử lý mấy cái nút mũi tên chuyển tháng */
   --mat-datepicker-calendar-header-text-color: var(--text-primary);
   --mat-datepicker-calendar-date-text-color: var(--text-primary);
+
+  /* B. Dark Mode Specific Layout Fixes */
+  .mat-drawer-content,
+  .mat-sidenav-content {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary);
+  }
+
+  /* C. ApexCharts Dark Mode Logic */
+  .apexcharts-text {
+    fill: var(--text-primary) !important;
+  }
+
+  .apexcharts-title-text,
+  .apexcharts-subtitle-text {
+    fill: var(--text-primary) !important;
+  }
+
+  .apexcharts-gridline {
+    stroke: var(--border-color) !important;
+  }
+
+  .apexcharts-legend-text {
+    color: var(--text-primary) !important;
+    font-family: inherit !important;
+  }
+
+  /* Tooltip Styles */
+  .apexcharts-tooltip {
+    background: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+
+    .apexcharts-tooltip-title {
+      background: var(--bg-primary) !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      font-family: inherit !important;
+    }
+
+    .apexcharts-tooltip-text-y-value,
+    .apexcharts-tooltip-text-goals-value,
+    .apexcharts-tooltip-text-z-value {
+      color: var(--text-primary) !important;
+    }
+  }
+
+  /* Menu Styles */
+  .apexcharts-menu-icon svg {
+    fill: var(--text-primary) !important;
+  }
+
+  .apexcharts-menu {
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+
+    .apexcharts-menu-item:hover {
+      background: var(--hover-bg) !important;
+    }
+  }
+
+  /* X-Axis Tooltip */
+  .apexcharts-xaxistooltip {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    
+    .apexcharts-xaxistooltip-text {
+      color: var(--text-primary) !important; 
+    }
+  }
+
+  .apexcharts-xaxistooltip-bottom:before {
+    border-bottom-color: var(--border-color) !important;
+  }
+  
+  .apexcharts-xaxistooltip-bottom:after {
+    border-bottom-color: var(--bg-secondary) !important;
+  }
 }
 
-/* 3. Áp dụng biến vào body để test ngay */
+/* =========================================
+   4. GLOBAL APP STYLES
+   ========================================= */
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-
-  /* Thêm hiệu ứng chuyển màu mượt mà (quan trọng cho UX) */
+  /* Hiệu ứng chuyển màu mượt mà */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* styles.scss */
+/* =========================================
+   5. COMPONENT CUSTOMIZATION
+   ========================================= */
 
+/* --- A. Buttons (Disabled State) --- */
+.mat-mdc-button:disabled,
+.mat-mdc-raised-button:disabled,
+.mat-mdc-unelevated-button:disabled,
+.mat-mdc-outlined-button:disabled {
+  background-color: var(--btn-disabled-bg) !important;
+  color: var(--btn-disabled-text) !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-outlined-button:disabled {
+  background-color: transparent !important;
+  border-color: var(--btn-disabled-bg) !important;
+}
+
+/* --- B. Material Select (.ct-select-dm) --- */
 .ct-select-dm {
-  /* 1. Gán màu nền cho panel thông qua biến (nếu component hỗ trợ) */
   --mat-select-panel-background-color: var(--bg-secondary);
-  /* Màu nền tối (ví dụ Slate-800) */
-
-  /* 2. QUAN TRỌNG: Đổi màu chữ option sang trắng */
   --mat-option-label-text-color: var(--text-primary);
-  /* Màu chữ thường */
-
-  /* 3. Màu chữ của option đang được chọn (Active) */
   --mat-option-selected-state-label-text-color: var(--color-active, #7d45ff);
 
-  /* Fallback: Can thiệp trực tiếp nếu biến trên không ăn (Do version Angular khác nhau) */
   .mat-mdc-select-panel {
     background: var(--bg-secondary);
-    /* Dùng background thay vì background-color */
   }
 
-  /* Xử lý hiệu ứng Hover cho đẹp (vì nền tối cần hover sáng) */
   .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
     background-color: rgba(255, 255, 255, 0.08);
   }
 }
 
-/* src/styles.scss */
-
+/* --- C. Material Datepicker (.ct-datepicker-dm) --- */
 .ct-datepicker-dm {
-
-  /* 1. Nút Tháng/Năm ở giữa (VD: "DEC 2025") */
-  .mat-calendar-period-button {
-    color: var(--text-primary) !important;
-  }
-
-  /* 2. Mũi tên nhỏ bên cạnh năm (Dropdown arrow) */
-  .mat-calendar-arrow {
-    fill: var(--text-primary) !important;
-    /* Lưu ý: SVG dùng fill chứ ko phải color */
-  }
-
-  /* 3. Hai nút mũi tên Trái/Phải (Previous/Next) */
+  .mat-calendar-period-button,
   .mat-calendar-previous-button,
   .mat-calendar-next-button {
     color: var(--text-primary) !important;
   }
 
-  /* 4. Tiêu đề các thứ trong tuần (S M T W...) */
-  .mat-calendar-table-header th {
-    color: var(--text-secondary, #9ca3af);
-    /* Màu xám nhạt cho đỡ chói */
+  .mat-calendar-arrow {
+    fill: var(--text-primary) !important;
   }
 
-  .mat-calendar-body{
-    td.mat-calendar-body-label {
+  .mat-calendar-table-header th {
+    color: var(--text-secondary, #9ca3af);
+  }
+
+  .mat-calendar-body td.mat-calendar-body-label {
     color: var(--text-primary);
   }
 
-  }
-  
-  /* 5. (Tùy chọn) Chữ "DEC" to đùng ở góc trái (Calendar Header) */
   .mat-datepicker-content .mat-calendar-header {
     color: var(--text-primary) !important;
   }
-}
-
-/* Logic CSS dùng chung (Viết 1 lần dùng cho cả 2 chế độ) */
-
-/* Selector chung cho tất cả các loại button của Material */
-.mat-mdc-button:disabled,
-.mat-mdc-raised-button:disabled,
-.mat-mdc-unelevated-button:disabled,
-.mat-mdc-outlined-button:disabled {
-  
-  /* Lúc này trình duyệt sẽ tự kiểm tra: 
-     - Nếu body không có class dark-mode -> lấy màu đen mờ.
-     - Nếu body CÓ class dark-mode -> tự đổi thành trắng mờ.
-  */
-  background-color: var(--btn-disabled-bg) !important;
-  color: var(--btn-disabled-text) !important;
-  
-  /* Những thuộc tính không đổi thì để đây luôn */
-  cursor: not-allowed !important;
-  box-shadow: none !important;
-}
-
-/* Fix riêng cho nút Outlined (Nút có viền) để nó không bị nền đục */
-.mat-mdc-outlined-button:disabled {
-  background-color: transparent !important;
-  border-color: var(--btn-disabled-bg) !important;
 }
