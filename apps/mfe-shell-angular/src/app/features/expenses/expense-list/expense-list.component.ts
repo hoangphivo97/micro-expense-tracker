@@ -158,7 +158,7 @@ export class ExpenseListComponent implements OnInit {
       });
   }
 
-  openDeleteConfirmModal(id: string) {
+  openDeleteConfirmModal(id: string, description: string) {
     const dialogRef = this.dialog.open(BaseModalComponent, {
       height: '200px',
       width: '400px',
@@ -167,7 +167,10 @@ export class ExpenseListComponent implements OnInit {
         action: this.dialogActionEnum.Delete,
         isSuccess: false,
         data: id,
-        content: ModalMessage.delete,
+        content: {
+          message: ModalMessage.delete,
+          description: description
+        },
       } as DialogData,
       disableClose: true,
     });

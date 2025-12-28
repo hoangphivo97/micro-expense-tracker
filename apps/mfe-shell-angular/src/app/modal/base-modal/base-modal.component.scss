@@ -1,6 +1,20 @@
 :host {
+  mat-dialog-content {
+    background-color: var(--bg-modal);
+
+    --mdc-dialog-supporting-text-color: var(--text-primary);
+
+    button {
+      color: var(--text-primary);
+    }
+  }
+
+  .dialog-title {
+    padding: 0;
+    color: var(--text-primary);
+  }
+
   .button-wrap {
-    padding-right: 30px;
-    justify-content: flex-end;
+    float: right;
   }
 }

@@ -68,7 +68,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
           <a
-            (click)="openDeleteConfirmModal(element.id)"
+            (click)="openDeleteConfirmModal(element.id, element.description)"
             class="button"
             aria-label="delete-btn"
           >
