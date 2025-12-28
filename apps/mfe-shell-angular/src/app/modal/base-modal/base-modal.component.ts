@@ -28,18 +28,18 @@ export class BaseModalComponent {
   dialogActionEnum = DialogActionEnum;
 
   onSave() {
-    // const isCancel: boolean = this.data.action === DialogActionEnum.Cancel
-    // const isSuccess: boolean = this.data.isSuccess === true
-    // if (isCancel && isSuccess) {
-    //   this.errorModalService.closeAllModals();
-    // } else {
-    //   this.expenseService.deleteExpense(this.data.data as string).subscribe(
-    //     {
-    //       error: e => { console.log(e) },
-    //       complete: () => this.dialogRef.close({ title: "Delete", action: this.dialogActionEnum.Delete, isSuccess: true } as DialogData)
-    //     }
-    //   )
-    // }
+    const isCancel: boolean = this.data.action === DialogActionEnum.Cancel
+    const isSuccess: boolean = this.data.isSuccess === true
+    if (isCancel && isSuccess) {
+      this.errorModalService.closeAllModals();
+    } else {
+      this.expenseService.deleteExpense(this.data.data as string).subscribe(
+        {
+          error: e => { console.log(e) },
+          complete: () => this.dialogRef.close({ title: "Delete", action: this.dialogActionEnum.Delete, isSuccess: true } as DialogData)
+        }
+      )
+    }
   }
 
   onCancel() {

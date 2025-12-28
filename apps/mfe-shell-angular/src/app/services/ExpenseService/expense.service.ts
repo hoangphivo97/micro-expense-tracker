@@ -4,6 +4,7 @@ import {
   addDoc,
   collection,
   collectionData,
+  deleteDoc,
   doc,
   DocumentReference,
   Firestore,
@@ -98,8 +99,8 @@ export class ExpenseService {
     );
   }
 
-  // deleteExpense(id: string) {
-  //   const expenseRef = doc(this.firestore, `expenses/${id}`);
-  //   return from(deleteDoc(expenseRef));
-  // }
+  deleteExpense(id: string) {
+    const expenseRef = doc(this.firestore, `expenses/${id}`);
+    return from(deleteDoc(expenseRef));
+  }
 }

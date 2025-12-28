@@ -2,7 +2,6 @@ import {
   Component,
   DestroyRef,
   inject,
-  OnChanges,
   OnInit,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
