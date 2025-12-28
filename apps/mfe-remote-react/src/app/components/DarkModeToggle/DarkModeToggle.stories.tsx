@@ -11,7 +11,7 @@ type Story = StoryObj<typeof DarkModeToggle>;
 
 export const Default: Story = {
   args: {
-    onToggle: (isDark: boolean) =>
+    onThemeChange: (isDark: boolean) =>
       console.log('Nút đã bấm! Dark mode:', isDark),
   },
 };
