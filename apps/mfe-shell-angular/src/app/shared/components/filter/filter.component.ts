@@ -78,14 +78,9 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {
     this.getAllYearsWithDateCurrUser();
     this.handleYearSelected();
-    this.initFilter();
+    this.initFilter(false);
     this.handleFilter();
-    this.emitDefaultList();
-  }
-
-  emitDefaultList() {
-    //Send Default Value to Comp
-    this.filterChange.emit(this.initFilterState);
+    this.initFilter(true)
   }
 
   onSearch(event: Event) {
@@ -97,12 +92,12 @@ export class FilterComponent implements OnInit {
     }
   }
 
-  initFilter() {
-    this.filterForm.setValue({ ...this.initFilterState });
+  initFilter(emit: boolean = true) {
+    this.filterForm.setValue({ ...this.initFilterState }, {emitEvent: emit});
   }
 
   resetFilter() {
-    this.initFilter();
+    this.initFilter(true);
   }
 
   handleFilter() {

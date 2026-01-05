@@ -65,6 +65,7 @@ export class ReportComponent {
     switchMap((p) =>
       this.expenseService.getExpenseList({ year: p.year, month: p.month }),
     ),
+    distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
     shareReplay(1),
   );
 
