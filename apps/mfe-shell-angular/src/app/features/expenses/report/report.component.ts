@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { FilterComponent } from '../../../shared/components/filter/filter.component';
 import { MatIcon } from '@angular/material/icon';
@@ -30,6 +30,7 @@ import {
   getPrevMonth,
 } from '../../../shared/utils/calculate-expense.helper';
 import { mainColorPieChart } from '../../../common/common-list';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-report',
@@ -48,60 +49,66 @@ import { mainColorPieChart } from '../../../common/common-list';
 export class ReportComponent {
   readonly expenseService = inject(ExpenseService);
 
-  private destroy$ = new Subject<void>();
   expense$!: Observable<ExpenseList[]>;
-  private filter$ = new BehaviorSubject<FilterParams>({});
+  private filter = signal<FilterParams>({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+  })
 
-  prevMonth$ = this.filter$.pipe(
+  prevMonthData$ = toObservable(this.filter).pipe(
     map((f) => getPrevMonth(f)),
     switchMap((p) => this.expenseService.getExpenseList(p)),
     shareReplay(1),
   );
 
-  month$ = this.filter$.pipe(
+  monthData$ = toObservable(this.filter).pipe(
     switchMap((p) =>
       this.expenseService.getExpenseList({ year: p.year, month: p.month }),
     ),
     shareReplay(1),
   );
 
-  year$ = this.filter$.pipe(
+  yearData$ = toObservable(this.filter).pipe(
     map((p) => p.year),
     distinctUntilChanged(),
-    switchMap((year) => this.expenseService.getExpenseList({ year })), // không month → cả năm
+    switchMap((year) => this.expenseService.getExpenseList({ year })),
     shareReplay(1),
   );
 
-  kpis$ = combineLatest([this.month$, this.prevMonth$]).pipe(
-    map(([curr, prev]) => {
-      const kNow = calcKPIs(curr);
-      const kPrev = calcKPIs(prev);
-      return { ...kNow, changePct: calcChangePct(kNow.total, kPrev.total) };
-    }),
-    shareReplay(1),
+  // Convert observables to signals for template use
+  monthExpenses = toSignal(this.monthData$, { initialValue: [] as ExpenseList[] });
+  prevMonthExpenses = toSignal(this.prevMonthData$, { initialValue: [] as ExpenseList[] });
+  yearExpenses = toSignal(this.yearData$, { initialValue: [] as ExpenseList[] });
+
+  // Calculate KPIs using signals
+  kpis = computed(() => {
+    const curr = this.monthExpenses();
+    const prev = this.prevMonthExpenses();
+    const kNow = calcKPIs(curr);
+    const kPrev = calcKPIs(prev);
+    return { ...kNow, changePct: calcChangePct(kNow.total, kPrev.total) };
+  })
+
+  // Prepare chart options using signals
+  lineOpts = computed(() => makeLineChart(this.monthExpenses()));
+  pieOpts = computed(() =>
+    makePieChart(this.monthExpenses(), {
+      title: 'Expense By Category',
+      colors: mainColorPieChart,
+    })
   );
 
-  lineOpts$ = this.month$.pipe(map(makeLineChart));
-  pieOpts$ = this.month$.pipe(
-    map((list) =>
-      makePieChart(list, {
-        title: 'Expense By Category',
-        colors: mainColorPieChart,
-      }),
-    ),
-  );
-  barOpts$ = this.year$.pipe(
-    map((list) =>
-      makeMonthlyColumnChart(list, this.filter$.value.year as number, {
-        title: 'Monthly Expenses',
-        seriesName: 'Expenses',
-      }),
-    ),
-  );
+  barOpts = computed(() => {
+    const year = this.filter().year ?? new Date().getFullYear();
+    return makeMonthlyColumnChart(this.yearExpenses(), year, {
+      title: 'Monthly Expenses',
+      seriesName: 'Expenses',
+    })
+  })
 
-  constructor() {}
+  constructor() { }
 
   onFitlerChanged(params: FilterParams) {
-    this.filter$.next(params);
+    this.filter.set(params);
   }
 }

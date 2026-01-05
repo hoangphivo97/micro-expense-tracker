@@ -1,9 +1,9 @@
 import {
   Component,
   DestroyRef,
+  effect,
   EventEmitter,
   inject,
-  Input,
   input,
   OnInit,
   Output,
@@ -30,6 +30,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ExpenseService } from '../../../services/ExpenseService/expense.service';
 
 @Component({
   selector: 'app-filter',
@@ -50,6 +51,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class FilterComponent implements OnInit {
   private router = inject(Router);
+  private expenseService = inject(ExpenseService);
   inputDataSource = input<MatTableDataSource<ExpenseList>>();
   currMonth: number = new Date().getMonth() + 1;
   currYear: number = new Date().getFullYear();
@@ -68,9 +70,13 @@ export class FilterComponent implements OnInit {
     year: new FormControl(this.initFilterState.year),
   });
 
+  constructor() {
+  }
+
   @Output() filterChange = new EventEmitter<FilterParams>();
 
   ngOnInit(): void {
+    this.getAllYearsWithDateCurrUser();
     this.handleYearSelected();
     this.initFilter();
     this.handleFilter();
@@ -114,6 +120,12 @@ export class FilterComponent implements OnInit {
       this.yearsList.push(this.currYear);
     }
     this.yearsList.sort((a: number, b: number) => a - b);
+  }
+
+  getAllYearsWithDateCurrUser(){
+    this.expenseService.getAllYearsWithDate().subscribe(years => {
+      this.yearsList = years
+    })
   }
 
   get months() {
