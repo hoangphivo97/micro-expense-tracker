@@ -11,10 +11,11 @@ import {
   getDoc,
   query,
   QueryConstraint,
+  Timestamp,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { from, Observable, switchMap, take } from 'rxjs';
+import { from, map, Observable, of, switchMap, take } from 'rxjs';
 import {
   CreateExpense,
   ExpenseList,
@@ -29,8 +30,6 @@ export class ExpenseService {
   private expensesCollection = collection(this.firestore, 'expenses');
   readonly auth = inject(Auth);
   readonly user$ = authState(this.auth);
-
-  constructor() {}
 
   getExpenseList(params: Partial<FilterParams>): Observable<ExpenseList[]> {
     const { month, year, searchTerm } = params;
@@ -50,7 +49,6 @@ export class ExpenseService {
           constraints.push(where('date', '>=', startDate));
           constraints.push(where('date', '<=', endDate));
         }
-
         if (searchTerm) {
           constraints.push(
             where('description', '>=', searchTerm),
@@ -102,5 +100,21 @@ export class ExpenseService {
   deleteExpense(id: string) {
     const expenseRef = doc(this.firestore, `expenses/${id}`);
     return from(deleteDoc(expenseRef));
+  }
+
+  getAllYearsWithDate(): Observable<number[]> {
+    return this.user$.pipe(
+      take(1),
+      switchMap(user => {
+        if (!user) return of([]);
+        const q = query(this.expensesCollection, where('userId', '==', user.uid));
+        return collectionData(q).pipe(
+          map(docs => {
+            const years = docs.map(d => (d['date'] as Timestamp).toDate().getFullYear());
+            return Array.from(new Set([...years, new Date().getFullYear()])).sort((a, b) => b - a);
+          })
+        )
+      })
+    )
   }
 }
