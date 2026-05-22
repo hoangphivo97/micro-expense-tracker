@@ -1,5 +1,7 @@
 {
-  "installation": { "version": "22.4.1" },
+  "installation": {
+    "version": "22.4.1"
+  },
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",
@@ -12,7 +14,12 @@
         "serveStaticTargetName": "serve-static"
       }
     },
-    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
     {
       "plugin": "@nx/cypress/plugin",
       "options": {
@@ -24,7 +31,9 @@
     },
     {
       "plugin": "@nx/jest/plugin",
-      "options": { "targetName": "test" },
+      "options": {
+        "targetName": "test"
+      },
       "exclude": [
         "mfe-shell-angular/**/*",
         "backend-e2e/**/*",
@@ -52,10 +61,17 @@
         "linter": "eslint",
         "bundler": "webpack"
       },
-      "component": { "style": "scss" },
-      "library": { "style": "scss", "linter": "eslint" }
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     },
-    "@nx/angular:component": { "style": "css" }
+    "@nx/angular:component": {
+      "style": "css"
+    }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "defaultBase": "master",

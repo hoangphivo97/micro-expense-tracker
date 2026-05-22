@@ -92,9 +92,7 @@
             "output": "."
           }
         ],
-        "styles": [
-          "apps/mfe-shell-angular/src/styles.scss"
-        ],
+        "styles": ["apps/mfe-shell-angular/src/styles.scss"],
         "scripts": []
       }
     }
