@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './features/expenses/login/login.component';
 
 import { NgModule } from '@angular/core';
-import { authGuard } from './services/RouteGuard/auth.guard';
+import { authGuard } from '@micro-expense-tracker/auth/data-access';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 

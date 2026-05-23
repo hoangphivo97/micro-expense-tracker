@@ -38,7 +38,7 @@ import { SettingsServiceService } from '../../../services/SettingsService/settin
 import { LocalStorageService } from '../../../services/LocalStorage/local-storage.service';
 import { MatInputModule } from '@angular/material/input';
 import { EnumToStringPipe } from '../../../shared/EnumToStringPipe/enum-to-string.pipe';
-import { AuthStore } from '../../../services/RouteGuard/Akita/auth.store';
+import { AuthStore } from '@micro-expense-tracker/auth/data-access';
 import { FilterComponent } from '../../../shared/components/filter/filter.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -185,10 +185,6 @@ export class ExpenseListComponent implements OnInit {
       .subscribe((res) => {
         res?.currency as CurrencyEnum;
       });
-  }
-
-  getEnumString(enumObj: any, value: number): string {
-    return enumObj[value];
   }
 
   initDateFormat() {

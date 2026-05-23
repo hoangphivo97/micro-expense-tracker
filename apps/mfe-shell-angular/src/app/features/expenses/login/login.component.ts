@@ -6,10 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../services/RouteGuard/auth.service';
+import { AuthService, AuthStore } from '@micro-expense-tracker/auth/data-access';
 import { catchError, tap, throwError } from 'rxjs';
-import { LoginResponse } from '../../../interface/user.interface';
-import { AuthStore } from '../../../services/RouteGuard/Akita/auth.store';
+import { LoginResponse } from '@micro-expense-tracker/shared/types';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { FirebaseError } from 'firebase/app';

@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { AuthService } from '../../../services/RouteGuard/auth.service';
+import { AuthService } from '@micro-expense-tracker/auth/data-access';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { DialogActionEnum } from '../../../interface/modal.interface';

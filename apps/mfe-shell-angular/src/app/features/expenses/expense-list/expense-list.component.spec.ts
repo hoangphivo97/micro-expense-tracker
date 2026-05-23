@@ -16,7 +16,7 @@ import { expect, describe, it, beforeEach, afterEach } from '@jest/globals';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { SettingsServiceService } from '../../../services/SettingsService/settings-service.service';
-import { AuthService } from '../../../services/RouteGuard/auth.service';
+import { AuthService } from '../../../../../../../libs/auth/data-access/src/lib/auth-data-access/RouteGuard/auth.service';
 
 class MockExpeseService {
   private _$ = new Subject<ExpenseList[]>();

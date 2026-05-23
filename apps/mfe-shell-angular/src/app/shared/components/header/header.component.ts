@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../../services/RouteGuard/auth.service';
+import { AuthService } from '@micro-expense-tracker/auth/data-access';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsModalComponent } from '../../../modal/settings-modal/settings-modal.component';

@@ -11,7 +11,7 @@ import {
   onAuthStateChanged,
 } from '@angular/fire/auth';
 import { BehaviorSubject, from, Observable, switchMap } from 'rxjs';
-import { LoginResponse } from '../../interface/user.interface';
+import { LoginResponse } from '@micro-expense-tracker/shared/types';
 import { HttpClient } from '@angular/common/http';
 import { AuthStore } from './Akita/auth.store';
 import { Router } from '@angular/router';

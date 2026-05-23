@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { DarkModeToggleProps } from '@shared/types';
+import { DarkModeToggleProps } from '@micro-expense-tracker/shared/types';
 
 // Custom Switch theo style của Material UI demo
 const MaterialUISwitch = styled(Switch)(() => ({

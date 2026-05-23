@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { AuthService } from '../../services/RouteGuard/auth.service';
+import { AuthService } from '@micro-expense-tracker/auth/data-access';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
