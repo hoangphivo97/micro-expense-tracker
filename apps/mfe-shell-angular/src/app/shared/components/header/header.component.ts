@@ -17,7 +17,7 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(public authService: AuthService) {}
+  readonly authService = inject(AuthService);
   readonly dialog = inject(MatDialog);
 
   currentDayAndTime: string = '';
