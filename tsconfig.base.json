@@ -24,6 +24,13 @@
       ],
       "@micro-expense-tracker/auth/data-access": [
         "libs/auth/data-access/src/index.ts"
+      ],
+      "@micro-expense-tracker/shared/ui": ["libs/shared/ui/src/index.ts"],
+      "@micro-expense-tracker/auth/features": [
+        "libs/auth/features/src/index.ts"
+      ],
+      "@micro-expense-tracker/shared/constants": [
+        "libs/shared/constants/src/index.ts"
       ]
     }
   },

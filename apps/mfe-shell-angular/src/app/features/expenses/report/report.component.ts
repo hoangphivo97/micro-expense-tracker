@@ -1,16 +1,16 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { HeaderComponent } from '../../../shared/components/header/header.component';
-import { FilterComponent } from '../../../shared/components/filter/filter.component';
+import { HeaderComponent, FilterComponent } from '@micro-expense-tracker/shared/ui';
 import { MatIcon } from '@angular/material/icon';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import {
   makeMonthlyColumnChart,
   makeLineChart,
   makePieChart,
-} from '../../../shared/utils/multiple-charts-helper';
+  calcChangePct,
+  calcKPIs,
+  getPrevMonth,
+} from '@micro-expense-tracker/shared/utils';
 import {
-  BehaviorSubject,
-  combineLatest,
   distinctUntilChanged,
   map,
   Observable,
@@ -22,14 +22,9 @@ import { ExpenseService } from '../../../services/ExpenseService/expense.service
 import {
   ExpenseList,
   FilterParams,
-} from '../../../interface/expense.interface';
+} from '@micro-expense-tracker/shared/types';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import {
-  calcChangePct,
-  calcKPIs,
-  getPrevMonth,
-} from '../../../shared/utils/calculate-expense.helper';
-import { mainColorPieChart } from '../../../common/common-list';
+import { mainColorPieChart } from '@micro-expense-tracker/shared/constants';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({

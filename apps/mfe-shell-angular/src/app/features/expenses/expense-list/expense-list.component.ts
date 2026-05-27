@@ -5,14 +5,13 @@ import {
   OnInit,
   Renderer2,
 } from '@angular/core';
-import { HeaderComponent } from '../../../shared/components/header/header.component';
-import { FooterComponent } from '../../../shared/components/footer/footer.component';
+import { HeaderComponent, FooterComponent, CreateExpenseModalComponent, BaseModalComponent, EnumToStringPipe, FilterComponent} from '@micro-expense-tracker/shared/ui';
 import {
   EditExpense,
   ExpenseList,
   FilterParams,
   PaidMethodEnum,
-} from '../../../interface/expense.interface';
+} from '@micro-expense-tracker/shared/types';
 import { ExpenseService } from '../../../services/ExpenseService/expense.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -21,25 +20,21 @@ import {
   DateFormatValue,
   LocalStorageKey,
   ModalMessage,
-} from '../../../common/login.strings';
+} from '@micro-expense-tracker/shared/constants';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { CreateExpenseModalComponent } from '../../../modal/create-expense-modal/create-expense-modal.component';
 import {
   DialogActionEnum,
   DialogData,
-} from '../../../interface/modal.interface';
-import { BaseModalComponent } from '../../../modal/base-modal/base-modal.component';
+  CurrencyEnum
+} from '@micro-expense-tracker/shared/types';
 import { UserServiceService } from '../../../services/UserService/user-service.service';
-import { CurrencyEnum } from '../../../interface/settings.interface';
 import { SettingsServiceService } from '../../../services/SettingsService/settings-service.service';
 import { LocalStorageService } from '../../../services/LocalStorage/local-storage.service';
 import { MatInputModule } from '@angular/material/input';
-import { EnumToStringPipe } from '../../../shared/EnumToStringPipe/enum-to-string.pipe';
 import { AuthStore } from '@micro-expense-tracker/auth/data-access';
-import { FilterComponent } from '../../../shared/components/filter/filter.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
