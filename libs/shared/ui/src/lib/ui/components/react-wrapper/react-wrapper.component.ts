@@ -14,9 +14,9 @@ import {
 } from '@module-federation/enhanced/runtime';
 import * as React from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { ReactComponentType } from '../../../interface/shared.interface';
+import { ReactComponentType } from '@micro-expense-tracker/shared/types';
 import { DOCUMENT } from '@angular/common';
-import { ThemeService } from '../../../services/ThemeService/theme.service';
+import { ThemeService } from '@micro-expense-tracker/shared/data-access';
 
 @Component({
   selector: 'app-react-wrapper',

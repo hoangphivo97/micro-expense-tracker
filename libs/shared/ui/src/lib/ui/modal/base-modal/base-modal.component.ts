@@ -8,9 +8,9 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { DialogActionEnum, DialogData } from '@micro-expense-tracker/shared/types';
-import { ExpenseService } from '../../services/ExpenseService/expense.service';
+import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { MatButton } from '@angular/material/button';
-import { ErrorModalService } from '../../services/utils/error-modal.service';
+import { ErrorModalService } from '@micro-expense-tracker/shared/ui';
 
 @Component({
   selector: 'app-base-modal',

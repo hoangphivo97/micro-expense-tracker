@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { SettingsServiceService } from '../../../services/SettingsService/settings-service.service';
 
 @Component({
   selector: 'app-footer',
@@ -13,7 +12,6 @@ import { SettingsServiceService } from '../../../services/SettingsService/settin
 export class FooterComponent implements OnInit {
   currentDayAndTime: string = '';
   datePipe = inject(DatePipe);
-  settingService = inject(SettingsServiceService);
   // localStorageService = inject(LocalStorageService)
 
   ngOnInit(): void {

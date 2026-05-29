@@ -14,11 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  ExpenseList,
   FilterParams,
-} from '../../../interface/expense.interface';
+} from '@micro-expense-tracker/shared/types';
 import { CommonModule } from '@angular/common';
-import { months } from '../../../common/common-list';
+import { months } from '@micro-expense-tracker/shared/constants';
 import {
   FormControl,
   FormGroup,
@@ -30,7 +29,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ExpenseService } from '../../../services/ExpenseService/expense.service';
+import { ExpenseService, ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 
 @Component({
   selector: 'app-filter',

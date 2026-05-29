@@ -11,7 +11,7 @@ import { MatLabel } from '@angular/material/form-field';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
-import { ExpenseService } from '../../services/ExpenseService/expense.service';
+import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   DateAdapter,
@@ -57,7 +57,6 @@ export const MY_DATE_FORMATS: MatDateFormats = {
     MatInputModule,
     MatButton,
     MatDatepickerModule,
-    DecimalPipe,
     MatSelect,
     MatOption,
   ],
