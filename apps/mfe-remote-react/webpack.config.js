@@ -7,5 +7,5 @@ const baseConfig = require('./module-federation.config');
 module.exports = composePlugins(
   withNx(),
   withReact(),
-  withModuleFederation(baseConfig),
+  withModuleFederation(baseConfig , {dts: false}),
 );

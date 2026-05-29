@@ -10,20 +10,22 @@ export const routes: Routes = [
   {
     path: 'auth',
     component: AuthLayoutComponent,
-    children: [{ path: 'login', component: LoginComponent }],
+    loadChildren: () => import('@micro-expense-tracker/auth/features').then(m => m.LoginComponent)
   },
-  // Layout chính (có sidebar)
   {
     path: '',
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
+      // 1. Chỉ giữ ĐÚNG một dòng redirect từ trang chủ về /dashboard
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      
+      // 2. Định nghĩa tường minh path 'dashboard' bọc bên ngoài thư viện
       {
-        path: '',
+        path: 'dashboard',
         loadChildren: () =>
           import('@micro-expense-tracker/expenses/features').then(
-            (m) => m.EXPENSES_ROUTES,
+            (m) => m.EXPENSES_ROUTES
           ),
       },
     ],
