@@ -8,3 +8,4 @@ export * from './lib/ui/components/header/header.component';
 export * from './lib/ui/components/react-wrapper/react-wrapper.component';
 export * from './lib/ui/components/sidebar/sidebar.component';
 export * from './lib/ui/pipes/EnumToStringPipe/enum-to-string.pipe';
+export * from './lib/ui/modal/error-modal/error-modal.service';

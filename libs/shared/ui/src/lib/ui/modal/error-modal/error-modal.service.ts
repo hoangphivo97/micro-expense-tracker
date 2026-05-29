@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FirebaseError } from 'firebase/app';
 import { ErrorModalComponent } from '../../modal/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { getFriendlyFirebaseError } from '../../shared/utils/firebase-error.helper';
+import { getFriendlyFirebaseError } from '@micro-expense-tracker/shared/utils';
 
 @Injectable({
   providedIn: 'root',

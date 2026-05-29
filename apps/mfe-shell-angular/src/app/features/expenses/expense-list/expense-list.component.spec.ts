@@ -8,14 +8,14 @@ import {
 import { of, Subject } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { ExpenseService } from '../../../services/ExpenseService/expense.service';
+import { ExpenseService } from '../../../../../../../libs/expenses/data-access/src/lib/expenses-data-access/expense.service';
 import { MatTableModule } from '@angular/material/table';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTableHarness } from '@angular/material/table/testing';
 import { expect, describe, it, beforeEach, afterEach } from '@jest/globals';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { SettingsServiceService } from '../../../services/SettingsService/settings-service.service';
+import { SettingsServiceService } from '../../../../../../../libs/shared/data-access/src/lib/shared-data-access/SettingsService/settings-service.service';
 import { AuthService } from '../../../../../../../libs/auth/data-access/src/lib/auth-data-access/RouteGuard/auth.service';
 
 class MockExpeseService {

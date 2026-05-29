@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
+import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
-import { UserSettings } from '../../interface/settings.interface';
-import { DateFormatValue } from '../../common/login.strings';
+import { UserSettings } from '@micro-expense-tracker/shared/types';
+import { DateFormatValue } from '@micro-expense-tracker/shared/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -44,17 +44,4 @@ export class SettingsServiceService {
   getCurrDateFormat(): string {
     return this.dateFormatSubject.value;
   }
-
-  // createSettingsForUser(settings: UserSettings): Observable<void> {
-  //   const userId = this.getUserId();
-  //   if (!userId) {
-  //     throw new Error('User is not logged in');
-  //   }
-
-  //   // Create a reference to the "Settings" document for this user in Firestore
-  //   const settingsRef = doc(this.firestore, `settings/${userId}`);
-
-  //   // Use setDoc to create or overwrite the document
-  //   return from(setDoc(settingsRef, settings));
-  // }
 }

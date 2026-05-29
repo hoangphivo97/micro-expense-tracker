@@ -12,7 +12,7 @@ import {
   FilterParams,
   PaidMethodEnum,
 } from '@micro-expense-tracker/shared/types';
-import { ExpenseService } from '../../../services/ExpenseService/expense.service';
+import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -30,9 +30,7 @@ import {
   DialogData,
   CurrencyEnum
 } from '@micro-expense-tracker/shared/types';
-import { UserServiceService } from '../../../services/UserService/user-service.service';
-import { SettingsServiceService } from '../../../services/SettingsService/settings-service.service';
-import { LocalStorageService } from '../../../services/LocalStorage/local-storage.service';
+import { SettingsServiceService, LocalStorageService } from '@micro-expense-tracker/shared/data-access';
 import { MatInputModule } from '@angular/material/input';
 import { AuthStore } from '@micro-expense-tracker/auth/data-access';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -58,13 +56,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './expense-list.component.scss',
 })
 export class ExpenseListComponent implements OnInit {
-  readonly userService = inject(UserServiceService);
   readonly settingsService = inject(SettingsServiceService);
   readonly localStorageService = inject(LocalStorageService);
   readonly dialog = inject(MatDialog);
   readonly renderer = inject(Renderer2);
   readonly authStore = inject(AuthStore);
   private readonly destroyRef = inject(DestroyRef);
+  readonly expenseService = inject(ExpenseService);
 
   displayedColumns: string[] = [
     'date',
@@ -82,8 +80,6 @@ export class ExpenseListComponent implements OnInit {
   paidMethodEnum = PaidMethodEnum;
 
   params!: FilterParams;
-
-  constructor(private expenseService: ExpenseService) {}
 
   ngOnInit() {
     this.getToken();

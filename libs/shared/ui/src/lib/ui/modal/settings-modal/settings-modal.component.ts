@@ -8,7 +8,7 @@ import {
 import { MatButton } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
 import { MatOption, MatSelect } from '@angular/material/select';
-import { SettingsServiceService } from '../../services/SettingsService/settings-service.service';
+import { SettingsServiceService } from './settings-service.service';
 import {
   CurrencyStringValue,
   DateFormatStringValue,
@@ -21,9 +21,6 @@ import {
   DateFormatDropdownList,
   DialogActionEnum, DialogData
 } from '@micro-expense-tracker/shared/types';
-import { UserServiceService } from '../../services/UserService/user-service.service';
-import { AsyncPipe } from '@angular/common';
-import { LocalStorageService } from '../../services/LocalStorage/local-storage.service';
 
 @Component({
   selector: 'app-settings-modal',
@@ -43,7 +40,6 @@ export class SettingsModalComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<SettingsModalComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   readonly settingsService = inject(SettingsServiceService);
-  readonly userService = inject(UserServiceService);
   // readonly localStorageService = inject(LocalStorageService)
 
   currencyValue: CurrencyEnum = 0;

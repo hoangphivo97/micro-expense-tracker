@@ -1,5 +1,5 @@
 import { Timestamp } from '@angular/fire/firestore';
-import { DropdownList } from './settings.interface';
+import { DropdownList } from '@micro-expense-tracker/shared/types';
 
 export interface ExpenseList {
   id: string;
@@ -25,17 +25,3 @@ export interface CreateExpense extends Omit<ExpenseList, 'id'> {}
 export interface EditExpense extends ExpenseList {}
 
 export type PaidMethodDropdownList = DropdownList<PaidMethodEnum>;
-
-export interface FilterParams {
-  searchTerm?: string;
-  month?: number;
-  year?: number;
-}
-
-export enum NavItem {
-  DASHBOARD = 'dashboard',
-  REPORT = 'report',
-  EXPENSE = 'expense',
-  USER = 'user',
-  MESSAGE = 'message',
-}

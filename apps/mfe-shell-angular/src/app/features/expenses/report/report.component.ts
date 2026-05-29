@@ -18,7 +18,7 @@ import {
   Subject,
   switchMap,
 } from 'rxjs';
-import { ExpenseService } from '../../../services/ExpenseService/expense.service';
+import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import {
   ExpenseList,
   FilterParams,

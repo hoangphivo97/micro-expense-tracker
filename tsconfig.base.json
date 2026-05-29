@@ -31,6 +31,9 @@
       ],
       "@micro-expense-tracker/shared/constants": [
         "libs/shared/constants/src/index.ts"
+      ],
+      "@micro-expense-tracker/expenses/data-access": [
+        "libs/expenses/data-access/src/index.ts"
       ]
     }
   },
