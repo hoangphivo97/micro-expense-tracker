@@ -9,3 +9,6 @@ export * from './lib/ui/components/react-wrapper/react-wrapper.component';
 export * from './lib/ui/components/sidebar/sidebar.component';
 export * from './lib/ui/pipes/EnumToStringPipe/enum-to-string.pipe';
 export * from './lib/ui/modal/error-modal/error-modal.service';
+export * from './lib/ui/modal/settings-modal/settings-service.service';
+export * from './lib/ui/layouts/auth-layout/auth-layout.component';
+export * from './lib/ui/layouts/main-layout/main-layout.component';

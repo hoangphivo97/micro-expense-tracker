@@ -12,7 +12,7 @@ import { LoginResponse } from '@micro-expense-tracker/shared/types';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { FirebaseError } from 'firebase/app';
-import { ErrorModalService } from '';
+import { ErrorModalService } from '@micro-expense-tracker/shared/ui';
 import { RegisterModalComponent } from './register-modal/register-modal.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -28,15 +28,15 @@ export class LoginComponent implements OnInit {
   router: Router;
   readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly fb = inject(FormBuilder);
+  private readonly rt = inject(Router);
+  public readonly authService = inject(AuthService)
+  private readonly authStore = inject(AuthStore)
+  private readonly errorModalService = inject(ErrorModalService);
 
   loading: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private rt: Router,
-    public authService: AuthService,
-    private authStore: AuthStore,
-    private errorModalService: ErrorModalService,
   ) {
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],

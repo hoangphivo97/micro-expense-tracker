@@ -15,7 +15,6 @@ import {
   map,
   Observable,
   shareReplay,
-  Subject,
   switchMap,
 } from 'rxjs';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';

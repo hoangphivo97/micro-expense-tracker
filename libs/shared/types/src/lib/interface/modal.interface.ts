@@ -1,4 +1,4 @@
-import { EditExpense } from '../../../../../expenses/data-access/src/lib/expenses-data-access/expense.interface';
+import { EditExpense } from '../../../../../expenses/data-access/src/lib/data-access/expense.interface';
 
 export interface DialogData {
   title: string;

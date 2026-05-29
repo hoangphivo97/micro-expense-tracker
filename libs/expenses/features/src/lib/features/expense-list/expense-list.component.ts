@@ -30,7 +30,8 @@ import {
   DialogData,
   CurrencyEnum
 } from '@micro-expense-tracker/shared/types';
-import { SettingsServiceService, LocalStorageService } from '@micro-expense-tracker/shared/data-access';
+import { LocalStorageService } from '@micro-expense-tracker/shared/data-access';
+import { SettingsServiceService} from '@micro-expense-tracker/shared/ui';
 import { MatInputModule } from '@angular/material/input';
 import { AuthStore } from '@micro-expense-tracker/auth/data-access';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

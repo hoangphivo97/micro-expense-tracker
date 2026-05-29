@@ -1,1 +1,1 @@
-export * from './lib/expenses-data-access/expense.service';
+export * from './lib/data-access/expense.service';
