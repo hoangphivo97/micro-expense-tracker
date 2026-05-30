@@ -8,6 +8,10 @@ import {
   Inject,
   inject,
 } from '@angular/core';
+import {
+  loadRemote,
+  registerRemotes,
+} from '@module-federation/enhanced/runtime';
 import * as React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { ReactComponentType } from '@micro-expense-tracker/shared/types';
@@ -32,16 +36,20 @@ export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
 
   async ngAfterViewInit() {
     try {
-      // @ts-ignore - Bypass tạm thời lỗi TS (Sẽ hướng dẫn bỏ ở dưới)
-      const m = await import('mfe-remote-react/DarkModeToggle');
+      registerRemotes([
+        {
+          name: 'mfe_remote_react',
+          entry: 'http://localhost:5000/remoteEntry.js',
+        },
+      ]);
+
+      const m = await loadRemote<ReactComponentType>(
+        'mfe_remote_react/DarkModeToggle',
+      );
 
       if (m && m.default) {
-        const ReactComp = m.default as React.ElementType;
-        
-        // Khởi tạo React Root
+        const ReactComp = m.default;
         this.root = createRoot(this.containerRef.nativeElement);
-        
-        // Render Component React với Props
         this.root.render(
           React.createElement(ReactComp, {
             onThemeChange: (isDark: boolean) => {
@@ -50,10 +58,12 @@ export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
           }),
         );
       } else {
-        console.error('Remote module trả về null hoặc không có default export.');
+        console.error(
+          'Remote module trả về null hoặc không có default export.',
+        );
       }
     } catch (error) {
-      console.error('Lỗi khi tải React Remote Component:', error);
+      console.error('Lỗi tải React Remote:', error);
     }
   }
 

@@ -7,5 +7,11 @@ const baseConfig = require('./module-federation.config');
 module.exports = composePlugins(
   withNx(),
   withReact(),
-  withModuleFederation(baseConfig, {dts: false}),
+  withModuleFederation(baseConfig, { dts: false }),
+  (config) => {
+    if (config.output) {
+      config.output.scriptType = 'text/javascript';
+    }
+    return config;
+  }
 );
