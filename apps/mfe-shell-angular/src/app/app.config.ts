@@ -1,5 +1,5 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideFirebaseApp } from '@angular/fire/app';
@@ -17,8 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideHttpClient(withFetch()),
-    provideRouter(routes),
     provideStore(),
-    // provideEffects()
+    provideRouter(routes, withEnabledBlockingInitialNavigation()),
   ],
 };

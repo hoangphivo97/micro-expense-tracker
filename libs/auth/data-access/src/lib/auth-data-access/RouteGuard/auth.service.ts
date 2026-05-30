@@ -99,6 +99,7 @@ export class AuthService {
   get isLoading$(): Observable<boolean> {
     return this.loading$.asObservable();
   }
+  
   get userObs$(): Observable<User | null> {
     return this.user$.asObservable();
   }

@@ -6,11 +6,16 @@ import { authGuard } from '@micro-expense-tracker/auth/data-access';
 import { MainLayoutComponent, AuthLayoutComponent} from '@micro-expense-tracker/shared/ui';
 
 export const routes: Routes = [
-  // Layout dành cho auth (login)
   {
     path: 'auth',
     component: AuthLayoutComponent,
-    loadChildren: () => import('@micro-expense-tracker/auth/features').then(m => m.LoginComponent)
+    children: [
+      {
+        path: '', 
+        // Dùng loadComponent thay vì loadChildren cho Standalone Component
+        loadComponent: () => import('@micro-expense-tracker/auth/features').then(m => m.LoginComponent)
+      }
+    ]
   },
   {
     path: '',
