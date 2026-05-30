@@ -14,3 +14,9 @@ export const firebaseConfig = {
   appId: '1:924319318341:web:f5b94b3a5d89b4b7d3fe2c',
   measurementId: 'G-T8HZWEXF29',
 };
+
+export const environment = {
+  production: false,
+  reactRemoteURL: 'http://localhost:5000/remoteEntry.js',
+
+}

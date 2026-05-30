@@ -35,9 +35,8 @@ export class ExpenseService {
   getExpenseList(params: Partial<FilterParams>): Observable<ExpenseList[]> {
     const { month, year, searchTerm } = params;
     return this.user$.pipe(
-      take(1),
       switchMap((user) => {
-        if (!user) throw new Error('User is not logged in');
+        if (!user) return of([]);
 
         const constraints: QueryConstraint[] = [
           where('userId', '==', user.uid),
@@ -105,7 +104,6 @@ export class ExpenseService {
 
   getAllYearsWithDate(): Observable<number[]> {
     return this.user$.pipe(
-      take(1),
       switchMap(user => {
         if (!user) return of([]);
         const q = query(this.expensesCollection, where('userId', '==', user.uid));

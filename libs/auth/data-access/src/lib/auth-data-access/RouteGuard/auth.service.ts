@@ -88,7 +88,7 @@ export class AuthService {
 
   async signOut() {
     await this.auth.signOut();
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/auth']);
   }
 
   getIdToken(forceRefresh = false) {

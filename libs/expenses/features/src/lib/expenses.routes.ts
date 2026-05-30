@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 export const EXPENSES_ROUTES: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     loadComponent: () =>
       import('./features/expense-list/expense-list.component').then(
         (m) => m.ExpenseListComponent

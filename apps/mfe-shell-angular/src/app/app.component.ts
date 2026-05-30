@@ -11,16 +11,16 @@ import { AuthStore } from '@micro-expense-tracker/auth/data-access';
 })
 export class AppComponent implements OnInit {
   title = 'expense-tracker-app';
-  // authStore: AuthStore = inject(AuthStore);
+  authStore: AuthStore = inject(AuthStore);
 
   ngOnInit(): void {
-    // if (typeof window !== 'undefined') {
-    //   // this.getToken();
-    // }
+    if (typeof window !== 'undefined') {
+      this.getToken();
+    }
   }
 
-  // getToken() {
-  //   const token = localStorage.getItem('token');
-  //   this.authStore.setToken(token);
-  // }
+  getToken() {
+    const token = localStorage.getItem('token');
+    this.authStore.setToken(token);
+  }
 }

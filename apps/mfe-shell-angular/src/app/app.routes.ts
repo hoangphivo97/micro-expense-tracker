@@ -1,5 +1,4 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from '@micro-expense-tracker/auth/features';
 
 import { NgModule } from '@angular/core';
 import { authGuard } from '@micro-expense-tracker/auth/data-access';
@@ -27,7 +26,7 @@ export const routes: Routes = [
       
       // 2. Định nghĩa tường minh path 'dashboard' bọc bên ngoài thư viện
       {
-        path: 'dashboard',
+        path: '',
         loadChildren: () =>
           import('@micro-expense-tracker/expenses/features').then(
             (m) => m.EXPENSES_ROUTES
