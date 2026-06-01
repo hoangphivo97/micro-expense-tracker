@@ -1,6 +1,6 @@
 {
   "installation": {
-    "version": "22.4.1"
+    "version": "22.7.5"
   },
   "plugins": [
     {
@@ -91,5 +91,6 @@
       "dependsOn": ["^build"],
       "inputs": ["default", "^default"]
     }
-  }
+  },
+  "analytics": false
 }
