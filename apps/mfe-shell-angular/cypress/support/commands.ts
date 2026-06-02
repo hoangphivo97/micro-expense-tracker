@@ -36,6 +36,7 @@ Cypress.Commands.add(
   },
 );
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare global {
   namespace Cypress {
     interface Chainable {

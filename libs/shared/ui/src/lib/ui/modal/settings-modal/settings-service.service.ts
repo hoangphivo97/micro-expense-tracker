@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
@@ -10,11 +10,8 @@ import { DateFormatValue } from '@micro-expense-tracker/shared/constants';
 })
 export class SettingsServiceService {
   private dateFormatSubject = new BehaviorSubject<string>(DateFormatValue.DMY);
-
-  constructor(
-    private firestore: Firestore,
-    private auth: Auth,
-  ) {}
+  private firestore = inject(Firestore);
+  private auth: Auth = inject(Auth);
 
   private getUserId(): string | null {
     return this.auth.currentUser?.uid || null;

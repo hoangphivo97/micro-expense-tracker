@@ -4,7 +4,7 @@
   "sourceRoot": "libs/auth/features/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:auth", "type:features"],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint"

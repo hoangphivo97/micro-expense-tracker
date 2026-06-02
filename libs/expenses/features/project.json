@@ -4,7 +4,7 @@
   "sourceRoot": "libs/expenses/features/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:expenses", "type:features"],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint"

@@ -5,13 +5,14 @@ import {
   OnInit,
   Renderer2,
 } from '@angular/core';
-import { HeaderComponent, FooterComponent, CreateExpenseModalComponent, BaseModalComponent, EnumToStringPipe, FilterComponent} from '@micro-expense-tracker/shared/ui';
+import { HeaderComponent, FooterComponent, BaseModalComponent, EnumToStringPipe, FilterComponent } from '@micro-expense-tracker/shared/ui';
 import {
   EditExpense,
   ExpenseList,
   FilterParams,
   PaidMethodEnum,
 } from '@micro-expense-tracker/shared/types';
+import { CreateExpenseModalComponent } from '../create-expense-modal/create-expense-modal.component';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -27,17 +28,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
   DialogActionEnum,
-  DialogData,
-  CurrencyEnum
+  DialogData
 } from '@micro-expense-tracker/shared/types';
 import { LocalStorageService } from '@micro-expense-tracker/shared/data-access';
-import { SettingsServiceService} from '@micro-expense-tracker/shared/ui';
+import { SettingsServiceService } from '@micro-expense-tracker/shared/ui';
 import { MatInputModule } from '@angular/material/input';
-import { AuthStore } from '@micro-expense-tracker/auth/data-access';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-expense-list',
+  selector: 'lib-expense-list',
   standalone: true,
   imports: [
     HeaderComponent,
@@ -61,7 +60,6 @@ export class ExpenseListComponent implements OnInit {
   readonly localStorageService = inject(LocalStorageService);
   readonly dialog = inject(MatDialog);
   readonly renderer = inject(Renderer2);
-  readonly authStore = inject(AuthStore);
   private readonly destroyRef = inject(DestroyRef);
   readonly expenseService = inject(ExpenseService);
 
@@ -83,7 +81,6 @@ export class ExpenseListComponent implements OnInit {
   params!: FilterParams;
 
   ngOnInit() {
-    this.getToken();
     this.initDateFormat();
   }
 
@@ -99,12 +96,6 @@ export class ExpenseListComponent implements OnInit {
           console.log(error);
         },
       );
-  }
-
-  getToken() {
-    const token: string | null = localStorage.getItem('token');
-    if (!token) return;
-    this.authStore.setToken(token);
   }
 
   openCreateExpenseModal() {
@@ -145,8 +136,18 @@ export class ExpenseListComponent implements OnInit {
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res: DialogData) => {
-        if (!res.isSuccess) return;
-        this.getExpenseList(this.params);
+        if (!res.isSuccess || !res) return;
+
+        if (res.action === this.dialogActionEnum.Delete && res.data) {
+          this.expenseService.deleteExpense(res.data as string).subscribe({
+            next: () => {
+              this.getExpenseList(this.params); //Delete data then call api
+            },
+            error: (e) => console.error(e)
+          });
+        } else {
+          this.getExpenseList(this.params);
+        }
       });
   }
 
@@ -168,15 +169,6 @@ export class ExpenseListComponent implements OnInit {
     });
 
     this.getListAfterSuccessCallApi(dialogRef);
-  }
-
-  getUserSettings() {
-    this.settingsService
-      .getUserSettings()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((res) => {
-        res?.currency as CurrencyEnum;
-      });
   }
 
   initDateFormat() {

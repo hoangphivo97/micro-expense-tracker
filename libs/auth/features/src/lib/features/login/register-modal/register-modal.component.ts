@@ -7,11 +7,11 @@ import {
 } from '@angular/forms';
 import { BaseModalComponent } from '@micro-expense-tracker/shared/ui';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DialogActionEnum} from '@micro-expense-tracker/shared/types';
+import { DialogActionEnum } from '@micro-expense-tracker/shared/types';
 import { ConfirmExitModal } from '@micro-expense-tracker/shared/constants';
 
 @Component({
-  selector: 'app-register-modal',
+  selector: 'lib-register-modal',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './register-modal.component.html',
@@ -19,20 +19,14 @@ import { ConfirmExitModal } from '@micro-expense-tracker/shared/constants';
 })
 export class RegisterModalComponent {
   readonly dialogRef = inject(MatDialogRef<RegisterModalComponent>);
-  registerForm: FormGroup;
+  private fb =  inject(FormBuilder);
+  private dialog = inject(MatDialog); 
 
-  constructor(
-    private fb: FormBuilder,
-    private dialog: MatDialog,
-  ) {
-    this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      passWord: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-    });
-  }
-
-  onSubmit() {}
+  registerForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    passWord: ['', Validators.required],
+    confirmPassword: ['', Validators.required],
+  });
 
   onCancel() {
     const isEmpty: boolean = Object.values(this.registerForm.value).every(

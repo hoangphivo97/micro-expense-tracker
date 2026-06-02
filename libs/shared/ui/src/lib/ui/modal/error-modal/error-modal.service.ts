@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FirebaseError } from 'firebase/app';
 import { ErrorModalComponent } from '../../modal/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,8 +8,8 @@ import { getFriendlyFirebaseError } from '@micro-expense-tracker/shared/utils';
   providedIn: 'root',
 })
 export class ErrorModalService {
-  constructor(private dialog: MatDialog) {}
-
+  private dialog = inject(MatDialog);
+  
   openErrorModal(error: FirebaseError) {
     this.dialog.open(ErrorModalComponent, {
       width: '400px',

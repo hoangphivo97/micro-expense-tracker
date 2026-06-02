@@ -13,7 +13,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBug } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-error-modal',
+  selector: 'lib-error-modal',
   standalone: true,
   imports: [
     MatDialogActions,
@@ -31,8 +31,6 @@ export class ErrorModalComponent {
   dialogRef = inject(MatDialogRef<ErrorModalComponent>);
   data = inject<DialogError>(MAT_DIALOG_DATA);
   iconBug = faBug;
-
-  constructor() {}
 
   onCancel() {
     this.dialogRef.close();

@@ -1,5 +1,4 @@
 export * from './lib/ui/modal/base-modal/base-modal.component';
-export * from './lib/ui/modal/create-expense-modal/create-expense-modal.component';
 export * from './lib/ui/modal/error-modal/error-modal.component';
 export * from './lib/ui/modal/settings-modal/settings-modal.component';
 export * from './lib/ui/components/filter/filter.component';

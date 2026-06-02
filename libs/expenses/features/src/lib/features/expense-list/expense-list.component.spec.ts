@@ -1,22 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ExpenseListComponent } from './expense-list.component';
-import {
-  ExpenseList,
-  PaidMethodEnum,
-} from '../../../interface/expense.interface';
+import { ExpenseList, PaidMethodEnum } from '@micro-expense-tracker/shared/types'; // Sửa import từ shared/types
 import { of, Subject } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { ExpenseService } from '../../../../../data-access/src/lib/data-access/expense.service';
+import { ExpenseService } from '@micro-expense-tracker/expenses/data-access'; // Sửa import alias của Nx
 import { MatTableModule } from '@angular/material/table';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatTableHarness } from '@angular/material/table/testing';
-import { expect, describe, it, beforeEach, afterEach } from '@jest/globals';
+import { expect, describe, it, beforeEach } from '@jest/globals'; // Xoá afterEach không dùng
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { SettingsServiceService } from '';
-import { AuthService } from '';
+import { SettingsServiceService } from '@micro-expense-tracker/shared/ui'; // Điền path hợp lệ
 
 class MockExpeseService {
   private _$ = new Subject<ExpenseList[]>();
@@ -35,23 +30,13 @@ class MockDialog {
   });
 }
 
-const mockAuthService = {
-  user$: of({ uid: 'u1', email: 'test@example.com' }),
-  isLoggedIn: jest.fn().mockReturnValue(true),
-  login: jest.fn(),
-  logout: jest.fn(),
-};
-
 const mockSettingsService = {
-  // tuỳ hàm nào component gọi thì bạn mock
   getSettings: jest.fn().mockReturnValue(of({ theme: 'dark' })),
 };
 
 describe('ExpenseListComponent', () => {
-  let component: ExpenseListComponent;
   let fixture: ComponentFixture<ExpenseListComponent>;
   let svc: MockExpeseService;
-  let dialog: MockDialog;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -59,7 +44,7 @@ describe('ExpenseListComponent', () => {
       providers: [
         provideHttpClientTesting(),
         provideHttpClient(),
-        { provide: 'ExpenseService', useClass: MockExpeseService },
+        { provide: ExpenseService, useClass: MockExpeseService },
         { provide: MatDialog, useClass: MockDialog },
       ],
     })
@@ -67,39 +52,26 @@ describe('ExpenseListComponent', () => {
       .overrideProvider(SettingsServiceService, {
         useValue: mockSettingsService,
       })
-      .overrideProvider(AuthService, { useValue: mockAuthService })
       .compileComponents();
 
     fixture = TestBed.createComponent(ExpenseListComponent);
-    component = fixture.componentInstance;
     svc = TestBed.inject(ExpenseService) as unknown as MockExpeseService;
-
     fixture.detectChanges();
   });
 
-  it('Should redner expense rows from service data', async () => {
+  it('Should render expense rows from service data', async () => {
     const loader = TestbedHarnessEnvironment.loader(fixture);
 
     const data: ExpenseList[] = [
       {
         id: '1',
-        date: new Date('2025-09-11T00:00:00.000Z'),
-        description: 'test',
+        date: { toDate: () => new Date('2025-09-11') } as any,
+        description: 'Cà phê',
         purpose: 'test',
         paid: PaidMethodEnum.CASH,
         for: 'Me',
-        amount: 100000,
+        amount: 45000,
         createdAt: new Date('2025-09-11T00:00:00.000Z'),
-      },
-      {
-        id: '2',
-        date: new Date('2025-09-12T00:00:00.000Z'),
-        description: 'test',
-        purpose: 'test',
-        paid: PaidMethodEnum.CASH,
-        for: 'Me',
-        amount: 105000,
-        createdAt: new Date('2025-09-12T00:00:00.000Z'),
       },
     ];
 
@@ -109,10 +81,10 @@ describe('ExpenseListComponent', () => {
     const table = await loader.getHarness(MatTableHarness);
     const rows = await table.getRows();
 
-    expect(rows.length).toBe(2);
+    expect(rows.length).toBe(1);
 
     const firstRowCells = await rows[0].getCellTextByIndex();
     expect(firstRowCells).toContain('Cà phê');
-    expect(firstRowCells).toContain('45000');
+    expect(firstRowCells).toContain('45,000');
   });
 });

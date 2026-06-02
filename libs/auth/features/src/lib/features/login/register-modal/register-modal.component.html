@@ -2,7 +2,7 @@
   <h2 class="title">Sign Up</h2>
 
   <div [formGroup]="registerForm" class="form">
-    <label>Email</label>
+    <label for="email">Email</label>
     <input placeholder="Email" formControlName="email" />
     @if (getErrorMessage('email')) {
       <div class="error-message">
@@ -10,7 +10,7 @@
       </div>
     }
 
-    <label>Password</label>
+    <label for="password">Password</label>
     <input placeholder="password" type="password" formControlName="passWord" />
     @if (this.getErrorMessage('passWord')) {
       <div class="error-message">
@@ -18,7 +18,7 @@
       </div>
     }
 
-    <label>Confirm password</label>
+    <label for="confirmPassword">Confirm password</label>
     <input
       placeholder="confirm password"
       type="password"

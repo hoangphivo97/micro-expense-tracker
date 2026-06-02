@@ -1,19 +1,17 @@
 import { Component, inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { DialogActionEnum, DialogData } from '@micro-expense-tracker/shared/types';
-import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { MatButton } from '@angular/material/button';
-import { ErrorModalService } from '@micro-expense-tracker/shared/ui';
+import { ErrorModalService } from '../error-modal/error-modal.service';
 
 @Component({
-  selector: 'app-base-modal',
+  selector: 'lib-base-modal',
   standalone: true,
   imports: [MatDialogActions, MatDialogContent, MatDialogTitle, MatButton],
   templateUrl: './base-modal.component.html',
@@ -22,7 +20,6 @@ import { ErrorModalService } from '@micro-expense-tracker/shared/ui';
 export class BaseModalComponent {
   readonly dialogRef = inject(MatDialogRef<BaseModalComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  readonly expenseService = inject(ExpenseService);
   readonly errorModalService = inject(ErrorModalService);
 
   dialogActionEnum = DialogActionEnum;
@@ -33,12 +30,12 @@ export class BaseModalComponent {
     if (isCancel && isSuccess) {
       this.errorModalService.closeAllModals();
     } else {
-      this.expenseService.deleteExpense(this.data.data as string).subscribe(
-        {
-          error: e => { console.log(e) },
-          complete: () => this.dialogRef.close({ title: "Delete", action: this.dialogActionEnum.Delete, isSuccess: true } as DialogData)
-        }
-      )
+      this.dialogRef.close({ 
+        title: "Delete", 
+        action: this.dialogActionEnum.Delete, 
+        isSuccess: true,
+        data: this.data.data 
+      } as DialogData);
     }
   }
 

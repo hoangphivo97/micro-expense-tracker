@@ -27,7 +27,7 @@ import { mainColorPieChart } from '@micro-expense-tracker/shared/constants';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-report',
+  selector: 'lib-report',
   standalone: true,
   imports: [
     HeaderComponent,
@@ -100,8 +100,6 @@ export class ReportComponent {
       seriesName: 'Expenses',
     })
   })
-
-  constructor() { }
 
   onFitlerChanged(params: FilterParams) {
     this.filter.set(params);

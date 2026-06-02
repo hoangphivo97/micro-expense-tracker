@@ -23,7 +23,7 @@ import {
 } from '@micro-expense-tracker/shared/types';
 
 @Component({
-  selector: 'app-settings-modal',
+  selector: 'lib-settings-modal',
   standalone: true,
   imports: [
     MatDialogActions,

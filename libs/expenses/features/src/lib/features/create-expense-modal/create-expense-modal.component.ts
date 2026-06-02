@@ -46,7 +46,7 @@ export const MY_DATE_FORMATS: MatDateFormats = {
 };
 
 @Component({
-  selector: 'app-create-expense-modal',
+  selector: 'lib-create-expense-modal',
   standalone: true,
   imports: [
     MatDialogTitle,
@@ -76,7 +76,7 @@ export class CreateExpenseModalComponent implements OnInit {
   private decimalPipe = inject(DecimalPipe);
   private destroyRef = inject(DestroyRef);
 
-  formattedValue: string = '';
+  formattedValue = '';
   dialogActionEnum = DialogActionEnum;
 
   paidMethodCurrVal: PaidMethodEnum = PaidMethodEnum.CASH;
@@ -176,8 +176,8 @@ export class CreateExpenseModalComponent implements OnInit {
 
   onInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    let rawValue = inputElement.value.replace(/,/g, ''); // Remove commas
-    let numericValue = parseFloat(rawValue); // Parse as float
+    const rawValue = inputElement.value.replace(/,/g, ''); // Remove commas
+    const numericValue = parseFloat(rawValue); // Parse as float
 
     // Update the form control with raw numeric value
     if (!isNaN(numericValue)) {

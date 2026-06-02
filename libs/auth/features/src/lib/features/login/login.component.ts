@@ -17,33 +17,28 @@ import { RegisterModalComponent } from './register-modal/register-modal.componen
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-login',
+  selector: 'lib-login',
   standalone: true,
   imports: [ReactiveFormsModule, MatCheckboxModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  router: Router;
+
   readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(FormBuilder);
-  private readonly rt = inject(Router);
+  private readonly router = inject(Router);
   public readonly authService = inject(AuthService)
   private readonly authStore = inject(AuthStore)
   private readonly errorModalService = inject(ErrorModalService);
 
   loading: boolean = false;
 
-  constructor(
-  ) {
-    this.loginForm = this.fb.group({
-      userName: ['', Validators.required],
-      passWord: ['', Validators.required],
-    });
-    this.router = this.rt;
-  }
+  loginForm: FormGroup = this.fb.group({
+    userName: ['', Validators.required],
+    passWord: ['', Validators.required],
+  });
 
   ngOnInit(): void {
     this.disableSignInAndRegister();

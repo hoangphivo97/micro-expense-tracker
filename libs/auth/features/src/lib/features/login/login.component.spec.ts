@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { LoginStrings } from '../../../common/login.strings';
+import { LoginStrings } from '@micro-expense-tracker/shared/constants';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('LoginComponent', () => {
