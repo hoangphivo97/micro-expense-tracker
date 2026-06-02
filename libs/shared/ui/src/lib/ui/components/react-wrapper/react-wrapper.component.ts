@@ -5,8 +5,8 @@ import {
   AfterViewInit,
   OnDestroy,
   Renderer2,
-  Inject,
   inject,
+  DOCUMENT,
 } from '@angular/core';
 import {
   loadRemote,
@@ -14,26 +14,24 @@ import {
 import * as React from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { ReactComponentType } from '@micro-expense-tracker/shared/types';
-import { DOCUMENT } from '@angular/common';
+
 import { ThemeService } from '@micro-expense-tracker/shared/data-access';
 import { NgZone } from '@angular/core';
 
 @Component({
-  selector: 'app-react-wrapper',
+  selector: 'lib-react-wrapper',
   standalone: true,
   templateUrl: './react-wrapper.component.html',
   styleUrls: ['./react-wrapper.component.css'],
 })
 export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
-  themeService = inject(ThemeService);
-  ngZone = inject(NgZone);
-  @ViewChild('reactContainer', { static: true }) containerRef!: ElementRef;
-  root!: Root;
+  protected readonly themeService = inject(ThemeService);
+  private readonly ngZone = inject(NgZone);
+  private readonly document = inject(DOCUMENT);
+  private readonly renderer = inject(Renderer2);
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2,
-  ) { }
+  @ViewChild('reactContainer', { static: true }) containerRef!: ElementRef;
+  private root!: Root;
 
   async ngAfterViewInit() {
     try {

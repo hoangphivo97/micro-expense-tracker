@@ -49,6 +49,7 @@ export default [
                 'type:util',
                 'type:types',
                 'type:constants',
+                'type:data-access'
               ],
             },
             {

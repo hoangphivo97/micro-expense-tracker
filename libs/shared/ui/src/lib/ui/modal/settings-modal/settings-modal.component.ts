@@ -44,7 +44,7 @@ export class SettingsModalComponent implements OnInit {
 
   currencyValue: CurrencyEnum = 0;
 
-  selectedFormat: string = '';
+  selectedFormat = '';
 
   dialogActionEnum = DialogActionEnum;
 
@@ -65,7 +65,7 @@ export class SettingsModalComponent implements OnInit {
     // this.localStorageService.clear();
   }
 
-  updateDateFormatGlobal(dateFormat: string, key: string) {
+  updateDateFormatGlobal(dateFormat: string) {
     this.settingsService.setDateFormat(dateFormat);
     // this.localStorageService.setItem(key, dateFormat);
   }
@@ -87,7 +87,6 @@ export class SettingsModalComponent implements OnInit {
     // })
     this.updateDateFormatGlobal(
       this.selectedFormat,
-      LocalStorageKey.dateFormat,
     );
     this.dialogRef.close({
       title: 'Settings',

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   private readonly authStore = inject(AuthStore)
   private readonly errorModalService = inject(ErrorModalService);
 
-  loading: boolean = false;
+  loading = false;
 
   loginForm: FormGroup = this.fb.group({
     userName: ['', Validators.required],

@@ -17,7 +17,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { navItems } from '@micro-expense-tracker/shared/constants';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { ReactWrapperComponent } from '../react-wrapper/react-wrapper.component';
+import { ReactWrapperComponent } from '@micro-expense-tracker/shared/ui';
 
 @Component({
   selector: 'app-sidebar',
@@ -35,7 +35,7 @@ import { ReactWrapperComponent } from '../react-wrapper/react-wrapper.component'
 })
 export class SidebarComponent implements OnInit {
   readonly dialog = inject(MatDialog);
-  authService = inject(AuthService);
+  readonly authService = inject(AuthService);
   private router = inject(Router);
 
   @Output() toggle = new EventEmitter<void>();
@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
   dialogActionEnum = DialogActionEnum;
   faArrowRightFromBracket = faArrowRightFromBracket;
 
-  activeItem: NavItem = NavItem.DASHBOARD;
+  activeItem = NavItem.DASHBOARD;
 
   ngOnInit(): void {
     this.getUrlAndActiveSidebar();

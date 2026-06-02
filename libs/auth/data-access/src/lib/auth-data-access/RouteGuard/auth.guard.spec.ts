@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
-
+import { describe } from '@jest/globals';
 import { authGuard } from './auth.guard';
 
 describe('authGuard', () => {

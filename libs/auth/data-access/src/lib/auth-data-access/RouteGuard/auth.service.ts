@@ -4,7 +4,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   UserCredential,
-  signOut,
   FacebookAuthProvider,
   AuthProvider,
   User,
@@ -26,12 +25,11 @@ export class AuthService {
   private apiFacebookUrl = 'http://localhost:3000/auth/facebook-login';
   private user$ = new BehaviorSubject<User | null>(null);
   private loading$ = new BehaviorSubject<boolean>(true);
+  private http = inject(HttpClient);
+  private authStore = inject(AuthStore);
+  private router = inject(Router);
 
-  constructor(
-    private http: HttpClient,
-    private authStore: AuthStore,
-    private router: Router,
-  ) {
+  constructor() {
     onAuthStateChanged(this.auth, (user: User | null) => {
       if (user) {
         this.user$.next({
@@ -53,13 +51,13 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginData);
   }
 
-  signInWithGoogleAccount(): Observable<Object> {
+  signInWithGoogleAccount(): Observable<object> {
     const provider = new GoogleAuthProvider();
 
     return this.signInWithProvider(provider, this.apiGoogleUrl);
   }
 
-  signInWithFacebookAccount(): Observable<Object> {
+  signInWithFacebookAccount(): Observable<object> {
     const provider = new FacebookAuthProvider();
     provider.addScope('email');
 
@@ -69,7 +67,7 @@ export class AuthService {
   private signInWithProvider(
     provider: AuthProvider,
     apiUrl: string,
-  ): Observable<any> {
+  ): Observable<object> {
     return from(signInWithPopup(this.auth, provider)).pipe(
       switchMap((result: UserCredential) =>
         from(result.user.getIdToken()).pipe(
@@ -80,11 +78,6 @@ export class AuthService {
       ),
     );
   }
-
-  // clearAuthData() {
-  //   this.authStore.update({ token: null }); // Clear Akita store
-  //   this.router.navigate(['/login']); // Redirect to login
-  // }
 
   async signOut() {
     await this.auth.signOut();
@@ -99,7 +92,7 @@ export class AuthService {
   get isLoading$(): Observable<boolean> {
     return this.loading$.asObservable();
   }
-  
+
   get userObs$(): Observable<User | null> {
     return this.user$.asObservable();
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core'; // Added inject import
 import { Query } from '@datorama/akita';
 import { AuthStore, AuthState } from './auth.store';
 import { Observable } from 'rxjs';
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 export class AuthQuery extends Query<AuthState> {
   token$: Observable<string | null> = this.select('token');
 
-  constructor(protected override store: AuthStore) {
-    super(store);
+  constructor() {
+    super(inject(AuthStore));
   }
 }

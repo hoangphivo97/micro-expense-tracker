@@ -2,7 +2,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { NgModule } from '@angular/core';
 import { authGuard } from '@micro-expense-tracker/auth/data-access';
-import { MainLayoutComponent, AuthLayoutComponent} from '@micro-expense-tracker/shared/ui';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
   {

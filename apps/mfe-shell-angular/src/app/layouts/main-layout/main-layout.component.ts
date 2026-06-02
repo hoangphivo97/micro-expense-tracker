@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AuthService } from '@micro-expense-tracker/auth/data-access';
 import { MatIcon } from '@angular/material/icon';
+import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [SidebarComponent, RouterOutlet, MatSidenavModule, MatIcon],
+  imports: [RouterOutlet, MatSidenavModule, MatIcon, SidebarComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })
