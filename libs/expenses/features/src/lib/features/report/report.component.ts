@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { HeaderComponent, FilterComponent } from '@micro-expense-tracker/shared/ui';
 import { MatIcon } from '@angular/material/icon';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -40,17 +40,21 @@ import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-i
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })
-export class ReportComponent {
+export class ReportComponent implements OnInit {
   readonly expenseService = inject(ExpenseService);
   private readonly destroyRef = inject(DestroyRef);
 
   availableYears: number[] = [];
-
   expense$!: Observable<ExpenseList[]>;
+
   private filter = signal<FilterParams>({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
   })
+
+  ngOnInit() {
+    this.getCurrYear();
+  }
 
   prevMonthData$ = toObservable(this.filter).pipe(
     map((f) => getPrevMonth(f)),
