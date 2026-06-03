@@ -1,9 +1,10 @@
 <section class="header-row">
   <lib-header></lib-header>
-  <app-filter
+  <lib-filter
     class="filter"
     (filterChange)="onFitlerChanged($event)"
-  ></app-filter>
+    [yearsList]="availableYears"
+  ></lib-filter>
 </section>
 <div class="report-page">
   <section class="summarize-section">

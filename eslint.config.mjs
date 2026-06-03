@@ -46,7 +46,7 @@ export default [
               sourceTag: 'type:ui',
               onlyDependOnLibsWithTags: [
                 'type:ui',
-                'type:util',
+                'type:shared-utils',
                 'type:types',
                 'type:constants',
                 'type:data-access'
@@ -55,22 +55,22 @@ export default [
             {
               sourceTag: 'type:data-access',
               onlyDependOnLibsWithTags: [
-                'type:util',
+                'type:shared-utils',
                 'type:types',
                 'type:constants',
               ],
             },
             {
-              sourceTag: 'type:util',
+              sourceTag: 'type:shared-utils',
               onlyDependOnLibsWithTags: ['type:types', 'type:constants'],
             },
             {
               sourceTag: 'type:types',
-              onlyDependOnLibsWithTags: ['type:constants'],
+              onlyDependOnLibsWithTags: [],
             },
             {
               sourceTag: 'type:constants',
-              onlyDependOnLibsWithTags: [],
+              onlyDependOnLibsWithTags: ['type:types'],
             },
           ],
         },

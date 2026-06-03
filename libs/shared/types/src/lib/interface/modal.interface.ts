@@ -1,10 +1,8 @@
-import { EditExpense } from '../../../../../expenses/data-access/src/lib/data-access/expense.interface';
-
-export interface DialogData {
+export interface DialogData <T = unknown>{
   title: string;
   action: DialogActionEnum;
   isSuccess: boolean;
-  data?: EditExpense | string;
+  data?: T;
   content: DialogContent;
 }
 

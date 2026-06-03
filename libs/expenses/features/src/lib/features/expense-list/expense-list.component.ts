@@ -7,11 +7,9 @@ import {
 } from '@angular/core';
 import { HeaderComponent, FooterComponent, BaseModalComponent, EnumToStringPipe, FilterComponent } from '@micro-expense-tracker/shared/ui';
 import {
-  EditExpense,
-  ExpenseList,
   FilterParams,
-  PaidMethodEnum,
 } from '@micro-expense-tracker/shared/types';
+import {  PaidMethodEnum , EditExpense, ExpenseList} from '@micro-expense-tracker/expenses/data-access';
 import { CreateExpenseModalComponent } from '../create-expense-modal/create-expense-modal.component';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -34,6 +32,7 @@ import { LocalStorageService } from '@micro-expense-tracker/shared/data-access';
 import { SettingsServiceService } from '@micro-expense-tracker/shared/ui';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'lib-expense-list',
@@ -80,8 +79,17 @@ export class ExpenseListComponent implements OnInit {
 
   params!: FilterParams;
 
+  availableYears: number[] = [];
+
   ngOnInit() {
     this.initDateFormat();
+    this.getCurrYear();
+  }
+
+  getCurrYear(){
+    this.expenseService.getAllYearsWithDate()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(years => this.availableYears = years);
   }
 
   getExpenseList(params: FilterParams) {

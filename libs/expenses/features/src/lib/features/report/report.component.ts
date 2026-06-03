@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { HeaderComponent, FilterComponent } from '@micro-expense-tracker/shared/ui';
 import { MatIcon } from '@angular/material/icon';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -19,12 +19,12 @@ import {
 } from 'rxjs';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import {
-  ExpenseList,
   FilterParams,
 } from '@micro-expense-tracker/shared/types';
+import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { mainColorPieChart } from '@micro-expense-tracker/shared/constants';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'lib-report',
@@ -42,6 +42,9 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 })
 export class ReportComponent {
   readonly expenseService = inject(ExpenseService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  availableYears: number[] = [];
 
   expense$!: Observable<ExpenseList[]>;
   private filter = signal<FilterParams>({
@@ -103,5 +106,11 @@ export class ReportComponent {
 
   onFitlerChanged(params: FilterParams) {
     this.filter.set(params);
+  }
+
+  getCurrYear() {
+    this.expenseService.getAllYearsWithDate()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(years => this.availableYears = years);
   }
 }

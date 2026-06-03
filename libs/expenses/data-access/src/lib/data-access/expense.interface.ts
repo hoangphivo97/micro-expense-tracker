@@ -10,8 +10,6 @@ export interface ExpenseList {
   for?: string;
   amount: number;
   createdAt: Date | Timestamp;
-  // budget: number;
-  // remainBalance: number;
 }
 
 export enum PaidMethodEnum {
@@ -20,8 +18,8 @@ export enum PaidMethodEnum {
   BANK_TRANSFER,
 }
 
-export interface CreateExpense extends Omit<ExpenseList, 'id'> {}
+export type CreateExpense = Omit<ExpenseList, 'id'>;
 
-export interface EditExpense extends ExpenseList {}
+export type EditExpense = ExpenseList;
 
 export type PaidMethodDropdownList = DropdownList<PaidMethodEnum>;

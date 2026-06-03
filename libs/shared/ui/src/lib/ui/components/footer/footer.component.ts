@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'lib-footer',
@@ -9,11 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './footer.component.scss',
   providers: [DatePipe],
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent  {
   readonly author = 'Vo Hoang Phi';
   readonly currentYear = new Date().getFullYear();
-
-  ngOnInit(): void {
-  }
 
 }

@@ -6,7 +6,7 @@
     </button>
   </section>
 
-  <app-filter (filterChange)="onFitlerChanged($event)" [inputDataSource]="dataSource"></app-filter>
+  <lib-filter (filterChange)="onFitlerChanged($event)" [inputDataSource]="dataSource" [yearsList]="availableYears"></lib-filter>
 
   <ng-container>
     <table mat-table [dataSource]="dataSource" *ngIf="dataSource && dataSource.data.length > 0; else noData">

@@ -13,7 +13,6 @@ import {
   CurrencyStringValue,
   DateFormatStringValue,
   DateFormatValue,
-  LocalStorageKey,
 } from '@micro-expense-tracker/shared/constants';
 import {
   CurrencyEnum,

@@ -1,4 +1,5 @@
-import { ExpenseList, FilterParams } from '@micro-expense-tracker/shared/types';
+import { FilterParams } from '@micro-expense-tracker/shared/types';
+import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 
 type KPIs = { total: number; count: number; max: number | null };
 

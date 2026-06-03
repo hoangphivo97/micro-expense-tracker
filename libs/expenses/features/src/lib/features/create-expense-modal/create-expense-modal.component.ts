@@ -21,10 +21,6 @@ import {
 } from '@angular/material/core';
 import { CustomDateAdapter } from '@micro-expense-tracker/shared/utils';
 import {
-  CreateExpense,
-  EditExpense,
-  PaidMethodDropdownList,
-  PaidMethodEnum,
   DialogActionEnum, DialogData
 } from '@micro-expense-tracker/shared/types';
 import { DecimalPipe } from '@angular/common';
@@ -32,6 +28,12 @@ import { MatSelect } from '@angular/material/select';
 import { PaidMethodStringValue } from '@micro-expense-tracker/shared/constants';
 import { Timestamp } from '@angular/fire/firestore';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  CreateExpense,
+  EditExpense,
+  PaidMethodDropdownList,
+  PaidMethodEnum
+} from '@micro-expense-tracker/expenses/data-access';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
   parse: {

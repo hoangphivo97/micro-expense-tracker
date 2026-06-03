@@ -1,16 +1,16 @@
 import {
   ApexAxisChartSeries,
-  ApexNonAxisChartSeries,
   ApexChart,
   ApexStroke,
   ApexXAxis,
   ApexTitleSubtitle,
   ChartType,
 } from 'ng-apexcharts';
-import { ExpenseList, AxisChartOptions, NonAxisChartOptions } from '@micro-expense-tracker/shared/types';
+import { AxisChartOptions, NonAxisChartOptions } from '@micro-expense-tracker/shared/types';
 import { formatDate } from '@angular/common';
-import { tsToDate, tsToMs } from '@micro-expense-tracker/shared/utils';
+import { tsToDate, tsToMs } from '../utils/custom-date';
 import { Timestamp } from '@angular/fire/firestore';
+import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 
 export type LineOpts = {
   series: ApexAxisChartSeries;
