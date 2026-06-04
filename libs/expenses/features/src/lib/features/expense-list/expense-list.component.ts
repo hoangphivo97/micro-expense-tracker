@@ -1,16 +1,18 @@
 import {
   Component,
+  computed,
   DestroyRef,
   inject,
   OnInit,
   Renderer2,
+  signal,
 } from '@angular/core';
 import { HeaderComponent, FooterComponent, BaseModalComponent, FilterComponent } from '@micro-expense-tracker/shared/ui';
 import {
   FilterParams,
 } from '@micro-expense-tracker/shared/types';
 import { EnumToStringPipe } from '../EnumToStringPipe/enum-to-string.pipe';
-import {  PaidMethodEnum , EditExpense, ExpenseList} from '@micro-expense-tracker/expenses/data-access';
+import { PaidMethodEnum, EditExpense, ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 import { CreateExpenseModalComponent } from '../create-expense-modal/create-expense-modal.component';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,8 +34,9 @@ import {
 import { LocalStorageService } from '@micro-expense-tracker/shared/data-access';
 import { SettingsServiceService } from '@micro-expense-tracker/shared/ui';
 import { MatInputModule } from '@angular/material/input';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'lib-expense-list',
@@ -73,7 +76,7 @@ export class ExpenseListComponent implements OnInit {
     'action',
   ];
 
-  dataSource = new MatTableDataSource<ExpenseList>();
+  private readonly refreshTrigger = signal<number>(0);
 
   dialogActionEnum = DialogActionEnum;
   paidMethodEnum = PaidMethodEnum;
@@ -82,29 +85,38 @@ export class ExpenseListComponent implements OnInit {
 
   availableYears: number[] = [];
 
+  readonly filterParams = signal<FilterParams>({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+  });
+
+  private readonly rawExpenses$ =
+    toObservable(
+      computed(() => ({ filter: this.filterParams(), refresh: this.refreshTrigger() }))).pipe(
+        switchMap(({ filter }) => this.expenseService.getExpenseList(filter)
+        ), catchError((e) => {
+          console.error("Get List Firebase Error", e);
+          return of([] as ExpenseList[]);
+        })
+      );
+
+  readonly expensesSignal = toSignal(this.rawExpenses$, { initialValue: [] as ExpenseList[] });
+
+  readonly dataSource = computed(() => {
+    const list = this.expensesSignal();
+    return new MatTableDataSource<ExpenseList>(list);
+  });
+
+
   ngOnInit() {
     this.initDateFormat();
     this.getCurrYear();
   }
 
-  getCurrYear(){
+  private getCurrYear() {
     this.expenseService.getAllYearsWithDate()
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe(years => this.availableYears = years);
-  }
-
-  getExpenseList(params: FilterParams) {
-    this.expenseService
-      .getExpenseList(params)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(
-        (data: ExpenseList[]) => {
-          this.dataSource.data = data;
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
+      .subscribe(years => this.availableYears = years);
   }
 
   openCreateExpenseModal() {
@@ -148,14 +160,16 @@ export class ExpenseListComponent implements OnInit {
         if (!res.isSuccess || !res) return;
 
         if (res.action === this.dialogActionEnum.Delete && res.data) {
-          this.expenseService.deleteExpense(res.data as string).subscribe({
-            next: () => {
-              this.getExpenseList(this.params); //Delete data then call api
-            },
-            error: (e) => console.error(e)
-          });
+          this.expenseService.deleteExpense(res.data as string)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+              next: () => {
+                this.refreshTrigger.update(n => n + 1);
+              },
+              error: (e) => console.error('Error while deleting expense', e)
+            });
         } else {
-          this.getExpenseList(this.params);
+          this.filterParams.set({ ...this.filterParams() });
         }
       });
   }
@@ -190,8 +204,7 @@ export class ExpenseListComponent implements OnInit {
   }
 
   onFitlerChanged(params: FilterParams) {
-    this.params = params;
-    this.getExpenseList(params);
+    this.filterParams.set(params);
   }
 
   get GlobalDateFormat(): string {
