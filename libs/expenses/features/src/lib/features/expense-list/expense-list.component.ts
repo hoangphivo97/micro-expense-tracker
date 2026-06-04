@@ -11,7 +11,7 @@ import {
   FilterParams,
 } from '@micro-expense-tracker/shared/types';
 import { EnumToStringPipe } from '../EnumToStringPipe/enum-to-string.pipe';
-import { PaidMethodEnum, EditExpense, ExpenseList } from '@micro-expense-tracker/expenses/data-access';
+import { PaidMethodEnum, EditExpense, ExpenseList, parseRouterFilterParams } from '@micro-expense-tracker/expenses/data-access';
 import { CreateExpenseModalComponent } from '../create-expense-modal/create-expense-modal.component';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -36,7 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
 import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'lib-expense-list',
@@ -94,13 +94,9 @@ export class ExpenseListComponent implements OnInit {
 
   availableYears: number[] = [];
 
-  readonly filterParams = computed<FilterParams>(() => {
-    const params = this.queryParamsSignal();
-    return {
-      year: params?.['year'] ? Number(params['year']) : new Date().getFullYear(),
-      month: params?.['month'] ? Number(params['month']) : new Date().getMonth() + 1,
-    }
-  });
+  readonly filterParams = computed<FilterParams>(() =>
+    parseRouterFilterParams(this.queryParamsSignal())
+  );
 
   private readonly rawExpenses$ =
     toObservable(

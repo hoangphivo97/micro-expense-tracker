@@ -1,5 +1,6 @@
 import { FilterParams } from '@micro-expense-tracker/shared/types';
 import { ExpenseList } from './expense.interface';
+import { Params } from '@angular/router';
 
 
 export function getPrevMonth(p: Partial<FilterParams>): FilterParams {
@@ -25,4 +26,16 @@ export function calcKPIs(list: ExpenseList[]) {
 
 export function calcChangePct(currTotal: number, prevTotal: number) {
   return prevTotal > 0 ? ((currTotal - prevTotal) / prevTotal) * 100 : null;
+}
+
+
+export function parseRouterFilterParams(params: Params | undefined): FilterParams {
+  const yearParsed = Number(params?.['year']);
+  const monthParsed = Number(params?.['month']);
+
+  return {
+    year: params?.['year'] && !isNaN(yearParsed) ? yearParsed : new Date().getFullYear(),
+    month: params?.['month'] && !isNaN(monthParsed) ? monthParsed : new Date().getMonth() + 1,
+    searchTerm: params?.['searchTerm'] ?? ''
+  };
 }

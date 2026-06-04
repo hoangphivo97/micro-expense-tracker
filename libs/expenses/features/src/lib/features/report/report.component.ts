@@ -7,7 +7,7 @@ import {
   makeLineChart,
   makePieChart,
 } from '../report/utils/multiple-charts-helper';
-import { calcChangePct, calcKPIs, getPrevMonth } from '@micro-expense-tracker/expenses/data-access';
+import { calcChangePct, calcKPIs, getPrevMonth, parseRouterFilterParams } from '@micro-expense-tracker/expenses/data-access';
 import {
   filter,
   map,
@@ -22,7 +22,7 @@ import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { mainColorPieChart } from '@micro-expense-tracker/shared/constants';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'lib-report',
@@ -54,30 +54,26 @@ export class ReportComponent implements OnInit {
     )
   );
 
-  readonly filter = computed<FilterParams>(() => {
-    const params = this.queryParamsSignal();
-    return {
-      year: params?.['year'] ? Number(params['year']) : new Date().getFullYear(),
-      month: params?.['month'] ? Number(params['month']) : new Date().getMonth() + 1,
-    };
-  });
+  readonly filterParams = computed<FilterParams>(() =>
+    parseRouterFilterParams(this.queryParamsSignal())
+  );
 
   readonly monthExpenses = toSignal(
-    toObservable(computed(() => ({ f: this.filter(), refresh: this.refreshTrigger() }))).pipe(
+    toObservable(computed(() => ({ f: this.filterParams(), refresh: this.refreshTrigger() }))).pipe(
       switchMap(({ f }) => this.expenseService.getExpenseList({ year: f.year, month: f.month }))
     ),
     { initialValue: [] as ExpenseList[] }
   );
 
   readonly prevMonthExpenses = toSignal(
-    toObservable(computed(() => ({ f: this.filter(), refresh: this.refreshTrigger() }))).pipe(
+    toObservable(computed(() => ({ f: this.filterParams(), refresh: this.refreshTrigger() }))).pipe(
       switchMap(({ f }) => this.expenseService.getExpenseList(getPrevMonth(f)))
     ),
     { initialValue: [] as ExpenseList[] }
   );
 
   readonly yearExpenses = toSignal(
-    toObservable(computed(() => ({ f: this.filter(), refresh: this.refreshTrigger() }))).pipe(
+    toObservable(computed(() => ({ f: this.filterParams(), refresh: this.refreshTrigger() }))).pipe(
       switchMap(({ f }) => this.expenseService.getExpenseList({ year: f.year }))
     ),
     { initialValue: [] as ExpenseList[] }
@@ -101,7 +97,7 @@ export class ReportComponent implements OnInit {
   );
 
   readonly barOpts = computed(() => {
-    const year = this.filter().year ?? new Date().getFullYear();
+    const year = this.filterParams().year ?? new Date().getFullYear();
     return makeMonthlyColumnChart(this.yearExpenses(), year, {
       title: 'Monthly Expenses',
       seriesName: 'Expenses',
