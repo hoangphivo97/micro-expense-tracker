@@ -8,7 +8,7 @@ import {
 } from 'ng-apexcharts';
 import { AxisChartOptions, NonAxisChartOptions } from '@micro-expense-tracker/shared/types';
 import { formatDate } from '@angular/common';
-import { tsToDate, tsToMs } from '../utils/custom-date';
+import { tsToDate, tsToMs } from '@micro-expense-tracker/shared/utils';
 import { Timestamp } from '@angular/fire/firestore';
 import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 

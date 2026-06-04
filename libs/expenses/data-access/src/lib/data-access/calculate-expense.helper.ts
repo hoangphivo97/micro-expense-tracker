@@ -1,12 +1,14 @@
 import { FilterParams } from '@micro-expense-tracker/shared/types';
-import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
+import { ExpenseList } from './expense.interface';
 
-type KPIs = { total: number; count: number; max: number | null };
 
 export function getPrevMonth(p: Partial<FilterParams>): FilterParams {
-  return p.month! > 1
-    ? { year: p.year, month: p.month! - 1 }
-    : { year: (p.year as number) - 1, month: 12 };
+  const currentMonth = p.month ?? new Date().getMonth() + 1;
+  const currentYear = p.year ?? new Date().getFullYear();
+
+  return currentMonth > 1
+    ? { year: currentYear, month: currentMonth - 1 }
+    : { year: currentYear - 1, month: 12 };
 }
 
 export function calcKPIs(list: ExpenseList[]) {

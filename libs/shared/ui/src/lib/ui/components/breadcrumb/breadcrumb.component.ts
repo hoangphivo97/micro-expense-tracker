@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-breadcrumb',
+  selector: 'lib-breadcrumb',
   standalone: true,
   imports: [],
   templateUrl: './breadcrumb.component.html',
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class BreadcrumbComponent implements OnInit {
   router = inject(Router);
-  firstBreadcrumb: string = '';
+  firstBreadcrumb = '';
 
   ngOnInit(): void {
     this.getBreadcrumb();

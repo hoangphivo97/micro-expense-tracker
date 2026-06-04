@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
   private readonly fb = inject(FormBuilder);
-  private readonly router = inject(Router);
+  readonly router = inject(Router);
   public readonly authService = inject(AuthService)
   private readonly authStore = inject(AuthStore)
   private readonly errorModalService = inject(ErrorModalService);

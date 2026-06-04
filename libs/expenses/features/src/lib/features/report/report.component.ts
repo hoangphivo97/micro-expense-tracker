@@ -6,10 +6,8 @@ import {
   makeMonthlyColumnChart,
   makeLineChart,
   makePieChart,
-  calcChangePct,
-  calcKPIs,
-  getPrevMonth,
-} from '@micro-expense-tracker/shared/utils';
+} from '../report/utils/multiple-charts-helper';
+import { calcChangePct, calcKPIs, getPrevMonth } from '@micro-expense-tracker/expenses/data-access';
 import {
   distinctUntilChanged,
   map,

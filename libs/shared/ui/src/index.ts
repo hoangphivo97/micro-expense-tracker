@@ -5,6 +5,5 @@ export * from './lib/ui/components/filter/filter.component';
 export * from './lib/ui/components/footer/footer.component';
 export * from './lib/ui/components/header/header.component';
 export * from './lib/ui/components/react-wrapper/react-wrapper.component';
-export * from './lib/ui/pipes/EnumToStringPipe/enum-to-string.pipe';
 export * from './lib/ui/modal/error-modal/error-modal.service';
 export * from './lib/ui/modal/settings-modal/settings-service.service';

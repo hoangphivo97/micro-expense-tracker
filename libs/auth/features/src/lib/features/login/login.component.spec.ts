@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { LoginStrings } from '@micro-expense-tracker/shared/constants';
 import { ReactiveFormsModule } from '@angular/forms';
+import { describe, beforeEach, it , expect} from '@jest/globals';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -24,8 +24,8 @@ describe('LoginComponent', () => {
   });
 
   it("should create form with two controls", () => {
-    expect(component.loginForm.contains('userName')).toBeTrue();
-    expect(component.loginForm.contains('passWord')).toBeTrue();
+    expect(component.loginForm.contains('userName')).toBe(true);
+    expect(component.loginForm.contains('passWord')).toBe(true);
   })
 
   it("should navigate to expense list with admin account", () => {
@@ -37,6 +37,6 @@ describe('LoginComponent', () => {
   it("should failed to login", () => {
     expect(component.loginForm.setValue({userName:"test",passWord: "test"}));
     component.loginAction();
-    expect(component.).toBe(LoginStrings.loginError)
+    expect(component).toBe("Login Failed")
   })
 });

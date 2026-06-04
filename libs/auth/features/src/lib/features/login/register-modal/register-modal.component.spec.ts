@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterModalComponent } from './register-modal.component';
+import { describe, beforeEach, it , expect} from '@jest/globals';
 
 describe('RegisterModalComponent', () => {
   let component: RegisterModalComponent;

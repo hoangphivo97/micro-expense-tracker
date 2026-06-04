@@ -5,10 +5,11 @@ import {
   OnInit,
   Renderer2,
 } from '@angular/core';
-import { HeaderComponent, FooterComponent, BaseModalComponent, EnumToStringPipe, FilterComponent } from '@micro-expense-tracker/shared/ui';
+import { HeaderComponent, FooterComponent, BaseModalComponent, FilterComponent } from '@micro-expense-tracker/shared/ui';
 import {
   FilterParams,
 } from '@micro-expense-tracker/shared/types';
+import { EnumToStringPipe } from '../EnumToStringPipe/enum-to-string.pipe';
 import {  PaidMethodEnum , EditExpense, ExpenseList} from '@micro-expense-tracker/expenses/data-access';
 import { CreateExpenseModalComponent } from '../create-expense-modal/create-expense-modal.component';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
