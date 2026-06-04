@@ -122,11 +122,16 @@ export class FilterComponent<T = any> implements OnInit {
     this.filterForm.valueChanges
       .pipe(
         debounceTime(300),
-        // Safe guard object reference emission loops with strict stringified comparison contracts
         distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
       )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => {
+
+        const dataSource = this.inputDataSource();
+        if (dataSource) {
+          dataSource.filter = (value.searchTerm || '').trim().toLowerCase();
+        }
+
         this.filterChange.emit(value as FilterParams);
       });
   }
