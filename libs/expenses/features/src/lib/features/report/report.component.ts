@@ -9,6 +9,9 @@ import {
 } from '../report/utils/multiple-charts-helper';
 import { calcChangePct, calcKPIs, getPrevMonth } from '@micro-expense-tracker/expenses/data-access';
 import {
+  filter,
+  map,
+  startWith,
   switchMap,
 } from 'rxjs';
 import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
@@ -18,7 +21,8 @@ import {
 import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { mainColorPieChart } from '@micro-expense-tracker/shared/constants';
-import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'lib-report',
@@ -36,31 +40,45 @@ import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-i
 })
 export class ReportComponent implements OnInit {
   readonly expenseService = inject(ExpenseService);
+  private readonly router = inject(Router);
 
   readonly availableYears = signal<number[]>([]);
 
-  private filter = signal<FilterParams>({
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-  })
+  readonly refreshTrigger = signal<number>(0);
+
+  private readonly queryParamsSignal = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(() => this.router.parseUrl(this.router.url).queryParams),
+      startWith(this.router.parseUrl(this.router.url).queryParams) // Extracts parameters instantly on load
+    )
+  );
+
+  readonly filter = computed<FilterParams>(() => {
+    const params = this.queryParamsSignal();
+    return {
+      year: params?.['year'] ? Number(params['year']) : new Date().getFullYear(),
+      month: params?.['month'] ? Number(params['month']) : new Date().getMonth() + 1,
+    };
+  });
 
   readonly monthExpenses = toSignal(
-    toObservable(this.filter).pipe(
-      switchMap((f) => this.expenseService.getExpenseList({ year: f.year, month: f.month }))
+    toObservable(computed(() => ({ f: this.filter(), refresh: this.refreshTrigger() }))).pipe(
+      switchMap(({ f }) => this.expenseService.getExpenseList({ year: f.year, month: f.month }))
     ),
     { initialValue: [] as ExpenseList[] }
   );
 
   readonly prevMonthExpenses = toSignal(
-    toObservable(this.filter).pipe(
-      switchMap((f) => this.expenseService.getExpenseList(getPrevMonth(f)))
+    toObservable(computed(() => ({ f: this.filter(), refresh: this.refreshTrigger() }))).pipe(
+      switchMap(({ f }) => this.expenseService.getExpenseList(getPrevMonth(f)))
     ),
     { initialValue: [] as ExpenseList[] }
   );
 
   readonly yearExpenses = toSignal(
-    toObservable(this.filter).pipe(
-      switchMap((f) => this.expenseService.getExpenseList({ year: f.year }))
+    toObservable(computed(() => ({ f: this.filter(), refresh: this.refreshTrigger() }))).pipe(
+      switchMap(({ f }) => this.expenseService.getExpenseList({ year: f.year }))
     ),
     { initialValue: [] as ExpenseList[] }
   );
@@ -94,8 +112,11 @@ export class ReportComponent implements OnInit {
     this.getCurrYear();
   }
 
-  onFitlerChanged(params: FilterParams) {
-    this.filter.set(params);
+  onFilterChanged(params: FilterParams): void {
+    this.router.navigate([], {
+      queryParams: { year: params.year, month: params.month },
+      queryParamsHandling: 'merge',
+    });
   }
 
   private getCurrYear() {

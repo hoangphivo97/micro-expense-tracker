@@ -48,7 +48,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.scss',
 })
-export class FilterComponent <T = any> implements OnInit {
+export class FilterComponent<T = any> implements OnInit {
   private router = inject(Router);
   inputDataSource = input<MatTableDataSource<T>>();
 
@@ -71,6 +71,17 @@ export class FilterComponent <T = any> implements OnInit {
     year: new FormControl(this.initFilterState.year),
   });
 
+  // 1. DATA ENTRY BOUNDARY: Synchronizes URL state from parent directly into the reactive form inputs
+  @Input() set value(val: FilterParams | null) {
+    if (val) {
+      this.filterForm.patchValue({
+        month: val.month ?? this.currMonth,
+        year: val.year ?? this.currYear,
+        searchTerm: val.searchTerm ?? ''
+      }, { emitEvent: false }); // CRITICAL: prevent infinite loop routing triggers
+    }
+  }
+
   @Input() set yearsList(years: number[]) {
     this._yearsList = [...years];
     if (!this._yearsList.includes(this.currYear)) {
@@ -87,9 +98,7 @@ export class FilterComponent <T = any> implements OnInit {
 
   ngOnInit(): void {
     this.handleYearSelected();
-    this.initFilter(false);
     this.handleFilter();
-    this.initFilter(true)
   }
 
   onSearch(event: Event) {
@@ -111,7 +120,11 @@ export class FilterComponent <T = any> implements OnInit {
 
   handleFilter() {
     this.filterForm.valueChanges
-      .pipe(debounceTime(300), distinctUntilChanged())
+      .pipe(
+        debounceTime(300),
+        // Safe guard object reference emission loops with strict stringified comparison contracts
+        distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
+      )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => {
         this.filterChange.emit(value as FilterParams);

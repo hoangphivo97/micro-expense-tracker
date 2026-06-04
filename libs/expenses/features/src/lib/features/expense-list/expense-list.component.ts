@@ -4,7 +4,6 @@ import {
   DestroyRef,
   inject,
   OnInit,
-  Renderer2,
   signal,
 } from '@angular/core';
 import { HeaderComponent, FooterComponent, BaseModalComponent, FilterComponent } from '@micro-expense-tracker/shared/ui';
@@ -36,7 +35,8 @@ import { SettingsServiceService } from '@micro-expense-tracker/shared/ui';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';
-import { catchError, of, switchMap } from 'rxjs';
+import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'lib-expense-list',
@@ -62,9 +62,10 @@ export class ExpenseListComponent implements OnInit {
   readonly settingsService = inject(SettingsServiceService);
   readonly localStorageService = inject(LocalStorageService);
   readonly dialog = inject(MatDialog);
-  readonly renderer = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
   readonly expenseService = inject(ExpenseService);
+  private readonly router = inject(Router);
+
 
   displayedColumns: string[] = [
     'date',
@@ -76,6 +77,14 @@ export class ExpenseListComponent implements OnInit {
     'action',
   ];
 
+  private readonly queryParamsSignal = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(() => this.router.parseUrl(this.router.url).queryParams),
+      startWith(this.router.parseUrl(this.router.url).queryParams) // Extracts parameters instantly on load
+    )
+  );
+
   private readonly refreshTrigger = signal<number>(0);
 
   dialogActionEnum = DialogActionEnum;
@@ -85,14 +94,18 @@ export class ExpenseListComponent implements OnInit {
 
   availableYears: number[] = [];
 
-  readonly filterParams = signal<FilterParams>({
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
+  readonly filterParams = computed<FilterParams>(() => {
+    const params = this.queryParamsSignal();
+    return {
+      year: params?.['year'] ? Number(params['year']) : new Date().getFullYear(),
+      month: params?.['month'] ? Number(params['month']) : new Date().getMonth() + 1,
+    }
   });
 
   private readonly rawExpenses$ =
     toObservable(
-      computed(() => ({ filter: this.filterParams(), refresh: this.refreshTrigger() }))).pipe(
+      computed(() => ({ filter: this.filterParams(), refresh: this.refreshTrigger() })))
+      .pipe(
         switchMap(({ filter }) => this.expenseService.getExpenseList(filter)
         ), catchError((e) => {
           console.error("Get List Firebase Error", e);
@@ -169,7 +182,7 @@ export class ExpenseListComponent implements OnInit {
               error: (e) => console.error('Error while deleting expense', e)
             });
         } else {
-          this.filterParams.set({ ...this.filterParams() });
+          this.refreshTrigger.update(n => n + 1);
         }
       });
   }
@@ -203,8 +216,11 @@ export class ExpenseListComponent implements OnInit {
     }
   }
 
-  onFitlerChanged(params: FilterParams) {
-    this.filterParams.set(params);
+  onFilterChanged(params: FilterParams) {
+    this.router.navigate([], {
+      queryParams: { year: params.year, month: params.month },
+      queryParamsHandling: 'merge',
+    });
   }
 
   get GlobalDateFormat(): string {

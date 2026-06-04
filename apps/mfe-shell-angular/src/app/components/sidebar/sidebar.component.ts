@@ -36,7 +36,7 @@ import { ReactWrapperComponent } from '@micro-expense-tracker/shared/ui';
 export class SidebarComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   readonly authService = inject(AuthService);
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
   @Output() toggle = new EventEmitter<void>();
   @Output() logout = new EventEmitter<void>();
@@ -69,20 +69,15 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  // openSettings() {
-  //   const dialogRef = this.dialog.open(SettingsModalComponent, {
-  //     height: '270px',
-  //     width: '450px',
-  //     data: { title: "Settings", action: this.dialogActionEnum.Settings, isSuccess: false } as DialogData,
-  //     disableClose: true
-  //   })
 
-  //   this.getListAfterSuccessCallApi(dialogRef)
-  // }
 
-  setActive(itemKey: NavItem) {
-    this.activeItem = itemKey;
-    this.router.navigateByUrl(itemKey);
+setActive(itemKey: NavItem) {
+    const currentQueryParams = this.router.parseUrl(this.router.url).queryParams;
+
+    this.router.navigate([itemKey], {
+      queryParams: currentQueryParams,
+      queryParamsHandling: 'merge',
+    });
   }
 
   get navItems() {

@@ -6,8 +6,8 @@
     </button>
   </section>
 
-  <lib-filter (filterChange)="onFitlerChanged($event)" [inputDataSource]="dataSource()"
-    [yearsList]="availableYears"></lib-filter>
+  <lib-filter (filterChange)="onFilterChanged($event)" [inputDataSource]="dataSource()"
+    [yearsList]="availableYears" [value]="filterParams()"></lib-filter>
 
   @if(expensesSignal().length > 0){
   <table mat-table [dataSource]="dataSource()">

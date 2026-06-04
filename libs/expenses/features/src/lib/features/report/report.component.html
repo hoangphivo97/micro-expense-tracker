@@ -2,8 +2,9 @@
   <lib-header></lib-header>
   <lib-filter
     class="filter"
-    (filterChange)="onFitlerChanged($event)"
+    (filterChange)="onFilterChanged($event)"
     [yearsList]="availableYears()"
+    [value]="filter()"
   ></lib-filter>
 </section>
 <div class="report-page">

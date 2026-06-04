@@ -1,5 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'lib-breadcrumb',
@@ -8,17 +10,24 @@ import { Router } from '@angular/router';
   templateUrl: './breadcrumb.component.html',
   styleUrl: './breadcrumb.component.scss',
 })
-export class BreadcrumbComponent implements OnInit {
-  router = inject(Router);
-  firstBreadcrumb = '';
+export class BreadcrumbComponent {
+  private readonly router = inject(Router);
 
-  ngOnInit(): void {
-    this.getBreadcrumb();
-  }
+  //Reactive stream pipeline that extracts clean paths on NavigationEnd, completely isolating '?year=...' query params
+  private readonly cleanUrl = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => event.urlAfterRedirects.split('?')[0])
+    ),
+    { initialValue: this.router.url.split('?')[0] }
+  );
 
-  getBreadcrumb() {
-    //Will need improve if have more sub path
-    const path: string = this.router.url.split('/')[1];
-    this.firstBreadcrumb = path;
-  }
+  //Computed Contract: Enforces layout text formatting, normalizing capitalization structures dynamically
+  readonly firstBreadcrumb = computed(() => {
+    const path = this.cleanUrl().split('/')[1];
+    if (!path) return '';
+
+    // Returns a capitalized string title layout contract 
+    return path.charAt(0).toUpperCase() + path.slice(1);
+  });
 }
