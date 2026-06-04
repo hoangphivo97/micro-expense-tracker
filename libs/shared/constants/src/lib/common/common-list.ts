@@ -16,12 +16,6 @@ export const months = [
 ];
 
 export const navItems = [
-  {
-    icon: 'dashboard',
-    label: 'Dashboard',
-    route: '/dashboard',
-    key: NavItem.DASHBOARD,
-  },
   { icon: 'local_atm', label: 'Expenses', key: NavItem.EXPENSE },
   { icon: 'accessibility_new', label: 'User', key: NavItem.USER },
   {

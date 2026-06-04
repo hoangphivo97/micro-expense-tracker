@@ -12,7 +12,6 @@ export const routes: Routes = [
     children: [
       {
         path: '', 
-        // Dùng loadComponent thay vì loadChildren cho Standalone Component
         loadComponent: () => import('@micro-expense-tracker/auth/features').then(m => m.LoginComponent)
       }
     ]
@@ -22,10 +21,7 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      // 1. Chỉ giữ ĐÚNG một dòng redirect từ trang chủ về /dashboard
-      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
-      
-      // 2. Định nghĩa tường minh path 'dashboard' bọc bên ngoài thư viện
+      { path: '', pathMatch: 'full', redirectTo: 'expense' },
       {
         path: '',
         loadChildren: () =>
@@ -38,7 +34,7 @@ export const routes: Routes = [
   // 404 fallback
   {
     path: '**',
-    redirectTo: '/dashboard',
+    redirectTo: '/expense',
   },
 ];
 

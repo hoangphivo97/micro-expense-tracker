@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'libs/shared/ui/src/lib/ui/styles/_variables' as *;
 
 .main {
   display: flex;

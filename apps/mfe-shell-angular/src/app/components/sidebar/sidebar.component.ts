@@ -18,6 +18,8 @@ import { navItems } from '@micro-expense-tracker/shared/constants';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ReactWrapperComponent } from '@micro-expense-tracker/shared/ui';
+import { A11yModule } from "@angular/cdk/a11y";
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,7 +31,8 @@ import { ReactWrapperComponent } from '@micro-expense-tracker/shared/ui';
     FontAwesomeModule,
     RouterModule,
     ReactWrapperComponent,
-  ],
+    A11yModule
+],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
@@ -42,11 +45,11 @@ export class SidebarComponent implements OnInit {
   @Output() logout = new EventEmitter<void>();
   @Input() collapsed = false;
 
-  user$ = this.authService.userObs$;
+  readonly user = toSignal(this.authService.userObs$)
   dialogActionEnum = DialogActionEnum;
   faArrowRightFromBracket = faArrowRightFromBracket;
 
-  activeItem = NavItem.DASHBOARD;
+  activeItem = NavItem.EXPENSE;
 
   ngOnInit(): void {
     this.getUrlAndActiveSidebar();
@@ -64,8 +67,8 @@ export class SidebarComponent implements OnInit {
   setActiveItemByUrl(url: string) {
     if (url.includes('/report')) {
       this.activeItem = NavItem.REPORT;
-    } else if (url.includes('/dashboard')) {
-      this.activeItem = NavItem.DASHBOARD;
+    } else if (url.includes('/expense')) {
+      this.activeItem = NavItem.EXPENSE;
     }
   }
 

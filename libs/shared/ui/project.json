@@ -8,6 +8,9 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "stylePreprocessorOptions": {
+      "includePaths": ["libs/shared/ui/src/lib/ui/styles"]
     }
   }
 }
