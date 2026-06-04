@@ -1,0 +1,13 @@
+{
+  "name": "expenses-features",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expenses/features/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:expenses", "type:features"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

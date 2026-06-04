@@ -3,20 +3,20 @@ import { IsString, IsNotEmpty } from 'class-validator';
 export class LoginDto {
   @IsString()
   @IsNotEmpty()
-  uid: string;
+  uid!: string;
 
   @IsString()
   @IsNotEmpty()
-  username: string;
+  username!: string;
 
   @IsString()
-  password: string;
-
-  @IsString()
-  @IsNotEmpty()
-  email: string;
+  password!: string;
 
   @IsString()
   @IsNotEmpty()
-  role: string;
+  email!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  role!: string;
 }

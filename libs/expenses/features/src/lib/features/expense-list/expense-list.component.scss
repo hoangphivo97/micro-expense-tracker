@@ -1,0 +1,72 @@
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+  background-color: var(--bg-secondary);
+
+  .button:hover {
+    cursor: pointer;
+  }
+
+  .expense-list {
+    padding: 0px 40px 60px 40px;
+    flex: 1 1 auto;
+
+    ::ng-deep{
+      .mat-mdc-table{
+        background-color: var(--bg-secondary);
+      }
+    }
+
+    .create-section {
+      display: flex;
+      flex-direction: row-reverse;
+
+      .create-btn {
+        border: none;
+        padding: 20px;
+        border-radius: 35px;
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        background-color: var(--purple-bland-8);
+
+        &:hover {
+          color: var(--bg-secondary);
+          background-color: var(--text-primary);
+        }
+      }
+    }
+
+    table{
+      ::ng-deep{
+        th, td{
+          color: var(--text-primary)
+        }
+      }
+    }
+
+    .no-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      font-size: 25px;
+      padding-bottom: 40px;
+    }
+  }
+}
+
+lib-header,
+lib-footer {
+  flex: 0 0 auto;
+  flex-direction: column;
+}

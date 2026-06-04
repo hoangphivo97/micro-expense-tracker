@@ -1,37 +1,32 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './features/expenses/login/login.component';
 
 import { NgModule } from '@angular/core';
-import { authGuard } from './services/RouteGuard/auth.guard';
+import { authGuard } from '@micro-expense-tracker/auth/data-access';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
-  // Layout dành cho auth (login)
   {
     path: 'auth',
     component: AuthLayoutComponent,
-    children: [{ path: 'login', component: LoginComponent }],
+    children: [
+      {
+        path: '', 
+        loadComponent: () => import('@micro-expense-tracker/auth/features').then(m => m.LoginComponent)
+      }
+    ]
   },
-  // Layout chính (có sidebar)
   {
     path: '',
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: '', pathMatch: 'full', redirectTo: 'expense' },
       {
-        path: 'dashboard',
-        loadComponent: () =>
-          import(
-            './features/expenses/expense-list/expense-list.component'
-          ).then((m) => m.ExpenseListComponent),
-      },
-      {
-        path: 'report',
-        loadComponent: () =>
-          import('./features/expenses/report/report.component').then(
-            (m) => m.ReportComponent,
+        path: '',
+        loadChildren: () =>
+          import('@micro-expense-tracker/expenses/features').then(
+            (m) => m.EXPENSES_ROUTES
           ),
       },
     ],
@@ -39,7 +34,7 @@ export const routes: Routes = [
   // 404 fallback
   {
     path: '**',
-    redirectTo: '/dashboard',
+    redirectTo: '/expense',
   },
 ];
 

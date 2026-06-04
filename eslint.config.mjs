@@ -16,9 +16,61 @@ export default [
           enforceBuildableLibDependency: true,
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
+            // 1. App (Shell, Remote) Rules
             {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
+              sourceTag: 'scope:app',
+              onlyDependOnLibsWithTags: [
+                'scope:auth',
+                'scope:expenses',
+                'scope:shared',
+              ],
+            },
+            // 2. Rulse for Domain Auth
+            {
+              sourceTag: 'scope:auth',
+              onlyDependOnLibsWithTags: ['scope:auth', 'scope:shared'],
+            },
+            // 3. Rules Domain Expenses
+            {
+              sourceTag: 'scope:expenses',
+              onlyDependOnLibsWithTags: ['scope:expenses', 'scope:shared'],
+            },
+            // 4. Rules for Shared
+            {
+              sourceTag: 'scope:shared',
+              onlyDependOnLibsWithTags: ['scope:shared'],
+            },
+
+            // Inbound Rules for Shared Libraries (UI, Data Access, Utils, Types, Constants)
+            {
+              sourceTag: 'type:ui',
+              onlyDependOnLibsWithTags: [
+                'type:ui',
+                'type:shared-utils',
+                'type:types',
+                'type:constants',
+                'type:data-access'
+              ],
+            },
+            {
+              sourceTag: 'type:data-access',
+              onlyDependOnLibsWithTags: [
+                'type:shared-utils',
+                'type:types',
+                'type:constants',
+              ],
+            },
+            {
+              sourceTag: 'type:shared-utils',
+              onlyDependOnLibsWithTags: ['type:types', 'type:constants'],
+            },
+            {
+              sourceTag: 'type:types',
+              onlyDependOnLibsWithTags: [],
+            },
+            {
+              sourceTag: 'type:constants',
+              onlyDependOnLibsWithTags: ['type:types'],
             },
           ],
         },

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthStore } from './services/RouteGuard/Akita/auth.store';
+import { AuthStore } from '@micro-expense-tracker/auth/data-access';
 
 @Component({
   selector: 'app-root',

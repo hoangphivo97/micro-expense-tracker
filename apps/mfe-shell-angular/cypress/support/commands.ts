@@ -37,6 +37,7 @@ Cypress.Commands.add(
 );
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       firebaseLoginWithCustomToken(uid?: string): Chainable<void>;

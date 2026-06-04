@@ -1,0 +1,125 @@
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService, AuthStore } from '@micro-expense-tracker/auth/data-access';
+import { catchError, tap, throwError } from 'rxjs';
+import { LoginResponse } from '@micro-expense-tracker/shared/types';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
+import { FirebaseError } from 'firebase/app';
+import { ErrorModalService } from '@micro-expense-tracker/shared/ui';
+import { RegisterModalComponent } from './register-modal/register-modal.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+@Component({
+  selector: 'lib-login',
+  standalone: true,
+  imports: [ReactiveFormsModule, MatCheckboxModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
+})
+export class LoginComponent implements OnInit {
+
+  readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly fb = inject(FormBuilder);
+  readonly router = inject(Router);
+  public readonly authService = inject(AuthService)
+  private readonly authStore = inject(AuthStore)
+  private readonly errorModalService = inject(ErrorModalService);
+
+  loading = false;
+
+  loginForm: FormGroup = this.fb.group({
+    userName: ['', Validators.required],
+    passWord: ['', Validators.required],
+  });
+
+  ngOnInit(): void {
+    this.disableSignInAndRegister();
+  }
+
+  loginAction() {
+    const userNameValue: string = this.loginForm.value.userName;
+    const passWordValue: string = this.loginForm.value.passWord;
+
+    this.authService
+      .signInWithUserAccount(userNameValue, passWordValue)
+      .pipe(
+        tap((res: LoginResponse) => {
+          this.updateTokenAndReRoute(res.token, '/expense');
+        }),
+        catchError((err: FirebaseError) => {
+          // console.error('Đăng nhập thất bại:', err);
+          this.errorModalService.openErrorModal(err);
+          return throwError(() => err);
+        }),
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  loginWithGoogle() {
+    if (this.loading) return;
+    this.loading = true;
+
+    this.authService
+      .signInWithGoogleAccount()
+      .pipe(
+        tap((res: any) => {
+          this.updateTokenAndReRoute(res.token, '/expense');
+          this.loading = false;
+        }),
+        catchError((err: FirebaseError) => {
+          this.errorModalService.openErrorModal(err);
+          this.loading = false;
+          return throwError(() => err);
+        }),
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  loginWithFacebook() {
+    if (this.loading) return;
+    this.loading = true;
+
+    this.authService
+      .signInWithFacebookAccount()
+      .pipe(
+        tap((res: any) => {
+          this.updateTokenAndReRoute(res.token, '/expense');
+          this.loading = false;
+        }),
+        catchError((err: FirebaseError) => {
+          this.errorModalService.openErrorModal(err);
+          this.loading = false;
+          return throwError(() => err);
+        }),
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
+  updateTokenAndReRoute(token: string, direction: string) {
+    this.authStore.update({ token: token });
+    localStorage.setItem('token', token);
+    this.router.navigate([direction]);
+  }
+
+  openRegisterModal() {
+    this.dialog.open(RegisterModalComponent, {
+      width: '450px',
+      disableClose: false,
+    });
+  }
+
+  disableSignInAndRegister() {
+    this.loginForm.disable();
+  }
+}

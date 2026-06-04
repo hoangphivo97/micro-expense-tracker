@@ -1,0 +1,1 @@
+declare module 'mfe-remote-react/DarkModeToggle';
