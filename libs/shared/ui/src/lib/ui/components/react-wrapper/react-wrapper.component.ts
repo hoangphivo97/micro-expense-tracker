@@ -4,12 +4,11 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
-  Renderer2,
   inject,
-  DOCUMENT,
 } from '@angular/core';
 import {
   loadRemote,
+  registerRemotes,
 } from '@module-federation/enhanced/runtime';
 import * as React from 'react';
 import { createRoot, Root } from 'react-dom/client';
@@ -27,14 +26,19 @@ import { NgZone } from '@angular/core';
 export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
   protected readonly themeService = inject(ThemeService);
   private readonly ngZone = inject(NgZone);
-  private readonly document = inject(DOCUMENT);
-  private readonly renderer = inject(Renderer2);
 
   @ViewChild('reactContainer', { static: true }) containerRef!: ElementRef;
   private root!: Root;
 
   async ngAfterViewInit() {
     try {
+      registerRemotes([
+        {
+          name: 'mfe_remote_react',
+          entry: 'http://localhost:5000/remoteEntry.js',
+        },
+      ]);
+
       const m = await loadRemote<ReactComponentType>(
         'mfe_remote_react/DarkModeToggle',
       );

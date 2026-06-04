@@ -21,12 +21,12 @@ export const authInterceptor: HttpInterceptorFn = (
       ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
       : req;
 
-  return from(auth.getIdToken()).pipe(
+  return from(Promise.resolve(auth.getIdToken())).pipe(
     switchMap((token) => next(attach(token))),
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401 || err.status === 403) {
-        // refresh 1 lần rồi retry
-        return from(auth.getIdToken(true)).pipe(
+        //refresh 1 time and retry
+        return from(Promise.resolve(auth.getIdToken(true))).pipe(
           switchMap((newToken) => next(attach(newToken))),
           catchError(async (err2) => {
             await auth.signOut();
