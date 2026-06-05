@@ -28,11 +28,8 @@
       "@micro-expense-tracker/auth/data-access": [
         "./libs/auth/data-access/src/index.ts"
       ],
-      "@micro-expense-tracker/shared/ui": [
-        "./libs/shared/ui/src/index.ts"
-      ],
-      "@micro-expense-tracker/auth/features": 
-      [
+      "@micro-expense-tracker/shared/ui": ["./libs/shared/ui/src/index.ts"],
+      "@micro-expense-tracker/auth/features": [
         "./libs/auth/features/src/index.ts"
       ],
       "@micro-expense-tracker/shared/constants": [
@@ -50,7 +47,8 @@
       ],
       "@micro-expense-tracker/backend/auth/features": [
         "./libs/auth/features-backend/src/index.ts"
-      ]
+      ],
+      "shared/ui-react": ["./libs/shared/ui-react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
