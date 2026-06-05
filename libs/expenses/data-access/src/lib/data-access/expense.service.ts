@@ -19,8 +19,7 @@ import { from, map, Observable, of, switchMap, take } from 'rxjs';
 import {
   CreateExpense,
   ExpenseList
-} from './expense.interface';
-
+} from './interfaces/expense.interface';
 import { FilterParams } from '@micro-expense-tracker/shared/types';
 
 @Injectable({

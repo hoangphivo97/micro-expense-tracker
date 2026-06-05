@@ -6,7 +6,7 @@ import {
   ApexTitleSubtitle,
   ChartType,
 } from 'ng-apexcharts';
-import { AxisChartOptions, NonAxisChartOptions } from '@micro-expense-tracker/shared/types';
+import { AxisChartOptions, NonAxisChartOptions } from '@micro-expense-tracker/expenses/data-access';
 import { formatDate } from '@angular/common';
 import { tsToDate, tsToMs } from '@micro-expense-tracker/shared/utils';
 import { Timestamp } from '@angular/fire/firestore';
