@@ -1,6 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
-
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 import { authGuard } from '@micro-expense-tracker/auth/data-access';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
@@ -37,5 +35,3 @@ export const routes: Routes = [
     redirectTo: '/expense',
   },
 ];
-
-export class AppRoutingModule {}
