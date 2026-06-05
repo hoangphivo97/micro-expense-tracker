@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { UserService } from './user.service';
-import { UserController } from '@micro-expense-tracker/backend/auth/features';
 
 @Module({
   imports: [
@@ -11,7 +10,6 @@ import { UserController } from '@micro-expense-tracker/backend/auth/features';
     }),
   ],
   providers: [UserService],
-  controllers: [UserController],
   exports: [UserService], 
 })
 export class AuthDataAccessBackendModule {}
