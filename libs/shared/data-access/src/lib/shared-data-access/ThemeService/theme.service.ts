@@ -20,8 +20,8 @@ export class ThemeService {
 
   setDarkMode(isDark: boolean) {
     this.isDarkMode.set(isDark);
-    console.log('Angular received theme change:', isDark);
-    console.log('Current document state:', this._document.body.classList.contains('dark-mode'));
+    // console.log('Angular received theme change:', isDark);
+    // console.log('Current document state:', this._document.body.classList.contains('dark-mode'));
   }
 
 }

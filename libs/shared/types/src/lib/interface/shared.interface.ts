@@ -1,8 +1,12 @@
 import * as React from 'react';
-import { DarkModeToggleProps } from '../interface/types';
 
 export interface ReactComponentType {
-  default: React.ComponentType<DarkModeToggleProps>;
+  MuiDarkModeToggle: React.ComponentType<DarkModeToggleProps>;
+}
+
+export interface DarkModeToggleProps {
+  onThemeChange?: (isDark: boolean) => void;
+  isDark?: boolean;
 }
 
 export interface FilterParams {

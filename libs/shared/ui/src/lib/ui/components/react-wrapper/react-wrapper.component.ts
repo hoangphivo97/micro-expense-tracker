@@ -5,10 +5,10 @@ import {
   AfterViewInit,
   OnDestroy,
   inject,
+  effect,
 } from '@angular/core';
 import {
   loadRemote,
-  registerRemotes,
 } from '@module-federation/enhanced/runtime';
 import * as React from 'react';
 import { createRoot, Root } from 'react-dom/client';
@@ -16,6 +16,7 @@ import { ReactComponentType } from '@micro-expense-tracker/shared/types';
 
 import { ThemeService } from '@micro-expense-tracker/shared/data-access';
 import { NgZone } from '@angular/core';
+import { DarkModeToggleProps } from '@micro-expense-tracker/shared/types'
 
 @Component({
   selector: 'lib-react-wrapper',
@@ -29,40 +30,50 @@ export class ReactWrapperComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('reactContainer', { static: true }) containerRef!: ElementRef;
   private root!: Root;
+  private ReactComp!: React.ComponentType<DarkModeToggleProps>;
+
+  constructor() {
+    effect(() => {
+      const isDark = this.themeService.isDarkMode()
+
+      if (this.root && this.ReactComp) {
+        this.renderReact(isDark)
+      }
+    })
+  }
 
   async ngAfterViewInit() {
     try {
-      registerRemotes([
-        {
-          name: 'mfe_remote_react',
-          entry: 'http://localhost:5000/remoteEntry.js',
-        },
-      ]);
-
       const m = await loadRemote<ReactComponentType>(
         'mfe_remote_react/DarkModeToggle',
       );
 
-      if (m && m.default) {
-        const ReactComp = m.default;
+      if (m && m.MuiDarkModeToggle) {
+        this.ReactComp = m.MuiDarkModeToggle
         this.root = createRoot(this.containerRef.nativeElement);
-        this.root.render(
-          React.createElement(ReactComp, {
-            onThemeChange: (isDark: boolean) => {
-              this.ngZone.run(() => {
-                this.themeService.setDarkMode(isDark);
-              });
-            },
-          }),
-        );
+
+        this.renderReact(this.themeService.isDarkMode())
       } else {
         console.error(
-          'Remote module trả về null hoặc không có default export.',
+          'Remote module return null or there are no default export',
         );
       }
     } catch (error) {
-      console.error('Lỗi tải React Remote:', error);
+      console.error('error load React remote:', error);
     }
+  }
+
+  private renderReact(isDark: boolean) {
+    this.root.render(
+      React.createElement(this.ReactComp, {
+        isDark: isDark,
+        onThemeChange: (newDarkVal: boolean) => {
+          this.ngZone.run(() => {
+            this.themeService.setDarkMode(newDarkVal);
+          });
+        },
+      })
+    );
   }
 
   ngOnDestroy() {
