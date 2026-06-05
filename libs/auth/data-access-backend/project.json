@@ -1,0 +1,9 @@
+{
+  "name": "data-access-backend",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/auth/data-access-backend/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project data-access-backend --web",
+  "targets": {}
+}

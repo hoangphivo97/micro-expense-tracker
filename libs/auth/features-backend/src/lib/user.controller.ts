@@ -1,15 +1,17 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { UserService } from './user.service';
-import { LoginDto } from '../DTO/login.dto';
+import { LoginDto, UserService } from '@micro-expense-tracker/backend/auth/data-access';
 import * as admin from 'firebase-admin';
+import { UserInDb } from '@micro-expense-tracker/shared/types';
 
 @Controller('auth')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.userService.login(loginDto);
+  async login(@Body() loginDto: LoginDto) {
+    const validatedUser = await this.userService.validateUser(loginDto.username, loginDto.password);
+
+    return this.userService.login(validatedUser);
   }
 
   @Post('google-login')
@@ -34,7 +36,7 @@ export class UserController {
 
   private async handleFirebaseLogin(
     token: string,
-  ): Promise<{ token: string; user: any }> {
+  ): Promise<{ token: string; user: UserInDb }> {
     const decodedToken = await admin.auth().verifyIdToken(token);
     const { uid, email, name } = decodedToken;
 

@@ -12,8 +12,8 @@ import {
 import { BehaviorSubject, from, Observable, switchMap } from 'rxjs';
 import { LoginResponse } from '@micro-expense-tracker/shared/types';
 import { HttpClient } from '@angular/common/http';
-import { AuthStore } from './Akita/auth.store';
 import { Router } from '@angular/router';
+import { UserSession } from '@micro-expense-tracker/shared/types';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,6 @@ export class AuthService {
   private user$ = new BehaviorSubject<User | null>(null);
   private loading$ = new BehaviorSubject<boolean>(true);
   private http = inject(HttpClient);
-  private authStore = inject(AuthStore);
   private router = inject(Router);
 
   constructor() {
@@ -46,9 +45,9 @@ export class AuthService {
   signInWithUserAccount(
     username: string,
     password: string,
-  ): Observable<LoginResponse> {
+  ): Observable<UserSession> {
     const loginData = { username, password };
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginData);
+    return this.http.post<UserSession>(`${this.apiUrl}/login`, loginData);
   }
 
   signInWithGoogleAccount(): Observable<object> {
