@@ -1,10 +1,21 @@
+//For Frontend
 export interface LoginResponse {
   token: string;
 }
 
-export interface User extends LoginResponse {
+export interface UserBase {
+  uid: string;
   username: string;
-  password: string;
   role: string;
   email: string;
+  createdAt?: string;
+}
+
+export interface UserInDb extends UserBase {
+  password?: string;
+}
+
+// For FE store in localStorage
+export interface UserSession extends UserBase {
+  token: string; 
 }

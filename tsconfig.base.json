@@ -41,7 +41,13 @@
       "@micro-expense-tracker/expenses/features": [
         "./libs/expenses/features/src/index.ts"
       ],
-      "utils": ["./libs/expenses/utils/src/index.ts"]
+      "utils": ["./libs/expenses/utils/src/index.ts"],
+      "@micro-expense-tracker/backend/auth/data-access": [
+        "./libs/auth/data-access-backend/src/index.ts"
+      ],
+      "@micro-expense-tracker/backend/auth/features": [
+        "./libs/auth/features-backend/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
