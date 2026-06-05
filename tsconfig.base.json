@@ -47,7 +47,8 @@
       ],
       "@micro-expense-tracker/backend/auth/features": [
         "./libs/auth/features-backend/src/index.ts"
-      ]
+      ],
+      "shared/ui-react": ["./libs/shared/ui-react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

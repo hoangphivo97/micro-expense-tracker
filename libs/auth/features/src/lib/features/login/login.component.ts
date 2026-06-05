@@ -6,9 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService, AuthStore } from '@micro-expense-tracker/auth/data-access';
+import { AuthService, AuthStore, LoginResponse } from '@micro-expense-tracker/auth/data-access';
 import { catchError, tap, throwError } from 'rxjs';
-import { LoginResponse } from '@micro-expense-tracker/shared/types';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { FirebaseError } from 'firebase/app';

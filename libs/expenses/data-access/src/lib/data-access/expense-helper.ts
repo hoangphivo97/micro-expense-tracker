@@ -1,5 +1,5 @@
 import { FilterParams } from '@micro-expense-tracker/shared/types';
-import { ExpenseList } from './expense.interface';
+import { ExpenseList } from './interfaces/expense.interface';
 import { Params } from '@angular/router';
 
 

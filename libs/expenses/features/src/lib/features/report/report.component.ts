@@ -7,18 +7,16 @@ import {
   makeLineChart,
   makePieChart,
 } from '../report/utils/multiple-charts-helper';
-import { calcChangePct, calcKPIs, getPrevMonth, parseRouterFilterParams } from '@micro-expense-tracker/expenses/data-access';
+import { calcChangePct, calcKPIs, getPrevMonth, parseRouterFilterParams, ExpenseService , ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 import {
   filter,
   map,
   startWith,
   switchMap,
 } from 'rxjs';
-import { ExpenseService } from '@micro-expense-tracker/expenses/data-access';
 import {
   FilterParams,
 } from '@micro-expense-tracker/shared/types';
-import { ExpenseList } from '@micro-expense-tracker/expenses/data-access';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { mainColorPieChart } from '@micro-expense-tracker/shared/constants';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';

@@ -3,7 +3,6 @@ import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import { DarkModeToggleProps } from '@micro-expense-tracker/shared/types';
 
-// Custom Switch theo style của Material UI demo
 const MaterialUISwitch = styled(Switch)(() => ({
   width: 62,
   height: 34,
@@ -22,12 +21,12 @@ const MaterialUISwitch = styled(Switch)(() => ({
       },
       '& + .MuiSwitch-track': {
         opacity: 1,
-        backgroundColor: '#8796A5', // Màu track khi dark
+        backgroundColor: '#8796A5',
       },
     },
   },
   '& .MuiSwitch-thumb': {
-    backgroundColor: '#003892', // Màu thumb mặc định
+    backgroundColor: '#003892',
     width: 32,
     height: 32,
     '&::before': {
@@ -51,8 +50,12 @@ const MaterialUISwitch = styled(Switch)(() => ({
   }
 }));
 
-export default function MuiDarkModeToggle({ onThemeChange }: DarkModeToggleProps) {
-  const [checked, setChecked] = useState(false);
+export function MuiDarkModeToggle({ onThemeChange, isDark = false }: DarkModeToggleProps & { isDark?: boolean }) {
+  const [checked, setChecked] = useState(isDark);
+
+  React.useEffect(() => {
+    setChecked(isDark);
+  }, [isDark])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newVal = event.target.checked;
@@ -61,21 +64,16 @@ export default function MuiDarkModeToggle({ onThemeChange }: DarkModeToggleProps
   };
 
   return (
-    // <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-    //   <MaterialUISwitch checked={checked} onChange={handleChange} />
-    //   <span style={{ fontSize: '1.4rem', color: `${checked ? '#FFF' : '#003892'}`, fontWeight: '500' }}>Dark Mode</span>
-    // </div>
     <label style={{
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
-      cursor: 'pointer', // Hiện bàn tay khi trỏ vào chữ
-      userSelect: 'none'  // Ngăn việc bôi đen chữ khi click nhanh nhiều lần
+      cursor: 'pointer',
+      userSelect: 'none'
     }}>
-      {/* Chữ nằm trước hoặc sau Switch đều được */}
       <MaterialUISwitch checked={checked} onChange={handleChange} />
 
-      <span className="label-text" style={{ fontSize: '1.4rem', color: `${checked ? '#FFF' : '#003892'}`, fontWeight: '500'  }}>
+      <span className="label-text" style={{ fontSize: '1.4rem', color: `${checked ? '#FFF' : '#003892'}`, fontWeight: '500' }}>
         {checked ? 'Dark Mode' : 'Light Mode'}
       </span>
     </label>

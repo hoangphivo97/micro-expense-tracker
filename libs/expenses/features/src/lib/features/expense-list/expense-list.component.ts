@@ -6,7 +6,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { HeaderComponent, FooterComponent, BaseModalComponent, FilterComponent } from '@micro-expense-tracker/shared/ui';
+import { HeaderComponent, FooterComponent, BaseModalComponent, FilterComponent, SettingsServiceService } from '@micro-expense-tracker/shared/ui';
 import {
   FilterParams,
 } from '@micro-expense-tracker/shared/types';
@@ -30,8 +30,7 @@ import {
   DialogActionEnum,
   DialogData
 } from '@micro-expense-tracker/shared/types';
-import { LocalStorageService } from '@micro-expense-tracker/shared/data-access';
-import { SettingsServiceService } from '@micro-expense-tracker/shared/ui';
+import { LocalStorageService } from '@micro-expense-tracker/shared/data-access';;
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatPaginator } from '@angular/material/paginator';

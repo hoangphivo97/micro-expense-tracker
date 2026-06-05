@@ -6,7 +6,6 @@ import {
   ApexStroke,
   ApexDataLabels,
   ApexLegend,
-  ApexOptions,
   ApexPlotOptions,
   ApexNonAxisChartSeries,
   ApexTooltip,
